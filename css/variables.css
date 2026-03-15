@@ -1,0 +1,32 @@
+:root {
+    /* Color Palette - Deep Teal/Emerald Theme (C1 Advanced) */
+    --bg-primary: #0f766e;
+    /* Deep Teal */
+    --bg-secondary: #0d6560;
+    /* Darker Teal */
+    --text-primary: #ffffff;
+    --text-secondary: #f0fdfa;
+    /* Light Mint Cream */
+
+    /* Accent Colors */
+    --accent-gold: #99f6e4;
+    /* Bright Aqua Mint */
+    --accent-gold-dim: rgba(153, 246, 228, 0.3);
+    --accent-electric: #5eead4;
+    /* Vivid Teal */
+    --accent-dark: #134e4a;
+    /* Dark Emerald */
+
+    --gradient-teal: linear-gradient(135deg, #0f766e 0%, #0d6560 100%);
+    --gradient-accent: linear-gradient(135deg, #5eead4 0%, #2dd4bf 100%);
+
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+
+    --spacing-sm: 8px;
+    --spacing-md: 24px;
+    --spacing-lg: 48px;
+
+    --border-radius: 16px;
+    --shadow-glow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
