@@ -120,6 +120,17 @@ courseData.units.push(
                 { sentence: "Researchers hesitated _____ definitive conclusions from preliminary data.", options: ["to draw", "drawing", "draw"], correct: 0 }
             ]
         },
+        functionalLanguage: {
+            functionName: "Making Weekend Plans & Hype",
+            description: "Learn how to suggest plans, agree to go out, express excitement, or decline social invitations in a natural, colloquial peer-to-peer way.",
+            phrases: [
+                { phrase: "I'm down for...", def: "a highly casual, common way to say you are willing, interested, or agreeing to do an activity", example: "If you guys are going to the new taco place tonight, I'm totally down for that!" },
+                { phrase: "To have FOMO", def: "an acronym for 'Fear Of Missing Out'; the uneasy feeling that others are having fun while you are absent", example: "I stayed home to study on Saturday but had major FOMO looking at everyone's party photos." },
+                { phrase: "Not really my cup of tea", def: "used to politely and casually say that something does not appeal to your personal taste or preferences", example: "Going to a loud, crowded nightclub is not really my cup of tea; I prefer a cozy pub." },
+                { phrase: "To paint the town red", def: "to go out into a city or town and have a wild, highly active, and fun night out celebrating", example: "It's our last night of exams, so let's go out and absolutely paint the town red!" }
+            ],
+            task: "Your friends are planning a big night out celebrating a birthday, but you are exhausted. Write a casual text message (3 sentences) proposing a relaxed alternative or expressing your feelings, using at least two phrases above."
+        },
         videos: [
             { title: "What Is the Circular Economy?", channel: "Ellen MacArthur Foundation", duration: "3:49", url: "https://www.youtube.com/watch?v=zCRKvDyyHmI" },
             { title: "Can We Fix Climate Change?", channel: "Kurzgesagt", duration: "16:22", url: "https://www.youtube.com/watch?v=LxgMdjyw8uw" },
@@ -239,6 +250,17 @@ courseData.units.push(
                 { sentence: "He regretted not _____ his grandparents' language as a child.", options: ["to learn", "learning", "learn"], correct: 1 },
                 { sentence: "Technology enables linguists _____ interactive learning resources.", options: ["creating", "to create", "create"], correct: 1 }
             ]
+        },
+        functionalLanguage: {
+            functionName: "Being Hooked on Phones & Screen Time",
+            description: "Master highly common colloquial expressions to talk about digital distraction, phone addiction, and setting boundaries with technology.",
+            phrases: [
+                { phrase: "To be glued to your screen", def: "unable to stop looking at your smartphone, laptop, or tablet screen for long periods of time", example: "We went out for dinner but he spent the whole evening completely glued to his screen!" },
+                { phrase: "To phub someone", def: "a blend of 'phone' and 'snub'; to ignore the person you are with in social settings by looking at your phone instead", example: "It is incredibly frustrating when you are trying to tell a story and the other person just phubs you." },
+                { phrase: "To go cold turkey", def: "to completely, suddenly, and immediately stop a habit or addiction instead of slowing down gradually", example: "I was spending four hours a day scrolling on TikTok, so I went cold turkey and deleted the app." },
+                { phrase: "To unplug", def: "to temporarily disconnect from all digital devices, social media, and internet technology to rest and recharge", example: "I'm heading to a remote cabin this weekend to completely unplug and get some peace and quiet." }
+            ],
+            task: "You notice a friend is constantly phubbing you and always glued to their screen. Write a friendly, gentle intervention text (3 sentences) suggesting you both unplug, using at least two of the phrases."
         },
         videos: [
             { title: "Why Do Languages Die?", channel: "TED-Ed", duration: "4:53", url: "https://www.youtube.com/watch?v=Wp5FelcOPwU" },

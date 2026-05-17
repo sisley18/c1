@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Situations &amp; Functional Language | C1 Advanced English</title>
+    <meta name="description" content="Build real-world colloquial English skills through social situation vocabulary, conversation idioms, daily hassles, listening dialogues, and structured speaking tasks.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        :root {
+            --bg: #faf9f6; /* Premium soft warm cream */
+            --bg2: #ffffff; /* Pure white cards */
+            --gold: #0d9488; /* Premium Teal Accent */
+            --text: #1e1b18; /* Deep charcoal dark text */
+            --muted: #57534e; /* Stone gray */
+            --radius: 16px;
+            --font-body: 'Inter', sans-serif;
+            --font-head: 'Outfit', sans-serif;
+            --accent-electric: #4f46e5; /* Premium Indigo */
+        }
+
+        body { background:var(--bg); color:var(--text); font-family:var(--font-body); line-height:1.7; }
+
+        /* ── Header ── */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e7e5e4;
+            padding: 16px 0;
+            position: sticky; top:0; z-index:100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .hd-inner { max-width:1060px; margin:0 auto; padding:0 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        .logo { font-family:var(--font-head); font-size:1.4rem; font-weight:800; color:var(--text); }
+        .logo span { color:var(--accent-electric); }
+        .back-btn {
+            background: var(--accent-electric); border:2px solid var(--accent-electric); color:#ffffff;
+            padding:8px 20px; border-radius:50px; font-weight:700; font-size:0.9rem;
+            cursor:pointer; transition:all 0.3s; text-decoration:none; font-family:var(--font-head);
+        }
+        .back-btn:hover { background:#ffffff; color:var(--accent-electric); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(79, 70, 229, 0.15); }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, #ffffff 0%, #faf9f6 50%, #ffffff 100%);
+            padding: 60px 20px 50px;
+            text-align: center;
+            border-bottom: 1px solid #e7e5e4;
+        }
+        .hero-badge {
+            display:inline-block; background:rgba(79, 70, 229, 0.08); border:1px solid var(--accent-electric);
+            color:var(--accent-electric); padding:6px 18px; border-radius:50px; font-size:0.8rem;
+            font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:18px;
+        }
+        .hero h1 { font-family:var(--font-head); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; color:var(--text); margin-bottom:14px; }
+        .hero p { color:var(--muted); max-width:640px; margin:0 auto 28px; font-size:1.05rem; }
+        .topic-pills { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; }
+        .pill {
+            padding:8px 18px; border-radius:50px; font-size:0.85rem; font-weight:600;
+            border:1px solid; cursor:pointer; transition:all 0.3s; background: #ffffff !important;
+        }
+        .pill:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        /* ── Main ── */
+        main { max-width:1060px; margin:40px auto; padding:0 20px 80px; }
+
+        /* ── Lesson Card ── */
+        .lesson-card {
+            border-radius:var(--radius); margin-bottom:30px; overflow:hidden;
+            border:1px solid #e7e5e4;
+            background:#ffffff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.015);
+        }
+        .lesson-card:hover { border-color:var(--accent-electric); box-shadow:0 10px 30px rgba(0,0,0,0.03); }
+        .lesson-card[open] { border-color:var(--accent-electric); box-shadow:0 15px 40px rgba(0,0,0,0.04); }
+        .lesson-header {
+            padding:22px 28px; display:flex; justify-content:space-between; align-items:center;
+            cursor:pointer; list-style:none; background:#fdfdfc; border-bottom: 1px solid #f5f5f4;
+            transition: background 0.3s;
+        }
+        .lesson-header:hover { background:#f5f5f4; }
+        .lesson-header-left { display:flex; align-items:center; gap:16px; }
+        .lesson-emoji { font-size:2rem; }
+        .lesson-label { font-size:0.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
+        .lesson-title { font-family:var(--font-head); font-size:1.3rem; font-weight:700; color:var(--text); }
+        .lesson-sub { font-size:0.85rem; color:var(--muted); }
+        details[open] .toggle-icon::after { content:'−'; }
+        .toggle-icon::after { content:'+'; font-size:2rem; color:var(--accent-electric); font-weight:300; }
+
+        .lesson-body { padding:0 28px 28px; animation:fadeSlide 0.3s ease; }
+        @keyframes fadeSlide { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+
+        /* ── Section ── */
+        .sec { margin-top:32px; padding-top:28px; border-top:1px solid #e7e5e4; }
+        .sec-label {
+            display:inline-block; padding:5px 16px; border-radius:50px;
+            font-size:0.75rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+            margin-bottom:16px; border:1px solid; background: #ffffff !important;
+        }
+        .sec h3 { font-family:var(--font-head); font-size:1.15rem; margin-bottom:14px; color:var(--text); }
+
+        /* ── News Vocab ── */
+        .vocab-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:12px; }
+        .vocab-item {
+            background:#ffffff; border-radius:12px; padding:16px;
+            border: 1px solid #e7e5e4;
+            border-left:4px solid var(--gold); display:flex; flex-direction:column; gap:6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+            transition: all 0.3s;
+        }
+        .vocab-item:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.02); }
+        .vocab-word-row { display:flex; align-items:center; gap:10px; }
+        .vocab-item strong { font-size:1.1rem; color:var(--gold); }
+        .vocab-item .v-def { font-size:0.9rem; color:var(--muted); }
+        .vocab-item .v-ex { font-size:0.85rem; font-style:italic; color:var(--muted); opacity: 0.95; }
+        
+        .play-btn {
+            width:32px; height:32px; border-radius:50%; background:var(--accent-electric); border:none;
+            cursor:pointer; font-size:0.8rem; display:flex; align-items:center; justify-content:center;
+            flex-shrink:0; transition:transform 0.2s, box-shadow 0.2s; color:#ffffff; font-weight:700;
+        }
+        .play-btn:hover { transform:scale(1.15); box-shadow:0 4px 12px rgba(79, 70, 229, 0.3); }
+
+        /* ── Current Affairs ── */
+        .ca-card {
+            background: #ffffff; border-radius: 14px; overflow: hidden;
+            border: 1px solid #e7e5e4;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+        }
+        .ca-headline-bar {
+            padding: 14px 20px; background: #faf9f6;
+            border-bottom: 1px solid #e7e5e4;
+        }
+        .ca-headline-bar h4 { font-family:var(--font-head); font-size:1.05rem; color:var(--text); margin-bottom:6px; line-height:1.4; }
+        .ca-meta { display:flex; gap:8px; flex-wrap:wrap; }
+        .ca-badge {
+            display:inline-block; padding:3px 12px; border-radius:50px;
+            font-size:0.72rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+            background: #ffffff; border:1px solid #e7e5e4; color:var(--gold);
+        }
+        .ca-body { padding: 16px 20px; }
+        .ca-quote {
+            font-style: italic; font-size:0.95rem; color:var(--muted);
+            border-left:3px solid var(--accent-electric); padding-left:14px; margin-bottom:14px; line-height:1.7;
+        }
+        .ca-summary { font-size:0.9rem; color:var(--muted); margin-bottom:16px; line-height:1.8; }
+
+        /* ── Idioms ── */
+        .idioms-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:12px; }
+        .idiom-card {
+            background:#ffffff; border-radius:12px; padding:16px;
+            border: 1px solid #e7e5e4;
+            border-top:3px solid !important; display:flex; flex-direction:column; gap:6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+            transition: all 0.3s;
+        }
+        .idiom-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.02); }
+        .idiom-phrase { font-size:1rem; font-weight:700; color:var(--text); display:flex; align-items:center; gap:8px; }
+        .idiom-meaning { font-size:0.88rem; color:var(--muted); }
+        .idiom-ex { font-size:0.85rem; font-style:italic; color:var(--muted); opacity: 0.9; }
+
+        /* ── Listening ── */
+        .player-bar {
+            display:flex; align-items:center; gap:14px; background:#faf9f6; border:1px solid #e7e5e4;
+            padding:14px 20px; border-radius:50px; margin:12px 0;
+        }
+        .transcript-box {
+            background:#faf9f6; padding:20px; border-radius:12px; border: 1px solid #e7e5e4;
+            border-left:4px solid var(--gold); line-height:1.9; font-size:0.95rem;
+            display:none; margin-top:10px; color: var(--text);
+        }
+        .show-btn {
+            background:#ffffff; border:1px solid #cccccc;
+            color:var(--text); padding:6px 18px; border-radius:50px; cursor:pointer;
+            font-size:0.85rem; font-weight:600; transition:all 0.2s;
+        }
+        .show-btn:hover { background:#faf9f6; border-color: var(--accent-electric); color: var(--accent-electric); }
+
+        /* ── Quiz ── */
+        .quiz-item { margin-bottom:16px; padding:14px; background:#faf9f6; border: 1px solid #e7e5e4; border-radius:10px; }
+        .quiz-q { font-weight:600; margin-bottom:10px; font-size:0.95rem; color: var(--text); }
+        .opts { display:flex; flex-wrap:wrap; gap:8px; }
+        .opt-btn {
+            background:#ffffff; border:1px solid #cccccc;
+            color:var(--text); padding:6px 16px; border-radius:50px; cursor:pointer;
+            font-size:0.85rem; font-weight:500; transition:all 0.2s;
+        }
+        .opt-btn:hover { background:#faf9f6; border-color: var(--accent-electric); color: var(--accent-electric); }
+        .opt-btn.correct { background:#d1fae5 !important; border-color:#10b981 !important; color:#065f46 !important; }
+        .opt-btn.wrong { background:#fee2e2 !important; border-color:#ef4444 !important; color:#991b1b !important; }
+
+        /* ── Discussion ── */
+        .discussion-box {
+            background:#ffffff; border-radius:12px; padding:20px; border:1px solid #e7e5e4;
+            border-left:4px solid !important;
+        }
+        .discussion-prompt { font-size:1rem; margin-bottom:14px; font-weight:500; color: var(--text); }
+        .tips-list { list-style:none; display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+        .tips-list li { font-size:0.85rem; color:var(--muted); padding-left:16px; position:relative; }
+        .tips-list li::before { content:'💡'; position:absolute; left:-2px; }
+        textarea.write-area {
+            width:100%; min-height:120px; background:#ffffff;
+            border:1px solid #cccccc; color:var(--text); padding:12px;
+            border-radius:10px; font-family:var(--font-body); font-size:0.95rem;
+            resize:vertical; transition:border-color 0.2s;
+        }
+        textarea.write-area:focus { outline:none; border-color:var(--accent-electric); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+        textarea.write-area::placeholder { color:#999999; }
+
+        /* ── Fill Blanks ── */
+        .blank-item { margin-bottom:14px; padding:14px; background:#faf9f6; border: 1px solid #e7e5e4; border-radius:10px; }
+        .blank-sent { font-size:0.95rem; margin-bottom:10px; color: var(--text); }
+
+        /* ── Footer ── */
+        footer { text-align:center; padding:40px 20px; background:#ffffff; border-top:1px solid #e7e5e4; color:var(--muted); font-size:0.9rem; }
+
+        /* ── Protection ── */
+        #prot-overlay {
+            display:none; position:fixed; inset:0; background:rgba(255,255,255,0.95);
+            backdrop-filter:blur(10px); z-index:9999; align-items:center; justify-content:center;
+        }
+        .prot-msg { background:#fef2f2; border:1px solid #fecaca; border-radius:20px; padding:40px 50px; text-align:center; max-width:420px; }
+        .prot-msg h2 { color:#b91c1c; margin-bottom:10px; }
+
+        @media(max-width:640px){
+            .lesson-header{ padding:18px 16px; }
+            .lesson-body{ padding:0 16px 20px; }
+            .lesson-title{ font-size:1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="hd-inner">
+        <div class="logo">Advanced<span>English</span> C1</div>
+        <a href="index.html" class="back-btn">← Back to Course</a>
+    </div>
+</header>
+
+<div class="hero">
+    <div class="hero-badge">🗣️ C1 · Bonus Section</div>
+    <h1>Social Situations &amp; Functional Language</h1>
+    <p>Master real-world colloquial English through social situation vocabulary, conversation idioms, daily struggles, authentic listening dialogues, and structured speaking tasks.</p>
+    <div class="topic-pills" id="topic-pills"></div>
+</div>
+
+<main id="lessons-container"></main>
+
+<footer>
+    <p>© 2025 C1 Advanced English Course · Cecilia Chiappero · Universidad Nacional de Córdoba</p>
+</footer>
+
+<div id="prot-overlay" style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); z-index:9999; align-items:center; justify-content:center;">
+    <div class="prot-msg">
+        <span style="font-size:3rem;">🔒</span>
+        <h2>Protected Content</h2>
+        <p style="color: #991b1b; margin-bottom: 10px;">No permission to copy or redistribute.</p>
+        <p style="color:var(--accent-electric); font-weight:700;">© 2025 C1 Course — Cecilia Chiappero</p>
+    </div>
+</div>
+
+<script src="js/data_everyday.js"></script>
+<script>
+/* ── High-Fidelity Google Translate Neural TTS Audio Player ───────────────── */
+let audioQueue = [];
+let currentAudio = null;
+
+window.speak = function(text) {
+    window.stopAudio();
+    if (!text) return;
+
+    // Split text into ~180-char chunks on sentence boundaries
+    const chunks = [];
+    const maxLen = 180;
+    let currentChunk = "";
+    const words = text.split(" ");
+    
+    for (let word of words) {
+        if ((currentChunk + " " + word).length > maxLen) {
+            chunks.push(currentChunk.trim());
+            currentChunk = word;
+        } else {
+            currentChunk += (currentChunk ? " " : "") + word;
+        }
+    }
+    if (currentChunk.trim()) {
+        chunks.push(currentChunk.trim());
+    }
+
+    // Build the queue of Google neural TTS URLs
+    audioQueue = chunks.map(chunk => 
+        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(chunk)}`
+    );
+
+    playNextInQueue();
+};
+
+function playNextInQueue() {
+    if (audioQueue.length === 0) {
+        currentAudio = null;
+        return;
+    }
+
+    const url = audioQueue.shift();
+    currentAudio = new Audio(url);
+    
+    currentAudio.addEventListener('ended', () => {
+        playNextInQueue();
+    });
+
+    currentAudio.addEventListener('error', (e) => {
+        console.error("Audio playback error, trying next chunk:", e);
+        playNextInQueue();
+    });
+
+    currentAudio.play().catch(err => {
+        console.error("Play failed:", err);
+        playNextInQueue();
+    });
+}
+
+window.stopAudio = function () {
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+    }
+    audioQueue = [];
+};
+
+/* ── Protection ───────────────────────────────────────────────────── */
+const overlay = document.getElementById('prot-overlay');
+function showProt(){ overlay.style.display='flex'; setTimeout(()=>overlay.style.display='none',2500); }
+document.addEventListener('contextmenu',e=>{e.preventDefault();showProt();});
+document.addEventListener('copy',e=>{e.preventDefault();showProt();});
+document.addEventListener('keydown',e=>{
+    if(e.ctrlKey&&['c','p','s','u'].includes(e.key)){e.preventDefault();showProt();}
+    if(e.key==='F12'){e.preventDefault();showProt();}
+});
+overlay.addEventListener('click',()=>overlay.style.display='none');
+
+/* ── Helpers ──────────────────────────────────────────────────────── */
+window.toggleBox = function(btn){
+    const box = btn.nextElementSibling;
+    const isHidden = box.style.display==='none'||!box.style.display;
+    box.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? 'Hide Transcript' : 'Show Transcript';
+};
+
+window.checkOpt = function(btn, correct){
+    const opts = btn.parentElement.querySelectorAll('.opt-btn');
+    opts.forEach(b=>{ b.classList.remove('correct','wrong'); b.disabled=true; });
+    btn.classList.add(correct ? 'correct' : 'wrong');
+};
+
+/* ── Render ───────────────────────────────────────────────────────── */
+function render(){
+    const pills = document.getElementById('topic-pills');
+    const main  = document.getElementById('lessons-container');
+
+    everydayData.lessons.forEach(lesson=>{
+        // Pill
+        const pill = document.createElement('span');
+        pill.className='pill';
+        pill.textContent = lesson.emoji+' '+lesson.theme;
+        pill.style.cssText=`color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};`;
+        pill.onclick=()=>{ const el=document.getElementById('lesson-'+lesson.id); if(el){el.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});} };
+        pills.appendChild(pill);
+
+        // Card
+        const card = document.createElement('details');
+        card.className='lesson-card'; card.id='lesson-'+lesson.id;
+        card.style.cssText=`border-color:${lesson.colorBorder};`;
+
+        card.innerHTML=`
+        <summary class="lesson-header">
+            <div class="lesson-header-left">
+                <span class="lesson-emoji">${lesson.emoji}</span>
+                <div>
+                    <div class="lesson-label" style="color:${lesson.color};">Lesson ${lesson.id}</div>
+                    <div class="lesson-title">${lesson.theme}</div>
+                    <div class="lesson-sub">${lesson.subtitle}</div>
+                </div>
+            </div>
+            <span class="toggle-icon"></span>
+        </summary>
+        <div class="lesson-body">
+
+            <!-- 1. SOCIAL SITUATIONS VOCAB -->
+            <div class="sec">
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">🗣️ Social Situations Vocabulary</span>
+                <h3>Key Words for Social Interactions</h3>
+                <p style="font-size:0.9rem;color:var(--muted);margin-bottom:16px;">🔊 Click the speaker to hear each word pronounced in American English.</p>
+                <div class="vocab-grid">
+                    ${lesson.newsVocab.map(v=>`
+                    <div class="vocab-item" style="border-left-color:${lesson.color};">
+                        <div class="vocab-word-row">
+                            <button class="play-btn" style="background:${lesson.color};" onclick="speak('${v.word.replace(/'/g,"\\'")}')">🔊</button>
+                            <strong style="color:${lesson.color};">${v.word}</strong>
+                        </div>
+                        <span class="v-def">${v.def}</span>
+                        <span class="v-ex">"${v.example}"</span>
+                    </div>`).join('')}
+                </div>
+            </div>
+
+            <!-- 2. TRENDING SOCIAL NEWS -->
+            <div class="sec">
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">📰 Trending Social News</span>
+                <h3>Modern Lifestyle &amp; Trend in Focus</h3>
+                <div class="ca-card">
+                    <div class="ca-headline-bar">
+                        <h4>🗣️ ${lesson.currentAffairs.headline}</h4>
+                        <div class="ca-meta">
+                            <span class="ca-badge">📡 ${lesson.currentAffairs.source}</span>
+                            <span class="ca-badge" style="background:${lesson.colorLight};border-color:${lesson.colorBorder};color:${lesson.color};">${lesson.currentAffairs.date}</span>
+                        </div>
+                    </div>
+                    <div class="ca-body">
+                        <p class="ca-quote" style="border-left-color:${lesson.color};">${lesson.currentAffairs.keyQuote}</p>
+                        <p class="ca-summary">${lesson.currentAffairs.summary}</p>
+                        <p style="font-weight:600;margin-bottom:12px;font-size:0.9rem;color:var(--text);">🧠 Comprehension Check:</p>
+                        ${lesson.currentAffairs.questions.map((q,qi)=>`
+                        <div class="quiz-item">
+                            <div class="quiz-q">${qi+1}. ${q.q}</div>
+                            <div class="opts">
+                                ${q.options.map((o,oi)=>`
+                                <button class="opt-btn" onclick="checkOpt(this,${oi===q.correct})">${o}</button>`).join('')}
+                            </div>
+                        </div>`).join('')}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. IDIOMS -->
+            <div class="sec">
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">💬 Everyday Colloquial Idioms</span>
+                <h3>Natural Expressions Used in Real Conversations</h3>
+                <div class="idioms-grid">
+                    ${lesson.idioms.map(id=>`
+                    <div class="idiom-card" style="border-color:${lesson.colorBorder};border-top-color:${lesson.color} !important;">
+                        <div class="idiom-phrase">
+                            <button class="play-btn" style="background:${lesson.color};" onclick="speak('${id.idiom.replace(/'/g,"\\'")}')">🔊</button>
+                            "${id.idiom}"
+                        </div>
+                        <span class="idiom-meaning">📖 ${id.meaning}</span>
+                        <span class="idiom-ex">✏️ ${id.example}</span>
+                    </div>`).join('')}
+                </div>
+            </div>
+
+            <!-- 4. LISTENING -->
+            <div class="sec">
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">🎧 Listening</span>
+                <h3>${lesson.listening.title}</h3>
+                <div class="player-bar">
+                    <button class="play-btn" style="width:44px;height:44px;font-size:1.1rem;background:${lesson.color};" onclick="speak('${lesson.listening.transcript.replace(/'/g,"\\'")}')">▶</button>
+                    <span style="font-size:0.9rem;color:var(--muted);">Audio Track — American English Dialogue</span>
+                </div>
+                <button class="show-btn" onclick="toggleBox(this)">Show Transcript</button>
+                <div class="transcript-box">${lesson.listening.transcript}</div>
+                <div style="margin-top:20px;">
+                    <p style="font-weight:600;margin-bottom:14px;font-size:0.95rem;color:var(--text);">Comprehension Questions:</p>
+                    ${lesson.listening.questions.map((q,qi)=>`
+                    <div class="quiz-item">
+                        <div class="quiz-q">${qi+1}. ${q.q}</div>
+                        <div class="opts">
+                            ${q.options.map((o,oi)=>`
+                            <button class="opt-btn" onclick="checkOpt(this,${oi===q.correct})">${o}</button>`).join('')}
+                        </div>
+                    </div>`).join('')}
+                </div>
+            </div>
+
+            <!-- 5. FILL BLANKS -->
+            <div class="sec">
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">✏️ Practice</span>
+                <h3>Fill in the Blank — Vocabulary &amp; Idioms in Context</h3>
+                ${lesson.fillBlanks.map((fb,fi)=>`
+                <div class="blank-item">
+                    <div class="blank-sent">${fi+1}. ${fb.sentence}</div>
+                    <div class="opts">
+                        ${fb.options.map((o,oi)=>`
+                        <button class="opt-btn" onclick="checkOpt(this,${oi===fb.correct})">${o}</button>`).join('')}
+                    </div>
+                </div>`).join('')}
+            </div>
+
+            <!-- 6. DISCUSSION -->
+            <div class="sec">
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">🎙️ Speaking &amp; Writing</span>
+                <h3>Discussion Task</h3>
+                <div class="discussion-box" style="border-left-color:${lesson.color} !important; display: flex; flex-direction: column; gap: 15px;">
+                    <p class="discussion-prompt" style="color:${lesson.color}; margin-bottom: 0;">🗣️ ${lesson.discussion.prompt}</p>
+                    <ul class="tips-list" style="margin-bottom: 5px;">
+                        ${lesson.discussion.tips.map(t=>`<li>${t}</li>`).join('')}
+                    </ul>
+                    <textarea id="discussion-textarea-${lesson.id}" class="write-area" placeholder="Write your response here (aim for 150–250 words)..." style="margin-bottom: 5px;"></textarea>
+                    <button onclick="sendDiscussionToTeacher(${lesson.id}, '${lesson.theme.replace(/'/g, "\\'")}', '${lesson.discussion.prompt.replace(/'/g, "\\'").replace(/\n/g, " ")}')" style="align-self: flex-start; background: #25d366; color: #ffffff; border: none; padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);" onmouseover="this.style.background='#20ba5a'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='#25d366'; this.style.transform='translateY(0)';" >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.436 0 9.86-4.42 9.864-9.852.002-2.63-1.023-5.101-2.887-6.963C16.378 1.936 13.912.912 11.3.912c-5.448 0-9.873 4.417-9.877 9.851-.001 1.765.464 3.486 1.347 5.013l-.995 3.637 3.737-.981zm12.355-6.853c-.302-.15-1.786-.881-2.046-.977-.26-.096-.45-.144-.64.144-.19.288-.737.977-.902 1.168-.166.19-.332.215-.634.065-1.229-.614-2.03-1.077-2.83-2.457-.215-.369.215-.343.615-1.144.1-.19.05-.356-.025-.506-.075-.15-.64-1.54-.877-2.109-.23-.553-.464-.477-.64-.486-.166-.008-.356-.01-.546-.01-.19 0-.5.07-.76.356-.26.288-1.002.977-1.002 2.385s1.025 2.766 1.168 2.957c.143.19 2.017 3.08 4.886 4.318.684.295 1.218.47 1.635.6.688.219 1.314.188 1.81.114.553-.083 1.78-.728 2.03-1.432.25-.704.25-1.309.175-1.432-.075-.124-.275-.2-.577-.35z"/></svg>
+                        Send task to teacher
+                    </button>
+                </div>
+            </div>
+
+        </div>`;
+
+        main.appendChild(card);
+    });
+}
+
+function sendDiscussionToTeacher(lessonId, theme, promptText) {
+    const textarea = document.getElementById(`discussion-textarea-${lessonId}`);
+    if (!textarea) return;
+    
+    const responseText = textarea.value.trim();
+    if (!responseText) {
+        alert("Please write your discussion response before sending it to the teacher!");
+        return;
+    }
+    
+    const baseText = `*C1 SOCIAL & FUNCTIONAL ENGLISH — DISCUSSION TASK*\n\n` +
+                     `*Lesson ${lessonId}:* ${theme}\n` +
+                     `*Prompt:* _${promptText}_\n\n` +
+                     `*My Response:*\n${responseText}`;
+                     
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(baseText)}`;
+    window.open(whatsappUrl, '_blank');
+}
+
+document.addEventListener('DOMContentLoaded', render);
+</script>
+</body>
+</html>

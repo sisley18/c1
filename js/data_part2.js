@@ -120,6 +120,17 @@ courseData.units.push(
                 { sentence: "The security council put off _____ the controversial proposal.", options: ["to discuss", "discussing", "discuss"], correct: 1 }
             ]
         },
+        functionalLanguage: {
+            functionName: "Splitting the Bill & Dining Out Struggles",
+            description: "Learn natural, colloquial expressions to handle payments, split tabs, or treat friends when dining out together.",
+            phrases: [
+                { phrase: "To go Dutch", def: "to split the bill equally at a restaurant so each person pays for their own share", example: "Let's go Dutch this time since we both ordered quite a lot of food." },
+                { phrase: "It's on me", def: "a highly friendly, colloquial way to announce that you will pay the entire bill for everyone or someone", example: "Put your wallet away! The coffees and desserts are on me today." },
+                { phrase: "To foot the bill", def: "to pay for a large, expensive bill, often when it's unexpected or a generous gesture", example: "My parents offered to foot the bill for our graduation dinner at that fancy steakhouse." },
+                { phrase: "To split it down the middle", def: "to divide the restaurant check exactly 50/50, regardless of who ordered what", example: "Instead of wasting time calculating who had the salad, let's just split it down the middle." }
+            ],
+            task: "You are at a cafe with a friend who is short on cash and feels embarrassed. Write a short, warm dialogue (3 lines) using at least two of the phrases above to treat them."
+        },
         videos: [
             { title: "How Does the United Nations Work?", channel: "TED-Ed", duration: "5:54", url: "https://www.youtube.com/watch?v=XAq3LBjh6ro" },
             { title: "Soft Power — Joseph Nye at TEDxNewEngland", channel: "TEDx", duration: "18:05", url: "https://www.youtube.com/watch?v=_58hm2dAyXk" },
@@ -239,6 +250,17 @@ courseData.units.push(
                 { sentence: "Participants reported _____ difficulty with the metacognitive tasks.", options: ["to experience", "experiencing", "experience"], correct: 1 },
                 { sentence: "The professor reminded students _____ their sources critically.", options: ["evaluating", "to evaluate", "evaluate"], correct: 1 }
             ]
+        },
+        functionalLanguage: {
+            functionName: "Getting Annoyed & Dealing with Daily Hassles",
+            description: "Master extremely natural, street-smart phrases to complain about daily headaches and minor life catastrophes to your friends.",
+            phrases: [
+                { phrase: "To drive someone up the wall", def: "to make someone extremely irritated, frustrated, or thoroughly annoyed", example: "My neighbour's dog has been barking since 5 AM and it's driving me up the wall!" },
+                { phrase: "To be a complete rip-off", def: "something that is grossly overpriced or a total scam", example: "Charging twelve dollars for a single bottle of sparkling water is a complete rip-off!" },
+                { phrase: "To get the runaround", def: "to be given evasive, confusing, or delayed answers when dealing with a customer support service", example: "I called the airline three times to get a refund but kept getting the runaround." },
+                { phrase: "To be at your wits' end", def: "to be completely overwhelmed, stressed, and exhausted by a difficult problem that you cannot solve", example: "I've tried fixing my internet connection all afternoon and I'm honestly at my wits' end." }
+            ],
+            task: "You spent your whole morning dealing with a bank whose website keeps crashing. Write a frustrated venting text message to your friend (3 sentences) using at least two of the phrases above."
         },
         videos: [
             { title: "The Psychology of Self-Deception", channel: "TED", duration: "14:33", url: "https://www.youtube.com/watch?v=YCRf5-8FHGE" },

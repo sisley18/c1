@@ -120,6 +120,17 @@ courseData.units.push(
                 { sentence: "The sceptic refused _____ any proposition without rigorous justification.", options: ["accepting", "to accept", "accept"], correct: 1 }
             ]
         },
+        functionalLanguage: {
+            functionName: "Travel Hassles & Getting Lost",
+            description: "Learn useful, highly colloquial expressions to talk about losing your way, packing tips, and planning spontaneous trips with peers.",
+            phrases: [
+                { phrase: "To get lost", def: "to lose one's way or wander without knowing the correct direction in a new place", example: "We got completely lost trying to find that local pizzeria in the narrow streets of Rome." },
+                { phrase: "Off the beaten track", def: "refers to a place that is isolated, quiet, or situated far away from popular tourist areas", example: "I prefer staying in small guest houses that are completely off the beaten track." },
+                { phrase: "To travel light", def: "to make a journey carrying only a small amount of luggage or bags", example: "Since we are changing hotels every night, it's highly recommended to travel light." },
+                { phrase: "To hit the road", def: "a highly natural, colloquial way to announce that you are starting a journey or leaving on a trip", example: "Pack your backpack and get your sunglasses ready, it's time to hit the road!" }
+            ],
+            task: "You are planning a road trip with your friends but one friend wants to bring three huge suitcases. Write a friendly message (3 sentences) encouraging them to travel light, using at least two phrases above."
+        },
         videos: [
             { title: "What Is Knowledge? — Crash Course Philosophy", channel: "CrashCourse", duration: "10:04", url: "https://www.youtube.com/watch?v=kXhJ3hHK9hQ" },
             { title: "Descartes' Meditations — Philosophy Explained", channel: "The School of Life", duration: "7:12", url: "https://www.youtube.com/watch?v=CAjWUrwvxs4" },
@@ -239,6 +250,17 @@ courseData.units.push(
                 { sentence: "The government attempted _____ access to certain websites.", options: ["to restrict", "restricting", "restrict"], correct: 0 },
                 { sentence: "They resisted _____ to pressure from advertisers.", options: ["to give in", "giving in", "give in"], correct: 1 }
             ]
+        },
+        functionalLanguage: {
+            functionName: "Texts, Typos & Social Media Habits",
+            description: "Master extremely modern, natural colloquial phrases to talk about digital communication, texting, and online social habits.",
+            phrases: [
+                { phrase: "To leave someone on read", def: "to open and read someone's digital message but not write a reply, causing social friction", example: "I sent her the invitation three days ago, and she just left me on read!" },
+                { phrase: "A typo", def: "a minor spelling or typing mistake in a digital text message or post", example: "Sorry for the confusing text message earlier; it was just a funny typo!" },
+                { phrase: "To misinterpret", def: "to understand an action, message, or tone incorrectly or differently than intended", example: "It is so easy to misinterpret someone's tone when you are just reading a brief text." },
+                { phrase: "To ghost someone", def: "to suddenly cut off all communication with a friend or romantic partner without any explanation", example: "We were texting every day, and then out of nowhere, he completely ghosted me." }
+            ],
+            task: "Your friend has stopped replying to your messages for a week. Write a casual, non-aggressive text (3 sentences) asking what happened and checking in, using at least two phrases above."
         },
         videos: [
             { title: "How Fake News Spreads — TED-Ed", channel: "TED-Ed", duration: "3:41", url: "https://www.youtube.com/watch?v=cSKGa_7XJkg" },

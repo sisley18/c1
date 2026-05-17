@@ -119,6 +119,17 @@ const courseData = {
                     { sentence: "We cannot risk _____ false conclusions from insufficient data.", options: ["to draw", "drawing", "draw"], correct: 1 }
                 ]
             },
+            functionalLanguage: {
+                functionName: "Asking for Favours & Borrowing Things",
+                description: "Master expressions that help you ask friends or peers for favours and borrow things naturally, without sounding awkward or demanding.",
+                phrases: [
+                    { phrase: "Do you think you could possibly...", def: "a highly natural, soft way to ask a friend to help you with a task", example: "Do you think you could possibly feed my cat this weekend while I'm away?" },
+                    { phrase: "I hate to ask, but...", def: "a friendly disclaimer used when you feel a bit guilty for asking for a favor", example: "I hate to ask, but could you lend me twenty bucks until pay day?" },
+                    { phrase: "Would you mind if I...", def: "a very casual, polite way to ask for permission to do something", example: "Would you mind if I crashed on your couch tonight after the concert?" },
+                    { phrase: "I'd be forever in your debt!", def: "an exaggerated, highly colloquial way to show intense gratitude to a friend", example: "If you help me move this heavy wardrobe, I'd be forever in your debt!" }
+                ],
+                task: "You need a friend to pick you up from the airport at midnight. Write a casual WhatsApp message (2-3 sentences) using at least two of the colloquial phrases above."
+            },
             videos: [
                 { title: "The Art of Rhetoric — Persuasion Through Language", channel: "TED-Ed", duration: "4:47", url: "https://www.youtube.com/watch?v=3klMM9BkW5o" },
                 { title: "How to Argue — Philosophical Reasoning", channel: "CrashCourse", duration: "10:07", url: "https://www.youtube.com/watch?v=NKEhdsnKKHs" },
@@ -238,6 +249,17 @@ const courseData = {
                     { sentence: "We cannot justify _____ millions on cosmetic genetic procedures.", options: ["to spend", "spending", "spend"], correct: 1 },
                     { sentence: "The director enabled the team _____ cutting-edge research.", options: ["conducting", "to conduct", "conduct"], correct: 1 }
                 ]
+            },
+            functionalLanguage: {
+                functionName: "Talking About Gossip & Social Drama",
+                description: "Learn natural, peer-to-peer expressions to discuss relationship dynamics, secrets, and resolving misunderstandings with friends.",
+                phrases: [
+                    { phrase: "To talk behind someone's back", def: "to discuss or criticise someone when they are not present to defend themselves", example: "It really bothers me when people talk behind my back instead of telling me to my face." },
+                    { phrase: "Between you and me...", def: "used to introduce a secret or piece of gossip that should not be shared with others", example: "Between you and me, I don't think he actually passed that exam." },
+                    { phrase: "To clear the air", def: "to discuss a misunderstanding or argument openly to remove anger or tension", example: "We had a massive argument yesterday, but we sat down today and cleared the air." },
+                    { phrase: "A two-faced person", def: "someone who acts friendly to your face but says mean things when you are not around", example: "Watch out for him; he acts like your best friend but he's incredibly two-faced." }
+                ],
+                task: "A friend has been acting cold towards you because of a rumor they heard. Write a casual message to them (3 sentences) proposing to clear the air, using at least two phrases from today's lesson."
             },
             videos: [
                 { title: "Genetic Engineering Will Change Everything Forever – CRISPR", channel: "Kurzgesagt", duration: "16:03", url: "https://www.youtube.com/watch?v=jAhjPd4uNFY" },

@@ -1,24 +1,18 @@
 :root {
-    /* Color Palette - Deep Teal/Emerald Theme (C1 Advanced) */
-    --bg-primary: #0f766e;
-    /* Deep Teal */
-    --bg-secondary: #0d6560;
-    /* Darker Teal */
-    --text-primary: #ffffff;
-    --text-secondary: #f0fdfa;
-    /* Light Mint Cream */
+    /* Premium Warm Light Theme (C1 Advanced) */
+    --bg-primary: #faf9f6; /* Warm elegant soft cream background */
+    --bg-secondary: #ffffff; /* Crisp pure white cards and blocks */
+    --text-primary: #1e1b18; /* Deep rich chocolate/charcoal dark text */
+    --text-secondary: #57534e; /* Soft elegant stone gray for subtext */
 
     /* Accent Colors */
-    --accent-gold: #99f6e4;
-    /* Bright Aqua Mint */
-    --accent-gold-dim: rgba(153, 246, 228, 0.3);
-    --accent-electric: #5eead4;
-    /* Vivid Teal */
-    --accent-dark: #134e4a;
-    /* Dark Emerald */
+    --accent-gold: #0d9488; /* Premium Teal */
+    --accent-gold-dim: rgba(13, 148, 136, 0.08);
+    --accent-electric: #4f46e5; /* Royal Indigo */
+    --accent-dark: #f5f5f4; /* Warm stone light gray background for nested boxes */
 
-    --gradient-teal: linear-gradient(135deg, #0f766e 0%, #0d6560 100%);
-    --gradient-accent: linear-gradient(135deg, #5eead4 0%, #2dd4bf 100%);
+    --gradient-teal: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+    --gradient-accent: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
 
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-heading: 'Outfit', sans-serif;
@@ -28,5 +22,5 @@
     --spacing-lg: 48px;
 
     --border-radius: 16px;
-    --shadow-glow: 0 0 30px rgba(0, 0, 0, 0.2);
+    --shadow-glow: 0 10px 40px rgba(0, 0, 0, 0.03);
 }
