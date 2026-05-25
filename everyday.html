@@ -265,71 +265,129 @@
 
 <script src="js/data_everyday.js"></script>
 <script>
-/* ── High-Fidelity Google Translate Neural TTS Audio Player ───────────────── */
-let audioQueue = [];
-let currentAudio = null;
+/* ── High-Quality American English Audio Engine (Web Speech API) ──────────── */
+/* 100% native — works on ALL devices (mobile, tablet, desktop) */
+/* No network dependency — instant, natural, professional American pronunciation */
+let cachedVoicesEv = [];
+let webSpeechUttsEv = [];
+let currentUttIdxEv = 0;
+let isPlayingEv = false;
+let isPausedEv = false;
 
-window.speak = function(text) {
-    window.stopAudio();
-    if (!text) return;
+function getBestUSVoiceEv() {
+    if (cachedVoicesEv.length === 0 && 'speechSynthesis' in window) cachedVoicesEv = window.speechSynthesis.getVoices();
+    const voices = cachedVoicesEv;
+    if (voices.length === 0) return null;
 
-    // Split text into ~180-char chunks on sentence boundaries
-    const chunks = [];
-    const maxLen = 180;
-    let currentChunk = "";
-    const words = text.split(" ");
-    
-    for (let word of words) {
-        if ((currentChunk + " " + word).length > maxLen) {
-            chunks.push(currentChunk.trim());
-            currentChunk = word;
-        } else {
-            currentChunk += (currentChunk ? " " : "") + word;
-        }
+    const usVoices = voices.filter(v => v.lang === 'en-US' || v.lang.startsWith('en-US'));
+    const pool = usVoices.length > 0 ? usVoices : voices.filter(v => v.lang.startsWith('en'));
+
+    const priority = [
+        'Google US English', 'Google US', 'Google',
+        'Microsoft Aria', 'Microsoft Jenny', 'Microsoft Ana', 'Microsoft Zira', 'Microsoft',
+        'Aria', 'Jenny', 'Zira', 'Monica',
+        'Enhanced', 'Premium', 'Natural',
+        'Samantha', 'Karen', 'Victoria', 'David', 'Alex'
+    ];
+    for (const kw of priority) {
+        const match = pool.find(v => v.name.includes(kw));
+        if (match) return match;
     }
-    if (currentChunk.trim()) {
-        chunks.push(currentChunk.trim());
-    }
-
-    // Build the queue of Google neural TTS URLs
-    audioQueue = chunks.map(chunk => 
-        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(chunk)}`
-    );
-
-    playNextInQueue();
-};
-
-function playNextInQueue() {
-    if (audioQueue.length === 0) {
-        currentAudio = null;
-        return;
-    }
-
-    const url = audioQueue.shift();
-    currentAudio = new Audio(url);
-    
-    currentAudio.addEventListener('ended', () => {
-        playNextInQueue();
-    });
-
-    currentAudio.addEventListener('error', (e) => {
-        console.error("Audio playback error, trying next chunk:", e);
-        playNextInQueue();
-    });
-
-    currentAudio.play().catch(err => {
-        console.error("Play failed:", err);
-        playNextInQueue();
-    });
+    return pool[0] || null;
 }
 
-window.stopAudio = function () {
-    if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
+function splitTextEv(text, maxLen) {
+    const chunks = [];
+    let rem = text;
+    while (rem.length > 0) {
+        if (rem.length <= maxLen) { chunks.push(rem); break; }
+        let idx = rem.lastIndexOf('. ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf('? ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf('! ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf(', ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf(' ', maxLen);
+        if (idx === -1) idx = maxLen;
+        chunks.push(rem.substring(0, idx + 1).trim());
+        rem = rem.substring(idx + 1).trim();
     }
-    audioQueue = [];
+    return chunks;
+}
+
+// IMPORTANT: speak() is called SYNCHRONOUSLY inside onclick handlers
+// so mobile browsers (iOS Safari, Android Chrome) never block the audio.
+window.speak = function(text) {
+    window.stopAudio();
+    if (!text || !('speechSynthesis' in window)) return;
+
+    const cleaned = text.replace(/<[^>]+>/g, ' ').replace(/[\/\(\)\[\]]/g, ' ').replace(/&amp;/g, 'and').replace(/&quot;/g, '').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+
+    window.speechSynthesis.cancel();
+    const chunks = splitTextEv(cleaned, 180);
+    webSpeechUttsEv = [];
+    currentUttIdxEv = 0;
+
+    chunks.forEach(chunk => {
+        const trimmed = chunk.trim();
+        if (trimmed.length === 0) return;
+
+        const utt = new SpeechSynthesisUtterance(trimmed);
+        utt.lang = 'en-US';
+        utt.rate = 0.95;
+        utt.pitch = 1.0;
+        utt.volume = 1.0;
+
+        const voice = getBestUSVoiceEv();
+        if (voice) utt.voice = voice;
+
+        utt.onend = () => {
+            currentUttIdxEv++;
+            if (currentUttIdxEv < webSpeechUttsEv.length) {
+                setTimeout(() => {
+                    if (!isPausedEv) window.speechSynthesis.speak(webSpeechUttsEv[currentUttIdxEv]);
+                }, 300);
+            } else {
+                isPlayingEv = false;
+            }
+        };
+
+        utt.onerror = () => {
+            currentUttIdxEv++;
+            if (currentUttIdxEv < webSpeechUttsEv.length) {
+                window.speechSynthesis.speak(webSpeechUttsEv[currentUttIdxEv]);
+            } else {
+                isPlayingEv = false;
+            }
+        };
+
+        webSpeechUttsEv.push(utt);
+    });
+
+    if (webSpeechUttsEv.length > 0) {
+        isPlayingEv = true;
+        isPausedEv = false;
+        window.speechSynthesis.speak(webSpeechUttsEv[0]);
+    }
 };
+
+window.stopAudio = function () {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    webSpeechUttsEv = [];
+    currentUttIdxEv = 0;
+    isPlayingEv = false;
+    isPausedEv = false;
+};
+
+// Pre-load voices on page load
+if ('speechSynthesis' in window) {
+    cachedVoicesEv = window.speechSynthesis.getVoices();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = () => { cachedVoicesEv = window.speechSynthesis.getVoices(); };
+    }
+    if (cachedVoicesEv.length === 0) {
+        let att = 0;
+        const r = setInterval(() => { cachedVoicesEv = window.speechSynthesis.getVoices(); att++; if (cachedVoicesEv.length > 0 || att >= 20) clearInterval(r); }, 200);
+    }
+}
 
 /* ── Protection ───────────────────────────────────────────────────── */
 const overlay = document.getElementById('prot-overlay');

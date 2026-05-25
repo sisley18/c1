@@ -586,107 +586,167 @@ window.checkCollocation = function (btn, selected, correct) {
     }
 };
 
-// High-Fidelity Google Translate Neural TTS Audio Engine
-let audioQueue = [];
-let currentAudio = null;
+// ─── Universal High-Quality Audio Engine ─────────────────────────────────────
+// American English, clear, professional, natural — works on ALL devices
+// 100% Web Speech API — zero network dependency, instant playback
 let isAudioPlaying = false;
 let isAudioPaused = false;
+let cachedVoices = [];
+let webSpeechUtterances = [];
+let currentUtteranceIndex = 0;
 
+// ─── Best American Voice Selector ────────────────────────────────────────────
+function getBestUSVoice() {
+    if (cachedVoices.length === 0) cachedVoices = window.speechSynthesis.getVoices();
+    const voices = cachedVoices;
+    if (voices.length === 0) return null;
+
+    // Strictly prefer en-US
+    const usVoices = voices.filter(v => v.lang === 'en-US' || v.lang.startsWith('en-US'));
+    const pool = usVoices.length > 0 ? usVoices : voices.filter(v => v.lang.startsWith('en'));
+
+    // Priority order: neural/premium voices first
+    const priority = [
+        'Google US English', 'Google US', 'Google',
+        'Microsoft Aria', 'Microsoft Jenny', 'Microsoft Ana', 'Microsoft Zira', 'Microsoft',
+        'Aria', 'Jenny', 'Zira', 'Monica',
+        'Enhanced', 'Premium', 'Natural',
+        'Samantha', 'Karen', 'Victoria', 'David', 'Alex'
+    ];
+    for (const kw of priority) {
+        const match = pool.find(v => v.name.includes(kw));
+        if (match) return match;
+    }
+    return pool[0] || null;
+}
+
+// ─── Text Chunker for TTS ────────────────────────────────────────────────────
+function splitTextForTTS(text, maxLen) {
+    const chunks = [];
+    let rem = text;
+    while (rem.length > 0) {
+        if (rem.length <= maxLen) { chunks.push(rem); break; }
+        let idx = rem.lastIndexOf('. ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf('? ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf('! ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf(', ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf(' ', maxLen);
+        if (idx === -1) idx = maxLen;
+        chunks.push(rem.substring(0, idx + 1).trim());
+        rem = rem.substring(idx + 1).trim();
+    }
+    return chunks;
+}
+
+// ─── Main playAudio Function ─────────────────────────────────────────────────
+// IMPORTANT: Calls speechSynthesis.speak SYNCHRONOUSLY inside the click handler
+// so mobile browsers (iOS Safari, Android Chrome) never block the audio.
 window.playAudio = function (text) {
     window.stopAudio();
     if (!text) return;
 
-    // Split text into ~180-char chunks on sentence boundaries
-    const chunks = [];
-    const maxLen = 180;
-    let currentChunk = "";
-    const words = text.split(" ");
-    
-    for (let word of words) {
-        if ((currentChunk + " " + word).length > maxLen) {
-            chunks.push(currentChunk.trim());
-            currentChunk = word;
-        } else {
-            currentChunk += (currentChunk ? " " : "") + word;
-        }
-    }
-    if (currentChunk.trim()) {
-        chunks.push(currentChunk.trim());
-    }
+    // Clean up text for better pronunciation
+    const cleanedText = text.replace(/<[^>]+>/g, ' ').replace(/[\/\(\)\[\]]/g, ' ').replace(/&amp;/g, 'and').replace(/&quot;/g, '').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
 
-    // Build the queue of Google neural TTS URLs
-    audioQueue = chunks.map(chunk => 
-        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(chunk)}`
-    );
-
-    isAudioPaused = false;
-    playNextInQueue();
+    // Directly invoke Web Speech API (synchronous — never blocked on mobile)
+    playWithWebSpeech(cleanedText);
 };
 
-function playNextInQueue() {
-    if (audioQueue.length === 0) {
-        currentAudio = null;
-        isAudioPlaying = false;
-        isAudioPaused = false;
-        updatePauseButton(false);
+// ─── Web Speech API (fallback — works everywhere) ────────────────────────────
+function playWithWebSpeech(text) {
+    if (!('speechSynthesis' in window)) {
+        console.error('This browser does not support Speech Synthesis.');
         return;
     }
 
-    isAudioPlaying = true;
-    const url = audioQueue.shift();
-    currentAudio = new Audio(url);
-    
-    currentAudio.addEventListener('ended', () => {
-        playNextInQueue();
+    window.speechSynthesis.cancel();
+
+    const chunks = splitTextForTTS(text, 180);
+    webSpeechUtterances = [];
+    currentUtteranceIndex = 0;
+
+    chunks.forEach(chunk => {
+        const trimmed = chunk.trim();
+        if (trimmed.length === 0) return;
+
+        const utt = new SpeechSynthesisUtterance(trimmed);
+        utt.lang = 'en-US';
+        utt.rate = 0.94;
+        utt.pitch = 1.0;
+        utt.volume = 1.0;
+
+        const voice = getBestUSVoice();
+        if (voice) utt.voice = voice;
+
+        utt.onend = () => {
+            currentUtteranceIndex++;
+            if (currentUtteranceIndex < webSpeechUtterances.length) {
+                // Small pause between chunks for natural breathing
+                setTimeout(() => {
+                    if (!isAudioPaused) window.speechSynthesis.speak(webSpeechUtterances[currentUtteranceIndex]);
+                }, 300);
+            } else {
+                isAudioPlaying = false;
+                updatePauseButton(false);
+            }
+        };
+
+        utt.onerror = () => {
+            currentUtteranceIndex++;
+            if (currentUtteranceIndex < webSpeechUtterances.length) {
+                window.speechSynthesis.speak(webSpeechUtterances[currentUtteranceIndex]);
+            } else {
+                isAudioPlaying = false;
+                updatePauseButton(false);
+            }
+        };
+
+        webSpeechUtterances.push(utt);
     });
 
-    currentAudio.addEventListener('error', (e) => {
-        console.error("Audio playback error, trying next chunk:", e);
-        playNextInQueue();
-    });
-
-    currentAudio.play().catch(err => {
-        console.error("Play failed:", err);
-        playNextInQueue();
-    });
+    if (webSpeechUtterances.length > 0) {
+        isAudioPlaying = true;
+        isAudioPaused = false;
+        window.speechSynthesis.speak(webSpeechUtterances[0]);
+    }
 }
 
+// ─── Stop / Pause / Resume ───────────────────────────────────────────────────
 window.stopAudio = function () {
-    if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
     }
-    audioQueue = [];
+    webSpeechUtterances = [];
+    currentUtteranceIndex = 0;
     isAudioPlaying = false;
     isAudioPaused = false;
     updatePauseButton(false);
 };
 
 window.pauseAudio = function () {
-    if (currentAudio && !currentAudio.paused) {
-        currentAudio.pause();
+    if (isAudioPlaying && !isAudioPaused) {
+        if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+            window.speechSynthesis.pause();
+        }
         isAudioPaused = true;
         updatePauseButton(true);
     }
 };
 
 window.resumeAudio = function () {
-    if (currentAudio && currentAudio.paused) {
-        currentAudio.play().catch(e => console.error(e));
+    if (isAudioPaused) {
+        if ('speechSynthesis' in window && window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+        }
         isAudioPaused = false;
         updatePauseButton(false);
-    } else if (audioQueue.length > 0) {
-        playNextInQueue();
     }
 };
 
 window.togglePauseAudio = function () {
-    if (currentAudio) {
-        if (currentAudio.paused) {
-            window.resumeAudio();
-        } else {
-            window.pauseAudio();
-        }
+    if (isAudioPlaying) {
+        if (isAudioPaused) window.resumeAudio();
+        else window.pauseAudio();
     }
 };
 
@@ -700,7 +760,25 @@ function updatePauseButton(isPaused) {
 window.courseAudio = { play: window.playAudio, stop: window.stopAudio, pause: window.pauseAudio, resume: window.resumeAudio, togglePause: window.togglePauseAudio };
 
 window.initAudioEngine = function () {
-    console.log("Google Neural TTS audio engine initialized");
+    console.log('C1 American Pronunciation Audio Engine Initialized');
+    // Pre-load voices aggressively for mobile Chrome/Safari
+    if ('speechSynthesis' in window) {
+        cachedVoices = window.speechSynthesis.getVoices();
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                cachedVoices = window.speechSynthesis.getVoices();
+            };
+        }
+        // Retry for Chrome on Windows (voices often empty on first call)
+        if (cachedVoices.length === 0) {
+            let attempts = 0;
+            const retryLoad = setInterval(() => {
+                cachedVoices = window.speechSynthesis.getVoices();
+                attempts++;
+                if (cachedVoices.length > 0 || attempts >= 20) clearInterval(retryLoad);
+            }, 200);
+        }
+    }
 };
 
 window.sendTaskToTeacher = function(unitId, unitTitle, taskText) {
