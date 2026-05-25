@@ -92,7 +92,7 @@ window.navigateUnit = function (direction) {
 
 function getUnitIllustration(unitId) {
     const svgs = {
-        1: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:#faf9f6; border:1px solid #e7e5e4; border-radius:12px; display:block; margin: 0 auto 25px;">
+        1: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; display:block; margin: 0 auto 25px;">
                 <!-- Rhetoric & Persuasion -->
                 <rect width="400" height="200" fill="#fcfbfa"/>
                 <circle cx="200" cy="100" r="70" fill="rgba(79, 70, 229, 0.04)" />
@@ -112,7 +112,7 @@ function getUnitIllustration(unitId) {
                 <path d="M70 50 L73 57 L80 57 L75 62 L77 69 L70 65 L63 69 L65 62 L60 57 L67 57 Z" fill="#d97706" opacity="0.7"/>
                 <path d="M330 60 L332 65 L337 65 L333 69 L335 74 L330 71 L325 74 L327 69 L323 65 L328 65 Z" fill="#4f46e5" opacity="0.7"/>
             </svg>`,
-        2: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:#faf9f6; border:1px solid #e7e5e4; border-radius:12px; display:block; margin: 0 auto 25px;">
+        2: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; display:block; margin: 0 auto 25px;">
                 <!-- Bioethics & DNA -->
                 <rect width="400" height="200" fill="#fcfbfa"/>
                 <circle cx="200" cy="100" r="70" fill="rgba(13, 148, 136, 0.04)" />
@@ -137,7 +137,7 @@ function getUnitIllustration(unitId) {
                 <circle cx="250" cy="65" r="6" fill="#4f46e5"/>
                 <circle cx="250" cy="135" r="6" fill="#0d9488"/>
             </svg>`,
-        3: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:#faf9f6; border:1px solid #e7e5e4; border-radius:12px; display:block; margin: 0 auto 25px;">
+        3: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; display:block; margin: 0 auto 25px;">
                 <!-- Geopolitics & Power -->
                 <rect width="400" height="200" fill="#fcfbfa"/>
                 <circle cx="200" cy="100" r="70" fill="rgba(217, 119, 6, 0.04)" />
@@ -159,7 +159,7 @@ function getUnitIllustration(unitId) {
                 <path d="M120 40 Q200 10 280 40" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" stroke-dasharray="5,5"/>
                 <polygon points="280,40 272,35 275,45" fill="#d97706"/>
             </svg>`,
-        4: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:#faf9f6; border:1px solid #e7e5e4; border-radius:12px; display:block; margin: 0 auto 25px;">
+        4: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; display:block; margin: 0 auto 25px;">
                 <!-- Cognitive Science & Brain -->
                 <rect width="400" height="200" fill="#fcfbfa"/>
                 <circle cx="200" cy="100" r="70" fill="rgba(139, 92, 246, 0.04)" />
@@ -176,7 +176,7 @@ function getUnitIllustration(unitId) {
                 <circle cx="245" cy="80" r="3" fill="#4f46e5"/>
                 <line x1="245" y1="80" x2="228" y2="95" stroke="#4f46e5" stroke-width="1.5" opacity="0.6"/>
             </svg>`,
-        5: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:#faf9f6; border:1px solid #e7e5e4; border-radius:12px; display:block; margin: 0 auto 25px;">
+        5: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; display:block; margin: 0 auto 25px;">
                 <!-- Sustainability & Circular Economy -->
                 <rect width="400" height="200" fill="#fcfbfa"/>
                 <circle cx="200" cy="100" r="70" fill="rgba(13, 148, 136, 0.04)" />
@@ -194,7 +194,7 @@ function getUnitIllustration(unitId) {
                 <polygon points="205,92 215,100 205,108" fill="#0d9488"/>
                 <polygon points="195,108 185,100 195,92" fill="#0d9488"/>
             </svg>`,
-        6: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:#faf9f6; border:1px solid #e7e5e4; border-radius:12px; display:block; margin: 0 auto 25px;">
+        6: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; display:block; margin: 0 auto 25px;">
                 <!-- Linguistic Diversity -->
                 <rect width="400" height="200" fill="#fcfbfa"/>
                 <circle cx="200" cy="100" r="70" fill="rgba(236, 72, 153, 0.04)" />
@@ -208,7 +208,7 @@ function getUnitIllustration(unitId) {
                 <!-- Branching Tree connecting them -->
                 <path d="M200 150 L200 125 M200 125 L175 105 M200 125 L225 110" stroke="#1e1b18" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
             </svg>`,
-        7: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:#faf9f6; border:1px solid #e7e5e4; border-radius:12px; display:block; margin: 0 auto 25px;">
+        7: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; display:block; margin: 0 auto 25px;">
                 <!-- Philosophy of Knowledge -->
                 <rect width="400" height="200" fill="#fcfbfa"/>
                 <circle cx="200" cy="100" r="70" fill="rgba(79, 70, 229, 0.04)" />
@@ -223,7 +223,7 @@ function getUnitIllustration(unitId) {
                 <path d="M100 50 L102 55 L107 55 L103 59 L105 64 L100 61 L95 64 L97 59 L93 55 L98 55 Z" fill="#4f46e5"/>
                 <path d="M200 25 L201 28 L204 28 L202 30 L203 33 L200 31 L197 33 L198 30 L196 28 L199 28 Z" fill="#d97706"/>
             </svg>`,
-        8: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:#faf9f6; border:1px solid #e7e5e4; border-radius:12px; display:block; margin: 0 auto 25px;">
+        8: `<svg viewBox="0 0 400 200" width="100%" height="160" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; display:block; margin: 0 auto 25px;">
                 <!-- Global Media & Narrative -->
                 <rect width="400" height="200" fill="#fcfbfa"/>
                 <circle cx="200" cy="100" r="70" fill="rgba(13, 148, 136, 0.04)" />
@@ -266,7 +266,7 @@ function renderCurriculum() {
                 <div class="unit-illustration">
                     ${getUnitIllustration(unit.id)}
                 </div>
-                <p style="opacity: 0.7; margin-bottom: 30px; border-bottom: 1px solid #e7e5e4; padding-bottom: 15px;">Topic: ${unit.topic}</p>
+                <p style="opacity: 0.7; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 15px;">Topic: ${unit.topic}</p>
                 
                 <!-- 1. Vocabulary -->
                 <div class="section-block">
@@ -320,11 +320,11 @@ function renderCurriculum() {
                     </div>
                     <div style="margin-top:20px;">
                         ${unit.grammar.quizzes ? unit.grammar.quizzes.map((q, idx) => `
-                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #e7e5e4;">
+                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);">
                                 <p style="font-weight:600; margin-bottom:10px; color: var(--text-primary);">${idx + 1}. ${q.question}</p>
                                 <div class="options-grid" style="justify-content: flex-start;">
                                     ${q.options.map((opt, i) => `
-                                        <button class="btn" style="background:#ffffff; border:1px solid #cccccc; color:var(--text-primary);" 
+                                        <button class="btn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:var(--text-primary);" 
                                         onclick="checkAnswer(this, ${i === q.correct})">${opt}</button>
                                     `).join('')}
                                 </div>
@@ -336,7 +336,7 @@ function renderCurriculum() {
                 <!-- 5. Verb Patterns -->
                 ${unit.verb_patterns ? `
                 <div class="section-block">
-                    <span class="section-label" style="background: var(--accent-gold); color: #ffffff;">Verb Patterns</span>
+                    <span class="section-label" style="background: var(--accent-gold); color: #0f172a;">Verb Patterns</span>
                     <h3>Verbs + Gerund / Infinitive</h3>
                     
                     <div class="theory-box">
@@ -362,11 +362,11 @@ function renderCurriculum() {
                     <p style="margin-bottom: 15px; color: var(--text-secondary); opacity: 0.9;">Complete the sentences with the correct verb form:</p>
                     <div style="margin-top:20px;">
                         ${unit.verb_patterns.exercises.map((q, idx) => `
-                            <div style="margin-bottom: 15px; padding: 15px; background: #faf9f6; border: 1px solid #e7e5e4; border-radius: 10px;">
+                            <div style="margin-bottom: 15px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;">
                                 <p style="font-weight:600; margin-bottom:10px; color: var(--text-primary);">${idx + 1}. ${q.sentence}</p>
                                 <div class="options-grid" style="justify-content: flex-start;">
                                     ${q.options.map((opt, i) => `
-                                        <button class="btn" style="background:#ffffff; border:1px solid #cccccc; color:var(--text-primary);" 
+                                        <button class="btn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:var(--text-primary);" 
                                         onclick="checkAnswer(this, ${i === q.correct})">${opt}</button>
                                     `).join('')}
                                 </div>
@@ -406,7 +406,7 @@ function renderCurriculum() {
                     
                     <p style="margin-bottom: 15px; color: var(--text-secondary); opacity: 0.9;">🔊 Click the speaker to hear the sentence with proper stress:</p>
                     ${unit.pronunciation && unit.pronunciation.sentence_stress ? unit.pronunciation.sentence_stress.map((item, idx) => `
-                        <div style="margin-bottom: 20px; padding: 15px; background: #faf9f6; border: 1px solid #e7e5e4; border-radius: 10px;">
+                        <div style="margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;">
                             <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
                                 <button class="play-btn" style="width: 40px; height: 40px; font-size: 1rem;" onclick="playAudio('${item.sentence.replace(/'/g, "\\'")}')" >🔊</button>
                                 <p style="font-size: 1.2rem; font-style: italic; margin: 0; color: var(--text-primary);">"${item.sentence}"</p>
@@ -430,7 +430,7 @@ function renderCurriculum() {
                                 ${(() => {
                 const opts = [col.pair[1], ...col.distractors].sort(() => Math.random() - 0.5);
                 return opts.map(opt => `
-                                        <button class="btn" style="background:#ffffff; border:1px solid #cccccc; color:var(--text-primary);" 
+                                        <button class="btn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:var(--text-primary);" 
                                         onclick="checkCollocation(this, '${opt}', '${col.pair[1]}')">${opt}</button>
                                     `).join('');
             })()}
@@ -443,17 +443,17 @@ function renderCurriculum() {
                 <!-- 7. Writing -->
                 <div class="section-block">
                     <span class="section-label" style="background: #ec4899; color: #ffffff;">Writing Task</span>
-                    <div style="background: #faf9f6; padding: 20px; border-radius: 12px; border: 1px solid #e7e5e4;">
+                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
                         <p style="font-style: italic; margin-bottom: 15px; color: var(--text-secondary);">Target: 250 words</p>
                         <h4 style="margin-bottom: 10px; color: var(--text-primary);">${unit.writing || 'Write about the topic.'}</h4>
-                        <textarea style="width: 100%; height: 150px; background: #ffffff; border: 1px solid #cccccc; color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit;" placeholder="Type your essay here..."></textarea>
+                        <textarea style="width: 100%; height: 150px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit;" placeholder="Type your essay here..."></textarea>
                     </div>
                 </div>
 
                 <!-- 8. Speaking -->
                 <div class="section-block">
                     <span class="section-label" style="background: #f59e0b; color: #ffffff;">Speaking</span>
-                    <div style="background: #faf9f6; padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 20px; border: 1px solid #e7e5e4;">
+                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.08);">
                         <span style="font-size: 2rem;">🎙️</span>
                         <div>
                             <h4 style="margin: 0 0 5px 0; color: var(--text-primary);">Discussion Prompt</h4>
@@ -472,7 +472,7 @@ function renderCurriculum() {
                     <p style="margin-bottom: 15px; color: var(--text-secondary); font-weight: 600; font-size: 0.95rem;">🔊 Click the speaker to hear key functional phrases pronounced:</p>
                     <div class="vocab-grid">
                         ${unit.functionalLanguage.phrases ? unit.functionalLanguage.phrases.map(p => `
-                            <div class="vocab-card" style="border-left-color: var(--accent-electric); background: #ffffff; border: 1px solid #e7e5e4; border-left-width: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.015);">
+                            <div class="vocab-card" style="border-left-color: var(--accent-electric); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-left-width: 4px;">
                                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
                                     <button class="play-btn" style="width: 32px; height: 32px; font-size: 0.9rem; flex-shrink: 0;" onclick="playAudio('${p.phrase.replace(/'/g, "\\'")}')">🔊</button>
                                     <strong style="color: var(--accent-electric); font-size: 1.1rem;">"${p.phrase}"</strong>
@@ -484,9 +484,9 @@ function renderCurriculum() {
                     </div>
 
                     <h4 style="margin: 30px 0 15px; color: var(--accent-electric);">🗣️ Real-World Application Task</h4>
-                    <div style="background: #faf9f6; padding: 25px; border-radius: 12px; border: 1px dashed #cccccc; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.15); display: flex; flex-direction: column; gap: 15px;">
                         <p style="font-size: 1.05rem; margin-bottom: 5px; line-height: 1.6; color: var(--text-primary);">${unit.functionalLanguage.task}</p>
-                        <textarea id="task-textarea-${unit.id}" style="width: 100%; height: 120px; background: #ffffff; border: 1px solid #cccccc; color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit; font-size: 0.95rem;" placeholder="Write your notes, dialogue, or practice sentences here..."></textarea>
+                        <textarea id="task-textarea-${unit.id}" style="width: 100%; height: 120px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit; font-size: 0.95rem;" placeholder="Write your notes, dialogue, or practice sentences here..."></textarea>
                         <button onclick="sendTaskToTeacher(${unit.id}, '${unit.title.replace(/'/g, "\\'")}', '${unit.functionalLanguage.task.replace(/'/g, "\\'").replace(/\n/g, " ")}')" style="align-self: flex-start; background: #25d366; color: #ffffff; border: none; padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);" onmouseover="this.style.background='#20ba5a'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='#25d366'; this.style.transform='translateY(0)';" >
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.436 0 9.86-4.42 9.864-9.852.002-2.63-1.023-5.101-2.887-6.963C16.378 1.936 13.912.912 11.3.912c-5.448 0-9.873 4.417-9.877 9.851-.001 1.765.464 3.486 1.347 5.013l-.995 3.637 3.737-.981zm12.355-6.853c-.302-.15-1.786-.881-2.046-.977-.26-.096-.45-.144-.64.144-.19.288-.737.977-.902 1.168-.166.19-.332.215-.634.065-1.229-.614-2.03-1.077-2.83-2.457-.215-.369.215-.343.615-1.144.1-.19.05-.356-.025-.506-.075-.15-.64-1.54-.877-2.109-.23-.553-.464-.477-.64-.486-.166-.008-.356-.01-.546-.01-.19 0-.5.07-.76.356-.26.288-1.002.977-1.002 2.385s1.025 2.766 1.168 2.957c.143.19 2.017 3.08 4.886 4.318.684.295 1.218.47 1.635.6.688.219 1.314.188 1.81.114.553-.083 1.78-.728 2.03-1.432.25-.704.25-1.309.175-1.432-.075-.124-.275-.2-.577-.35z"/></svg>
                             Send task to teacher
@@ -504,9 +504,9 @@ function renderCurriculum() {
                     <div style="display: grid; gap: 15px;">
                         ${unit.videos.map(video => `
                             <a href="${video.url}" target="_blank" rel="noopener noreferrer" 
-                               style="display: flex; align-items: center; gap: 15px; background: #ffffff; padding: 15px 20px; border-radius: 12px; text-decoration: none; color: var(--text-primary); border: 1px solid #e7e5e4; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.01);"
-                               onmouseover="this.style.background='#faf9f6'; this.style.borderColor='var(--accent-electric)';"
-                               onmouseout="this.style.background='#ffffff'; this.style.borderColor='#e7e5e4';">
+                               style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 12px; text-decoration: none; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease;"
+                               onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.borderColor='var(--accent-electric)';"
+                               onmouseout="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.08)';">
                                 <span style="font-size: 2rem;">▶️</span>
                                 <div>
                                     <h4 style="margin: 0 0 5px 0; color: var(--accent-electric);">${video.title}</h4>
@@ -525,8 +525,8 @@ function renderCurriculum() {
                     <h3 style="color: var(--text-primary); margin: 15px 0 10px;">You've completed Units ${unit.id - 1} &amp; ${unit.id}!</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 20px;">Test your knowledge with the Progress Exam covering both units — listening, writing &amp; grammar.</p>
                     <a href="exam${unit.id / 2}.html" style="display: inline-block; background: var(--accent-electric); border: 2px solid var(--accent-electric); color: #ffffff; padding: 14px 35px; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s ease;"
-                        onmouseover="this.style.background='#ffffff'; this.style.color='var(--accent-electric)'; this.style.transform='translateY(-2px)'"
-                        onmouseout="this.style.background='var(--accent-electric)'; this.style.color='#ffffff'; this.style.transform=''">
+                        onmouseover="this.style.background='transparent'; this.style.color='var(--accent-electric)'; this.style.transform='translateY(-2px)'"
+                        onmouseout="this.style.background='var(--accent-electric)'; this.style.color='#fff'; this.style.transform=''">
                         📝 Take Exam ${unit.id / 2} →
                     </a>
                 </div>
@@ -565,11 +565,11 @@ window.toggleTranscript = function (btn) {
 };
 window.checkAnswer = function (btn, isCorrect) {
     const container = btn.parentElement;
-    Array.from(container.children).forEach(b => { b.style.background = '#ffffff'; b.style.borderColor = '#cccccc'; b.style.color = 'var(--text-primary)'; });
+    Array.from(container.children).forEach(b => { b.style.background = 'rgba(255,255,255,0.05)'; b.style.borderColor = 'rgba(255,255,255,0.15)'; b.style.color = 'var(--text-primary)'; });
     if (isCorrect) { 
-        btn.style.background = '#d1fae5'; btn.style.borderColor = '#10b981'; btn.style.color = '#065f46'; 
+        btn.style.background = 'rgba(16,185,129,0.25)'; btn.style.borderColor = '#10b981'; btn.style.color = '#6ee7b7'; 
     } else { 
-        btn.style.background = '#fee2e2'; btn.style.borderColor = '#ef4444'; btn.style.color = '#991b1b';
+        btn.style.background = 'rgba(239,68,68,0.25)'; btn.style.borderColor = '#ef4444'; btn.style.color = '#fca5a5';
     }
 };
 window.checkCollocation = function (btn, selected, correct) {
@@ -581,8 +581,8 @@ window.checkCollocation = function (btn, selected, correct) {
         btn.style.background = '#10b981'; btn.style.color = '#ffffff';
         buttons.forEach(b => b.disabled = true);
     } else {
-        btn.style.background = '#ef4444'; btn.style.color = '#ffffff';
-        setTimeout(() => { btn.style.background = '#ffffff'; btn.style.color = 'var(--text-primary)'; }, 500);
+        btn.style.background = 'rgba(239,68,68,0.3)'; btn.style.color = '#fca5a5';
+        setTimeout(() => { btn.style.background = 'rgba(255,255,255,0.05)'; btn.style.color = 'var(--text-primary)'; }, 500);
     }
 };
 
