@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A1 English for Hospitality & Services | Inserción Laboral</title>
-    <meta name="description" content="A1 CEFR English course for hospitality, restaurants, food trucks, hotel services, and cleaning. Listening and speaking focus for job insertion.">
+    <title>C1 Advanced English Course | Premium Learning</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
@@ -15,84 +14,54 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">A1 English<span> Services</span></div>
-                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                    <a href="manual.html" class="btn nav-btn" style="padding:8px 14px;font-size:0.85rem;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.5);color:#25D366;text-decoration:none;">📖 Manual</a>
+                <div class="logo">Advanced<span>English</span> C1</div>
+                <div style="display: flex; gap: 10px; align-items: center;">
                     <button id="prev-unit-btn" class="btn nav-btn" onclick="navigateUnit(-1)"
-                        style="padding: 8px 14px; font-size: 0.85rem;">◀ Prev</button>
+                        style="background: rgba(99, 102, 241, 0.3); border-color: #6366f1; padding: 8px 16px; font-size: 0.9rem;">
+                        ◀️ Prev
+                    </button>
                     <button id="next-unit-btn" class="btn nav-btn" onclick="navigateUnit(1)"
-                        style="padding: 8px 14px; font-size: 0.85rem;">Next ▶</button>
-                    <span style="width:1px;height:24px;background:rgba(255,255,255,0.3);margin:0 4px;"></span>
+                        style="background: rgba(99, 102, 241, 0.3); border-color: #6366f1; padding: 8px 16px; font-size: 0.9rem;">
+                        Next ▶️
+                    </button>
+                    <span style="width: 1px; height: 24px; background: rgba(255,255,255,0.3); margin: 0 5px;"></span>
                     <button id="pause-audio-btn" class="btn pause-audio-btn" onclick="togglePauseAudio()"
-                        style="padding: 8px 14px; font-size: 0.85rem;">⏸️ Pause</button>
+                        style="background: rgba(251, 146, 60, 0.3); border-color: #fb923c; padding: 8px 16px; font-size: 0.9rem;">
+                        ⏸️ Pause
+                    </button>
                     <button class="btn stop-audio-btn" onclick="stopAudio()"
-                        style="padding: 8px 14px; font-size: 0.85rem;">⏹️ Stop</button>
+                        style="background: rgba(239, 68, 68, 0.3); border-color: #ef4444; padding: 8px 16px; font-size: 0.9rem;">
+                        ⏹️ Stop
+                    </button>
                 </div>
             </nav>
         </div>
     </header>
 
-    <div class="container admin-controls">
-        <!-- Attendance Control -->
-        <details class="attendance-block">
-            <summary class="attendance-header">📅 Attendance Control</summary>
-            <div class="attendance-content">
-                <div class="attendance-form">
-                    <div class="form-group">
-                        <label for="att-date">Select Date:</label>
-                        <input type="date" id="att-date" class="att-input">
-                    </div>
-                    <div class="form-group">
-                        <label for="att-user">Select Student:</label>
-                        <select id="att-user" class="att-input">
-                            <option value="Student 1">Student 1</option>
-                            <option value="Student 2">Student 2</option>
-                        </select>
-                    </div>
-                    <button class="btn att-save-btn" onclick="saveAttendance()">Mark Present ✅</button>
-                </div>
-                <div id="attendance-list" class="attendance-list"></div>
-            </div>
-        </details>
-
-        <!-- Payments Management -->
-        <details class="payments-block">
-            <summary class="payments-header">💳 Payments Management</summary>
-            <div class="payments-content">
-                <div class="payments-form">
-                    <div class="form-group">
-                        <label for="pay-date">Date:</label>
-                        <input type="date" id="pay-date" class="pay-input">
-                    </div>
-                    <div class="form-group">
-                        <label for="pay-user">Student:</label>
-                        <select id="pay-user" class="pay-input">
-                            <option value="Student 1">Student 1</option>
-                            <option value="Student 2">Student 2</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="pay-concept">Concept:</label>
-                        <input type="text" id="pay-concept" class="pay-input" placeholder="e.g. Class 1" value="Class 1">
-                    </div>
-                    <div class="form-group">
-                        <label for="pay-amount">Amount ($):</label>
-                        <input type="number" id="pay-amount" class="pay-input" placeholder="0.00">
-                    </div>
-                    <button class="btn pay-save-btn" onclick="savePayment()">Record Payment</button>
-                </div>
-                <div id="payments-list" class="payments-list"></div>
-            </div>
-        </details>
-    </div>
-
     <div class="container" id="main-content">
         <div class="unit-list" id="curriculum-container">
-            <!-- Content injected via script.js -->
+            <!-- Content Injected via script.js -->
         </div>
     </div>
 
-    <!-- About the Author -->
+    <!-- Social Situations & Functional Language Banner -->
+    <div class="container" style="margin-top: 10px; margin-bottom: 30px;">
+        <a href="everyday.html" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(99,102,241,0.15)); border:2px solid rgba(245,158,11,0.5); border-radius:18px; padding:24px 30px; text-decoration:none; color:#fff; transition:all 0.3s ease;"
+           onmouseover="this.style.borderColor='#f59e0b';this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 30px rgba(245,158,11,0.2)'"
+           onmouseout="this.style.borderColor='rgba(245,158,11,0.5)';this.style.transform='';this.style.boxShadow=''">
+            <div style="display:flex;align-items:center;gap:16px;">
+                <span style="font-size:2.5rem;">🗣️</span>
+                <div>
+                    <div style="font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#f59e0b;margin-bottom:4px;">Bonus Section · C1</div>
+                    <div style="font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:800;">Social Situations &amp; Functional Language</div>
+                    <div style="font-size:0.9rem;opacity:0.7;margin-top:4px;">Colloquial expressions · Socializing idioms · Daily hassles · Conversation tasks</div>
+                </div>
+            </div>
+            <span style="font-size:1.8rem;color:#f59e0b;">→</span>
+        </a>
+    </div>
+
+    <!-- About the Author Section -->
     <div class="container" id="author-section">
         <details class="author-block">
             <summary class="author-header">👩‍🏫 About the Author</summary>
@@ -101,16 +70,22 @@
                     <div class="author-avatar">CC</div>
                     <div class="author-info">
                         <h3>Cecilia Chiappero</h3>
-                        <p class="author-title">English Language Educator & Researcher | Universidad Nacional de Córdoba</p>
+                        <p class="author-title">English Language Educator & Researcher | Universidad Nacional de Córdoba
+                        </p>
                     </div>
                 </div>
                 <div class="author-bio">
                     <p>Cecilia Chiappero is an English language educator and researcher affiliated with the
                         <strong>Universidad Nacional de Córdoba</strong>, Argentina. Her academic work focuses on
-                        innovative teaching methodologies and technology-enhanced language learning for vocational insertion.</p>
-                    <p>This A1 English for Hospitality & Services course is specifically designed for <strong>job insertion</strong>
-                        in the restaurant, food truck, hotel, and cleaning sectors, aligned with the
-                        <strong>CEFR A1 framework</strong> with a strong focus on listening and speaking.</p>
+                        innovative teaching methodologies and technology-enhanced language learning.
+                    </p>
+                    <p>She has published research on the use of <strong>Moodle</strong> to promote listening
+                        comprehension strategies in the English Language classroom. Her paper "El uso de Moodle para
+                        fomentar el uso de estrategias de comprensión auditiva en el aula de Lengua Inglesa I" (2011)
+                        demonstrates her expertise in integrating digital tools into effective language instruction.</p>
+                    <p>This C1 Advanced English Course represents her continued dedication to creating comprehensive,
+                        accessible,
+                        and engaging materials for advanced learners seeking to refine their English proficiency to near-native levels.</p>
                     <p class="author-contact"><strong>Research Profile:</strong> Available on <a
                             href="https://www.researchgate.net" target="_blank"
                             style="color: var(--accent-gold);">ResearchGate</a> and academic databases.</p>
@@ -119,21 +94,47 @@
         </details>
     </div>
 
-    <!-- References -->
+    <!-- References Section -->
     <div class="container" id="references-section">
         <details class="references-block">
             <summary class="references-header">📚 References (APA Style)</summary>
             <div class="references-content">
-                <p class="references-author"><strong>Course Author:</strong> Chiappero, C. (2025). <em>A1 English for
-                    Hospitality & Services: Restaurant, Food Trucks, Hotels, and Cleaning</em>. Original educational material.</p>
+                <p class="references-author"><strong>Course Author:</strong> Chiappero, C. (2025). <em>Advanced English
+                        Course: C1 Level</em>. Original educational material.</p>
+
+                <h4>Video Resources</h4>
+                <ul class="references-list">
+                    <li>CrashCourse. (n.d.). <em>How to argue — Philosophical reasoning</em> [Video]. YouTube.
+                        https://www.youtube.com/watch?v=NKEhdsnKKHs</li>
+                    <li>Ellen MacArthur Foundation. (n.d.). <em>What is the circular economy?</em> [Video]. YouTube.
+                        https://www.youtube.com/watch?v=zCRKvDyyHmI</li>
+                    <li>Kurzgesagt. (n.d.). <em>Genetic engineering will change everything forever</em> [Video]. YouTube.
+                        https://www.youtube.com/watch?v=jAhjPd4uNFY</li>
+                    <li>Kurzgesagt. (n.d.). <em>Can we fix climate change?</em> [Video]. YouTube.
+                        https://www.youtube.com/watch?v=LxgMdjyw8uw</li>
+                    <li>TED. (n.d.). <em>The ethical dilemma of designer babies</em> [Video]. YouTube.
+                        https://www.youtube.com/watch?v=nOHbn8Q1fBM</li>
+                    <li>TED-Ed. (n.d.). <em>How fake news can spread</em> [Video]. YouTube.
+                        https://www.youtube.com/watch?v=cSKGa_7XJkg</li>
+                    <li>TED-Ed. (n.d.). <em>The art of rhetoric</em> [Video]. YouTube.
+                        https://www.youtube.com/watch?v=3klMM9BkW5o</li>
+                    <li>TED-Ed. (n.d.). <em>Why do languages die?</em> [Video]. YouTube.
+                        https://www.youtube.com/watch?v=Wp5FelcOPwU</li>
+                </ul>
+
                 <h4>Framework & Language References</h4>
                 <ul class="references-list">
-                    <li>Council of Europe. (2020). <em>Common European Framework of Reference for Languages (CEFR)</em>. Council of Europe Publishing.</li>
-                    <li>Nation, I. S. P. (2001). <em>Learning vocabulary in another language</em>. Cambridge University Press.</li>
-                    <li>Harmer, J. (2015). <em>The Practice of English Language Teaching</em> (5th ed.). Pearson Education.</li>
-                    <li>Thornbury, S. (2005). <em>How to Teach Speaking</em>. Pearson Education.</li>
+                    <li>Council of Europe. (2020). <em>Common European Framework of Reference for Languages (CEFR)</em>.
+                        Council of Europe Publishing.</li>
+                    <li>Chomsky, N., & Herman, E. S. (1988). <em>Manufacturing consent: The political economy of the mass
+                            media</em>. Pantheon Books.</li>
+                    <li>Kahneman, D. (2011). <em>Thinking, fast and slow</em>. Farrar, Straus and Giroux.</li>
+                    <li>Toulmin, S. E. (2003). <em>The uses of argument</em> (Updated ed.). Cambridge University Press.</li>
+                    <li>Swan, M. (2016). <em>Practical English usage</em> (4th ed.). Oxford University Press.</li>
                 </ul>
-                <p class="references-disclaimer"><em>All content created for educational purposes. Aligned with CEFR A1 standards for vocational English.</em></p>
+
+                <p class="references-disclaimer"><em>All video content is property of their respective creators. Used
+                        for educational purposes under fair use guidelines.</em></p>
             </div>
         </details>
     </div>
@@ -144,19 +145,21 @@
             <span class="protection-icon">🔒</span>
             <h2>Protected Content</h2>
             <p>No permission to copy, download, or redistribute this material.</p>
-            <p class="protection-copyright">© 2025 A1 English for Services - Cecilia Chiappero</p>
-            <p class="protection-note">All rights reserved. For authorized students only.</p>
+            <p class="protection-copyright">© 2025 C1 Advanced English Course - Cecilia Chiappero</p>
+            <p class="protection-note">All rights reserved. This content is for authorized students only.</p>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <p>© 2025 A1 English for Hospitality & Services. Created by Cecilia Chiappero.</p>
+            <p>© 2025 C1 Advanced English Course. Created by Cecilia Chiappero.</p>
         </div>
     </footer>
 
-    <script src="js/data_units1to4.js"></script>
-    <script src="js/data_units5to8.js"></script>
+    <script src="js/data_part1.js"></script>
+    <script src="js/data_part2.js"></script>
+    <script src="js/data_part3.js"></script>
+    <script src="js/data_part4.js"></script>
     <script src="js/script.js"></script>
 </body>
 
