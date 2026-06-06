@@ -357,122 +357,147 @@ function renderStandardQuestions(exercise, container, savedAnswers, indices, key
     });
 }
 
-// Vocabulary Matching Game Render
-let selectedWordCard = null;
-let selectedDefCard = null;
+// Vocabulary Matching Memory Card Flip Game
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
 
 function renderVocabularyMatching(exercise, container, savedMatches, key) {
     const pairs = exercise.pairs;
     
-    // Create columns
-    const columnsGrid = document.createElement('div');
-    columnsGrid.style.display = 'grid';
-    columnsGrid.style.gridTemplateColumns = '1fr 1fr';
-    columnsGrid.style.gap = '30px';
+    // Create the memory grid container
+    const memoryGrid = document.createElement('div');
+    memoryGrid.className = 'memory-grid';
     
-    const wordsCol = document.createElement('div');
-    wordsCol.className = 'matching-grid';
-    wordsCol.style.gridTemplateColumns = '1fr';
-    
-    const defsCol = document.createElement('div');
-    defsCol.className = 'matching-grid';
-    defsCol.style.gridTemplateColumns = '1fr';
-    
-    // Prepare items with random shuffles
-    let words = pairs.map((p, idx) => ({ text: p.word, index: idx }));
-    let defs = pairs.map((p, idx) => ({ text: p.def, index: idx }));
-    
-    // Simple shuffle
-    words.sort(() => Math.random() - 0.5);
-    defs.sort(() => Math.random() - 0.5);
-    
-    words.forEach(w => {
-        const card = document.createElement('div');
-        card.className = 'match-card';
-        card.id = `match-word-${w.index}`;
-        card.textContent = w.text;
-        
-        if (savedMatches[w.index] === true) {
-            card.classList.add('matched');
-        } else {
-            card.onclick = () => {
-                if (card.classList.contains('matched')) return;
-                
-                wordsCol.querySelectorAll('.match-card').forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                selectedWordCard = { index: w.index, element: card, text: w.text };
-                checkMatchSelection();
-            };
-        }
-        wordsCol.appendChild(card);
+    // Create card objects
+    let cards = [];
+    pairs.forEach((p, idx) => {
+        // Word Card
+        cards.push({
+            id: `word-${idx}`,
+            matchId: idx,
+            text: p.word,
+            type: 'word'
+        });
+        // Definition Card
+        cards.push({
+            id: `def-${idx}`,
+            matchId: idx,
+            text: p.def,
+            type: 'def'
+        });
     });
     
-    defs.forEach(d => {
+    // Shuffle cards
+    cards.sort(() => Math.random() - 0.5);
+    
+    // Render cards
+    cards.forEach(cardData => {
         const card = document.createElement('div');
-        card.className = 'match-card';
-        card.id = `match-def-${d.index}`;
-        card.textContent = d.text;
+        card.className = 'memory-card';
+        card.dataset.matchId = cardData.matchId;
+        card.dataset.id = cardData.id;
+        card.dataset.type = cardData.type;
+        card.dataset.text = cardData.text;
         
-        if (savedMatches[d.index] === true) {
-            card.classList.add('matched');
-        } else {
-            card.onclick = () => {
-                if (card.classList.contains('matched')) return;
-                
-                defsCol.querySelectorAll('.match-card').forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                selectedDefCard = { index: d.index, element: card };
-                checkMatchSelection();
-            };
+        // Inner structure for flip effect
+        const back = document.createElement('div');
+        back.className = 'memory-card-back';
+        back.textContent = '❓';
+        
+        const front = document.createElement('div');
+        front.className = 'memory-card-front';
+        front.textContent = cardData.text;
+        // Make font size smaller for long texts
+        if (cardData.text.length > 50) {
+            front.style.fontSize = '0.75rem';
+        } else if (cardData.text.length > 25) {
+            front.style.fontSize = '0.85rem';
         }
-        defsCol.appendChild(card);
+        
+        card.appendChild(back);
+        card.appendChild(front);
+        
+        // Check if already matched
+        if (savedMatches[cardData.matchId] === true) {
+            card.classList.add('flipped', 'matched');
+        } else {
+            card.onclick = () => flipCard(card);
+        }
+        
+        memoryGrid.appendChild(card);
     });
     
-    columnsGrid.appendChild(wordsCol);
-    columnsGrid.appendChild(defsCol);
-    container.appendChild(columnsGrid);
+    container.appendChild(memoryGrid);
 }
 
-function checkMatchSelection() {
-    if (selectedWordCard && selectedDefCard) {
-        const wordIdx = selectedWordCard.index;
-        const defIdx = selectedDefCard.index;
-        
-        const key = `${currentLevel}_${currentTab}`;
-        if (!students[activeStudent].scores[key]) {
-            students[activeStudent].scores[key] = {};
-        }
-        
-        if (wordIdx === defIdx) {
-            // Correct match
-            selectedWordCard.element.className = 'match-card matched animate__animated animate__rubberBand';
-            selectedDefCard.element.className = 'match-card matched animate__animated animate__rubberBand';
-            
-            // Speak the matched word
-            speakPhrase(selectedWordCard.text);
-            
-            // Save state
-            students[activeStudent].scores[key][wordIdx] = true;
-            saveStudents();
-            
-            updateLevelProgress(currentLevel);
-        } else {
-            // Incorrect match
-            const wEl = selectedWordCard.element;
-            const dEl = selectedDefCard.element;
-            
-            wEl.classList.add('animate__animated', 'animate__shakeX');
-            dEl.classList.add('animate__animated', 'animate__shakeX');
-            
-            setTimeout(() => {
-                wEl.classList.remove('selected', 'animate__animated', 'animate__shakeX');
-                dEl.classList.remove('selected', 'animate__animated', 'animate__shakeX');
-            }, 1000);
-        }
-        
-        selectedWordCard = null;
-        selectedDefCard = null;
+function flipCard(card) {
+    if (lockBoard) return;
+    if (card === firstCard) return;
+    if (card.classList.contains('matched')) return;
+    
+    card.classList.add('flipped');
+    
+    if (!firstCard) {
+        firstCard = card;
+        return;
     }
+    
+    secondCard = card;
+    checkForMatch();
+}
+
+function checkForMatch() {
+    // If cards match by matchId and they are different types (word vs def)
+    const isMatch = firstCard.dataset.matchId === secondCard.dataset.matchId && 
+                    firstCard.dataset.type !== secondCard.dataset.type;
+                    
+    if (isMatch) {
+        disableCards();
+    } else {
+        unflipCards();
+    }
+}
+
+function disableCards() {
+    firstCard.classList.add('matched');
+    secondCard.classList.add('matched');
+    
+    // Play sound of the word
+    const wordText = firstCard.dataset.type === 'word' ? firstCard.dataset.text : secondCard.dataset.text;
+    speakPhrase(wordText);
+    
+    // Save to profile
+    const matchId = firstCard.dataset.matchId;
+    const key = `${currentLevel}_${currentTab}`;
+    if (!students[activeStudent].scores[key]) {
+        students[activeStudent].scores[key] = {};
+    }
+    students[activeStudent].scores[key][matchId] = true;
+    saveStudents();
+    
+    updateLevelProgress(currentLevel);
+    
+    resetBoard();
+}
+
+function unflipCards() {
+    lockBoard = true;
+    
+    // Shake effect
+    firstCard.classList.add('animate__animated', 'animate__shakeX');
+    secondCard.classList.add('animate__animated', 'animate__shakeX');
+    
+    setTimeout(() => {
+        firstCard.classList.remove('flipped', 'animate__animated', 'animate__shakeX');
+        secondCard.classList.remove('flipped', 'animate__animated', 'animate__shakeX');
+        resetBoard();
+    }, 1200);
+}
+
+function resetBoard() {
+    [firstCard, secondCard] = [null, null];
+    lockBoard = false;
 }
 
 // Save inputs to profile
