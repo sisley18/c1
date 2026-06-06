@@ -20,18 +20,29 @@ let students = {
 document.addEventListener('DOMContentLoaded', () => {
     loadStudents();
     setLevel('A1');
-    initVoices();
 });
 
-// Voice initialization for TTS
-let voicesLoaded = false;
-function initVoices() {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.getVoices();
-        window.speechSynthesis.onvoiceschanged = () => {
-            voicesLoaded = true;
-        };
+// Google Neural TTS variables
+let ttsAudio = new Audio();
+let ttsChunks = [];
+let currentTtsIdx = 0;
+let isTtsPlaying = false;
+
+function splitText(text, maxLen = 180) {
+    const chunks = [];
+    let rem = text;
+    while (rem.length > 0) {
+        if (rem.length <= maxLen) { chunks.push(rem); break; }
+        let idx = rem.lastIndexOf('. ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf('? ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf('! ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf(', ', maxLen);
+        if (idx === -1) idx = rem.lastIndexOf(' ', maxLen);
+        if (idx === -1) idx = maxLen;
+        chunks.push(rem.substring(0, idx + 1).trim());
+        rem = rem.substring(idx + 1).trim();
     }
+    return chunks.filter(c => c.length > 0);
 }
 
 // Load student profile data from localStorage
@@ -186,38 +197,70 @@ function shuffleCurrent() {
     }
 }
 
-// Text to Speech
-function speakPhrase(phrase) {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        
-        // Remove any brackets or parentheses/slash content to make audio clean
-        let cleanText = phrase.replace(/\([^)]*\)/g, "").replace(/\[[^\]]*\]/g, "").replace(/_+/g, "blank").trim();
-        
-        const utterance = new SpeechSynthesisUtterance(cleanText);
-        
-        // Search for clear American voices
-        const voices = window.speechSynthesis.getVoices();
-        let voice = voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('google')) || 
-                    voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('natural')) || 
-                    voices.find(v => v.lang === 'en-US');
-                    
-        if (voice) {
-            utterance.voice = voice;
-        }
-        utterance.lang = 'en-US';
-        
-        // Slower for beginners (A1, A2) as per rule
-        if (['A1', 'A2'].includes(currentLevel)) {
-            utterance.rate = 0.75;
-        } else {
-            utterance.rate = 0.9;
-        }
-        utterance.pitch = 1.0;
-        
-        window.speechSynthesis.speak(utterance);
+// Text to Speech using Google Translate TTS
+function speakPhrase(text) {
+    window.stopAudio();
+    if (!text) return;
+
+    const cleaned = text
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/[\/\(\)\[\]]/g, ' ')
+        .replace(/&amp;/g, 'and')
+        .replace(/&quot;/g, '')
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    ttsChunks = splitText(cleaned, 180);
+    currentTtsIdx = 0;
+    isTtsPlaying = true;
+
+    if (ttsChunks.length > 0) {
+        playNextTtsChunk();
     }
 }
+
+function playNextTtsChunk() {
+    if (currentTtsIdx >= ttsChunks.length) {
+        isTtsPlaying = false;
+        return;
+    }
+    const chunk = ttsChunks[currentTtsIdx];
+    
+    // Slow speed parameter for A1/A2
+    let speedParam = '';
+    if (['A1', 'A2'].includes(currentLevel)) {
+        speedParam = '&ttsspeed=0.24';
+    }
+    
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(chunk)}${speedParam}`;
+    
+    ttsAudio.src = url;
+    ttsAudio.play().catch(err => {
+        console.error("Audio playback error:", err);
+        currentTtsIdx++;
+        playNextTtsChunk();
+    });
+}
+
+ttsAudio.onended = () => {
+    if (isTtsPlaying) {
+        currentTtsIdx++;
+        setTimeout(() => {
+            if (isTtsPlaying) {
+                playNextTtsChunk();
+            }
+        }, 400);
+    }
+};
+
+window.stopAudio = function () {
+    ttsAudio.pause();
+    ttsChunks = [];
+    currentTtsIdx = 0;
+    isTtsPlaying = false;
+};
 
 // Standard Questions Render (Cloze, Word Formation, Transformation, Error, Collocation Option Challenge)
 function renderStandardQuestions(exercise, container, savedAnswers, indices, key) {
