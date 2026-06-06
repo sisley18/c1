@@ -1,5 +1,231 @@
+// ─── Student Profile Management ──────────────────────────────────────────────
+function getActiveStudent() {
+    return localStorage.getItem('c1_active_student') || 'Default Student';
+}
+
+function getStudentsList() {
+    let list = localStorage.getItem('c1_students');
+    if (!list) {
+        list = ['Default Student'];
+        localStorage.setItem('c1_students', JSON.stringify(list));
+        localStorage.setItem('c1_active_student', 'Default Student');
+        
+        // Migrate existing keys if any
+        const keysToMigrate = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('c1_completed_u') || key.startsWith('c1_sec_u') || key.startsWith('c1ev_sec_')) {
+                keysToMigrate.push(key);
+            }
+        }
+        keysToMigrate.forEach(key => {
+            const val = localStorage.getItem(key);
+            localStorage.setItem(`Default Student_${key}`, val);
+        });
+        return list;
+    }
+    try {
+        return JSON.parse(list);
+    } catch(e) {
+        return ['Default Student'];
+    }
+}
+
+function getScopedKey(key) {
+    const student = getActiveStudent();
+    return `${student}_${key}`;
+}
+
+function initializeStudentSystem() {
+    getStudentsList();
+}
+
+function injectStudentSelector() {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
+    
+    let existing = document.getElementById('student-selector-container');
+    if (existing) existing.remove();
+    
+    const container = document.createElement('div');
+    container.id = 'student-selector-container';
+    container.style.cssText = 'display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); margin-right: 15px;';
+    
+    const activeStudent = getActiveStudent();
+    const list = getStudentsList();
+    
+    let optionsHtml = '';
+    list.forEach(student => {
+        const selected = student === activeStudent ? 'selected' : '';
+        optionsHtml += `<option value="${student}" ${selected}>${student}</option>`;
+    });
+    
+    container.innerHTML = `
+        <span style="font-size: 0.85rem; color: #a5b4fc; font-weight: 600;">Student:</span>
+        <select id="student-select" onchange="switchStudent(this.value)" style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(99, 102, 241, 0.4); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; outline: none; cursor: pointer; color-scheme: dark;">
+            ${optionsHtml}
+        </select>
+        <button onclick="openStudentModal()" style="background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;" title="Manage Students">
+            ⚙️
+        </button>
+    `;
+    
+    const buttonDiv = nav.querySelector('div:nth-of-type(2)') || nav.querySelector('div');
+    if (buttonDiv) {
+        nav.insertBefore(container, buttonDiv);
+    } else {
+        nav.appendChild(container);
+    }
+}
+
+window.switchStudent = function(name) {
+    localStorage.setItem('c1_active_student', name);
+    injectStudentSelector();
+    if (typeof renderCurriculum === 'function') {
+        renderCurriculum();
+    }
+    window.dispatchEvent(new Event('storage'));
+};
+
+window.openStudentModal = function() {
+    let modal = document.getElementById('student-modal');
+    if (modal) modal.remove();
+    
+    modal = document.createElement('div');
+    modal.id = 'student-modal';
+    modal.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px);
+        display: flex; align-items: center; justify-content: center; z-index: 10000;
+    `;
+    
+    const activeStudent = getActiveStudent();
+    const list = getStudentsList();
+    
+    let listHtml = '';
+    list.forEach(student => {
+        const deleteButton = list.length > 1 
+            ? `<button onclick="deleteStudent('${student.replace(/'/g, "\\'")}')" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s;">Delete ❌</button>`
+            : '';
+        const isActiveLabel = student === activeStudent ? '<span style="color: #2dd4bf; font-weight: bold; font-size: 0.8rem;">(Active)</span>' : '';
+        listHtml += `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; margin-bottom: 8px;">
+                <span style="color: #fff; font-size: 0.95rem;">${student} ${isActiveLabel}</span>
+                ${deleteButton}
+            </div>
+        `;
+    });
+    
+    modal.innerHTML = `
+        <div style="background: #1e293b; border: 1px solid rgba(129, 140, 248, 0.3); border-radius: 16px; padding: 30px; width: 90%; max-width: 450px; box-shadow: 0 15px 50px rgba(0,0,0,0.5); font-family: var(--font-body); color: #f1f5f9;">
+            <h3 style="margin-top: 0; margin-bottom: 20px; font-family: var(--font-heading); color: #fff; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span>👥 Manage Students</span>
+                <span style="cursor: pointer; font-size: 1.2rem; opacity: 0.7;" onclick="closeStudentModal()">✕</span>
+            </h3>
+            
+            <div style="max-height: 200px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px;">
+                ${listHtml}
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px; margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.85rem; color: #a5b4fc; margin-bottom: 6px; font-weight: 600;">Add New Student Profile:</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="new-student-name" placeholder="Enter name..." style="flex: 1; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(99, 102, 241, 0.4); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; outline: none;">
+                    <button onclick="addNewStudent()" style="background: var(--gradient-accent); border: none; color: #fff; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;">Add</button>
+                </div>
+            </div>
+            
+            <div style="text-align: right;">
+                <button onclick="closeStudentModal()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;">Close</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    setTimeout(() => {
+        const input = document.getElementById('new-student-name');
+        if (input) input.focus();
+    }, 50);
+};
+
+window.closeStudentModal = function() {
+    const modal = document.getElementById('student-modal');
+    if (modal) modal.remove();
+};
+
+window.addNewStudent = function() {
+    const input = document.getElementById('new-student-name');
+    if (!input) return;
+    const name = input.value.trim();
+    if (!name) {
+        alert("Please enter a valid student name.");
+        return;
+    }
+    
+    const list = getStudentsList();
+    if (list.includes(name)) {
+        alert("A student with this name already exists.");
+        return;
+    }
+    
+    list.push(name);
+    localStorage.setItem('c1_students', JSON.stringify(list));
+    localStorage.setItem('c1_active_student', name);
+    
+    closeStudentModal();
+    switchStudent(name);
+};
+
+window.deleteStudent = function(name) {
+    const list = getStudentsList();
+    if (list.length <= 1) {
+        alert("Cannot delete the last student profile.");
+        return;
+    }
+    
+    if (!confirm(`Are you sure you want to delete profile "${name}"? All progress for this student will be lost.`)) {
+        return;
+    }
+    
+    const index = list.indexOf(name);
+    if (index > -1) {
+        list.splice(index, 1);
+    }
+    localStorage.setItem('c1_students', JSON.stringify(list));
+    
+    const keysToRemove = [];
+    const prefix = `${name}_`;
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith(prefix)) {
+            keysToRemove.push(key);
+        }
+    }
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+    
+    const activeStudent = getActiveStudent();
+    if (activeStudent === name) {
+        localStorage.setItem('c1_active_student', list[0]);
+    }
+    
+    openStudentModal();
+    switchStudent(getActiveStudent());
+};
+
+window.addEventListener('storage', (e) => {
+    if (e.key === 'c1_active_student' || e.key === 'c1_students') {
+        injectStudentSelector();
+        if (typeof renderCurriculum === 'function') {
+            renderCurriculum();
+        }
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('C1 Advanced Course Initialized');
+    initializeStudentSystem();
+    injectStudentSelector();
     initAudioEngine();
     renderCurriculum();
     setupNavigation();
@@ -263,6 +489,16 @@ function renderCurriculum() {
                 </div>
             </summary>
             <div class="unit-body">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:20px; background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.3); padding:12px 15px; border-radius:8px;">
+                    <label style="font-size:0.95rem; cursor:pointer; display:flex; align-items:center; gap:8px; color:#a5b4fc; font-weight:600;">
+                        <input type="checkbox" id="chk_u${unit.id}" onchange="toggleUnitCompletion(${unit.id}, this.checked)" ${(function(){ var sd = localStorage.getItem(getScopedKey('c1_completed_u' + unit.id)); return sd ? 'checked' : ''; })()} style="width:18px;height:18px;accent-color:#6366f1;"> 
+                        <span>✅ Completed in Class</span>
+                    </label>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.85rem; color:#a5b4fc;">Date:</span>
+                        <input type="date" id="date_u${unit.id}" onchange="saveUnitDate(${unit.id}, this.value)" value="${localStorage.getItem(getScopedKey('c1_completed_u' + unit.id)) || ''}" style="background:rgba(0,0,0,0.3); border:1px solid rgba(99,102,241,0.4); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.85rem; outline:none; color-scheme:dark;">
+                    </div>
+                </div>
                 <div class="unit-illustration">
                     ${getUnitIllustration(unit.id)}
                 </div>
@@ -270,7 +506,7 @@ function renderCurriculum() {
                 
                 <!-- 1. Vocabulary -->
                 <div class="section-block">
-                    <span class="section-label" style="background: rgba(255,255,255,0.1); color: #fff;">Vocabulary</span>
+                    <span class="section-label" style="background: rgba(255,255,255,0.1); color: #fff;">A1. Vocabulary</span>
                     <h3>Key Terms</h3>
                     <p style="margin-bottom: 15px; opacity: 0.7;">🔊 Click the speaker to hear each word pronounced:</p>
                     <div class="vocab-grid">
@@ -285,11 +521,12 @@ function renderCurriculum() {
                             </div>
                         `).join('') : ''}
                     </div>
+                    ${compBar(unit.id, 'vocabulary')}
                 </div>
 
                 <!-- 2. Listening -->
                 <div class="section-block">
-                    <span class="section-label listening">Listening</span>
+                    <span class="section-label listening">B1. Listening</span>
                     <h3>${unit.listening.title}</h3>
                     <div class="player-controls">
                         <button class="play-btn" onclick="playTrack('${unit.listening.transcript.replace(/'/g, "\\'")}')">▶</button>
@@ -300,19 +537,21 @@ function renderCurriculum() {
                         ${unit.listening.transcript}
                     </div>
                     ${renderQuiz(unit.listening.questions)}
+                    ${compBar(unit.id, 'listening')}
                 </div>
 
                 <!-- 3. Reading -->
                 <div class="section-block">
-                    <span class="section-label reading">Reading</span>
+                    <span class="section-label reading">C1. Reading</span>
                     <h3>${unit.reading.title}</h3>
                     <div class="reading-text">${unit.reading.text}</div>
                     ${renderQuiz(unit.reading.questions)}
+                    ${compBar(unit.id, 'reading')}
                 </div>
 
                 <!-- 4. Grammar -->
                 <div class="section-block">
-                    <span class="section-label grammar">Grammar</span>
+                    <span class="section-label grammar">D1. Grammar</span>
                     <h3>${unit.grammar.title}</h3>
                     <div class="grammar-box">
                         <p style="margin-bottom:10px;">${unit.grammar.explanation}</p>
@@ -331,12 +570,13 @@ function renderCurriculum() {
                             </div>
                         `).join('') : ''}
                     </div>
+                    ${compBar(unit.id, 'grammar')}
                 </div>
  
                 <!-- 5. Verb Patterns -->
                 ${unit.verb_patterns ? `
                 <div class="section-block">
-                    <span class="section-label" style="background: var(--accent-gold); color: #0f172a;">Verb Patterns</span>
+                    <span class="section-label" style="background: var(--accent-gold); color: #0f172a;">E1. Verb Patterns</span>
                     <h3>Verbs + Gerund / Infinitive</h3>
                     
                     <div class="theory-box">
@@ -373,12 +613,13 @@ function renderCurriculum() {
                             </div>
                         `).join('')}
                     </div>
+                    ${compBar(unit.id, 'verb_patterns')}
                 </div>
                 ` : ''}
  
                 <!-- 6. Pronunciation -->
                 <div class="section-block">
-                    <span class="section-label pronunciation">Pronunciation</span>
+                    <span class="section-label pronunciation">F1. Pronunciation</span>
                     <h3>Sentence Stress</h3>
                     
                     <h4 style="margin: 20px 0 15px; color: var(--accent-electric);">Sentence Stress</h4>
@@ -414,11 +655,12 @@ function renderCurriculum() {
                             <p style="font-size: 0.9rem; color: var(--accent-electric); margin: 0;"><strong>Stressed words:</strong> ${item.stressed.join(', ')}</p>
                         </div>
                     `).join('') : ''}
+                    ${compBar(unit.id, 'pronunciation')}
                 </div>
  
                 <!-- 6. Collocation -->
                 <div class="section-block">
-                    <span class="section-label collocation">Collocations</span>
+                    <span class="section-label collocation">G1. Collocations</span>
                     <div style="display: grid; gap: 20px;">
                     ${unit.collocations ? unit.collocations.map(col => `
                         <div class="collo-box">
@@ -438,21 +680,23 @@ function renderCurriculum() {
                         </div>
                     `).join('') : ''}
                     </div>
+                    ${compBar(unit.id, 'collocations')}
                 </div>
  
                 <!-- 7. Writing -->
                 <div class="section-block">
-                    <span class="section-label" style="background: #ec4899; color: #ffffff;">Writing Task</span>
+                    <span class="section-label" style="background: #ec4899; color: #ffffff;">H1. Writing Task</span>
                     <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
                         <p style="font-style: italic; margin-bottom: 15px; color: var(--text-secondary);">Target: 250 words</p>
                         <h4 style="margin-bottom: 10px; color: var(--text-primary);">${unit.writing || 'Write about the topic.'}</h4>
                         <textarea style="width: 100%; height: 150px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit;" placeholder="Type your essay here..."></textarea>
                     </div>
+                    ${compBar(unit.id, 'writing')}
                 </div>
 
                 <!-- 8. Speaking -->
                 <div class="section-block">
-                    <span class="section-label" style="background: #f59e0b; color: #ffffff;">Speaking</span>
+                    <span class="section-label" style="background: #f59e0b; color: #ffffff;">I1. Speaking</span>
                     <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.08);">
                         <span style="font-size: 2rem;">🎙️</span>
                         <div>
@@ -460,12 +704,13 @@ function renderCurriculum() {
                             <p style="margin: 0; color: var(--text-secondary);">${unit.speaking || 'Discuss the topic.'}</p>
                         </div>
                     </div>
+                    ${compBar(unit.id, 'speaking')}
                 </div>
 
                 <!-- 9. Functional Language -->
                 ${unit.functionalLanguage ? `
                 <div class="section-block">
-                    <span class="section-label" style="background: var(--accent-electric); color: #ffffff;">Functional English</span>
+                    <span class="section-label" style="background: var(--accent-electric); color: #ffffff;">J1. Functional English</span>
                     <h3 style="color: var(--text-primary); margin: 15px 0 10px;">🗣️ Functional Language: ${unit.functionalLanguage.functionName}</h3>
                     <p style="color: var(--text-secondary); margin: 10px 0 20px; font-size: 0.98rem; line-height: 1.5;">${unit.functionalLanguage.description}</p>
                     
@@ -492,13 +737,14 @@ function renderCurriculum() {
                             Send task to teacher
                         </button>
                     </div>
+                    ${compBar(unit.id, 'functional')}
                 </div>
                 ` : ''}
 
                 <!-- 10. Recommended Videos -->
                 ${unit.videos && unit.videos.length > 0 ? `
                 <div class="section-block">
-                    <span class="section-label" style="background: #ef4444; color: #ffffff;">📺 Videos</span>
+                    <span class="section-label" style="background: #ef4444; color: #ffffff;">K1. Recommended Videos</span>
                     <h3>Recommended Videos</h3>
                     <p style="margin-bottom: 20px; color: var(--text-secondary);">Watch these videos to deepen your understanding of the topic:</p>
                     <div style="display: grid; gap: 15px;">
@@ -515,6 +761,7 @@ function renderCurriculum() {
                             </a>
                         `).join('')}
                     </div>
+                    ${compBar(unit.id, 'videos')}
                 </div>
                 ` : ''}
 
@@ -586,167 +833,205 @@ window.checkCollocation = function (btn, selected, correct) {
     }
 };
 
-// ─── Universal High-Quality Audio Engine ─────────────────────────────────────
-// American English, clear, professional, natural — works on ALL devices
-// 100% Web Speech API — zero network dependency, instant playback
-let isAudioPlaying = false;
-let isAudioPaused = false;
-let cachedVoices = [];
-let webSpeechUtterances = [];
-let currentUtteranceIndex = 0;
-
-// ─── Best American Voice Selector ────────────────────────────────────────────
-function getBestUSVoice() {
-    if (cachedVoices.length === 0) cachedVoices = window.speechSynthesis.getVoices();
-    const voices = cachedVoices;
-    if (voices.length === 0) return null;
-
-    // Strictly prefer en-US
-    const usVoices = voices.filter(v => v.lang === 'en-US' || v.lang.startsWith('en-US'));
-    const pool = usVoices.length > 0 ? usVoices : voices.filter(v => v.lang.startsWith('en'));
-
-    // Priority order: neural/premium voices first
-    const priority = [
-        'Google US English', 'Google US', 'Google',
-        'Microsoft Aria', 'Microsoft Jenny', 'Microsoft Ana', 'Microsoft Zira', 'Microsoft',
-        'Aria', 'Jenny', 'Zira', 'Monica',
-        'Enhanced', 'Premium', 'Natural',
-        'Samantha', 'Karen', 'Victoria', 'David', 'Alex'
-    ];
-    for (const kw of priority) {
-        const match = pool.find(v => v.name.includes(kw));
-        if (match) return match;
-    }
-    return pool[0] || null;
+// ─── Section Completion Bar ───────────────────────────────────────────────────
+function compBar(unitId, sec) {
+    const key = 'c1_sec_u' + unitId + '_' + sec;
+    const scopedKey = getScopedKey(key);
+    const saved = localStorage.getItem(scopedKey) || '';
+    const checked = saved ? 'checked' : '';
+    return `
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+        margin-top:18px;padding:9px 14px;background:rgba(99,102,241,0.08);
+        border:1px solid rgba(99,102,241,0.25);border-radius:8px;">
+        <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:0.88rem;color:#a5b4fc;font-weight:600;">
+            <input type="checkbox" onchange="saveSecCompletion('${key}',this.checked,'secdate_${key}')"
+                ${checked} style="width:16px;height:16px;accent-color:#6366f1;cursor:pointer;">
+            ✅ Done
+        </label>
+        <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:0.8rem;color:#a5b4fc;">Fecha:</span>
+            <input type="date" id="secdate_${key}" value="${saved}"
+                onchange="saveSecDate('${key}',this.value)"
+                style="background:rgba(0,0,0,0.25);border:1px solid rgba(99,102,241,0.35);
+                color:#fff;padding:3px 7px;border-radius:4px;font-size:0.82rem;
+                outline:none;color-scheme:dark;">
+        </div>
+    </div>`;
 }
 
-// ─── Text Chunker for TTS ────────────────────────────────────────────────────
-function splitTextForTTS(text, maxLen) {
+window.saveSecCompletion = function(key, isChecked, dateInputId) {
+    const dateInput = document.getElementById(dateInputId);
+    const scopedKey = getScopedKey(key);
+    if (isChecked) {
+        const today = new Date().toISOString().substr(0,10);
+        if (dateInput) dateInput.value = today;
+        localStorage.setItem(scopedKey, today);
+    } else {
+        if (dateInput) dateInput.value = '';
+        localStorage.removeItem(scopedKey);
+    }
+};
+
+window.saveSecDate = function(key, dateStr) {
+    const scopedKey = getScopedKey(key);
+    if (dateStr) {
+        localStorage.setItem(scopedKey, dateStr);
+    } else {
+        localStorage.removeItem(scopedKey);
+    }
+};
+
+window.toggleUnitCompletion = function(unitId, isChecked) {
+    const dateInput = document.getElementById('date_u' + unitId);
+    const scopedKey = getScopedKey('c1_completed_u' + unitId);
+    if (isChecked) {
+        const today = new Date().toISOString().substr(0, 10);
+        dateInput.value = today;
+        localStorage.setItem(scopedKey, today);
+    } else {
+        dateInput.value = '';
+        localStorage.removeItem(scopedKey);
+    }
+};
+
+window.saveUnitDate = function(unitId, dateStr) {
+    const chk = document.getElementById('chk_u' + unitId);
+    const scopedKey = getScopedKey('c1_completed_u' + unitId);
+    if (dateStr) {
+        chk.checked = true;
+        localStorage.setItem(scopedKey, dateStr);
+    } else {
+        chk.checked = false;
+        localStorage.removeItem(scopedKey);
+    }
+};
+
+// ─── Google Neural TTS Audio Engine ──────────────────────────────────────────
+// Natural, high-quality, professional American English TTS
+let ttsAudioElement = new Audio();
+let ttsTextChunks = [];
+let currentTtsChunkIndex = 0;
+let isTtsPlayingState = false;
+let isTtsPausedState = false;
+
+function splitTextForGoogleTTS(text, maxLen = 180) {
     const chunks = [];
     let rem = text;
     while (rem.length > 0) {
-        if (rem.length <= maxLen) { chunks.push(rem); break; }
+        if (rem.length <= maxLen) {
+            chunks.push(rem);
+            break;
+        }
         let idx = rem.lastIndexOf('. ', maxLen);
         if (idx === -1) idx = rem.lastIndexOf('? ', maxLen);
         if (idx === -1) idx = rem.lastIndexOf('! ', maxLen);
         if (idx === -1) idx = rem.lastIndexOf(', ', maxLen);
         if (idx === -1) idx = rem.lastIndexOf(' ', maxLen);
         if (idx === -1) idx = maxLen;
+        
         chunks.push(rem.substring(0, idx + 1).trim());
         rem = rem.substring(idx + 1).trim();
     }
-    return chunks;
+    return chunks.filter(c => c.length > 0);
 }
 
-// ─── Main playAudio Function ─────────────────────────────────────────────────
-// IMPORTANT: Calls speechSynthesis.speak SYNCHRONOUSLY inside the click handler
-// so mobile browsers (iOS Safari, Android Chrome) never block the audio.
 window.playAudio = function (text) {
     window.stopAudio();
     if (!text) return;
 
-    // Clean up text for better pronunciation
-    const cleanedText = text.replace(/<[^>]+>/g, ' ').replace(/[\/\(\)\[\]]/g, ' ').replace(/&amp;/g, 'and').replace(/&quot;/g, '').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+    // Clean up text
+    const cleanedText = text
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/[\/\(\)\[\]]/g, ' ')
+        .replace(/&amp;/g, 'and')
+        .replace(/&quot;/g, '')
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
 
-    // Directly invoke Web Speech API (synchronous — never blocked on mobile)
-    playWithWebSpeech(cleanedText);
+    ttsTextChunks = splitTextForGoogleTTS(cleanedText, 180);
+    currentTtsChunkIndex = 0;
+    isTtsPlayingState = true;
+    isTtsPausedState = false;
+    
+    if (ttsTextChunks.length > 0) {
+        playNextTtsChunk();
+    }
 };
 
-// ─── Web Speech API (fallback — works everywhere) ────────────────────────────
-function playWithWebSpeech(text) {
-    if (!('speechSynthesis' in window)) {
-        console.error('This browser does not support Speech Synthesis.');
+function playNextTtsChunk() {
+    if (currentTtsChunkIndex >= ttsTextChunks.length) {
+        isTtsPlayingState = false;
+        updatePauseButton(false);
         return;
     }
-
-    window.speechSynthesis.cancel();
-
-    const chunks = splitTextForTTS(text, 180);
-    webSpeechUtterances = [];
-    currentUtteranceIndex = 0;
-
-    chunks.forEach(chunk => {
-        const trimmed = chunk.trim();
-        if (trimmed.length === 0) return;
-
-        const utt = new SpeechSynthesisUtterance(trimmed);
-        utt.lang = 'en-US';
-        utt.rate = 0.94;
-        utt.pitch = 1.0;
-        utt.volume = 1.0;
-
-        const voice = getBestUSVoice();
-        if (voice) utt.voice = voice;
-
-        utt.onend = () => {
-            currentUtteranceIndex++;
-            if (currentUtteranceIndex < webSpeechUtterances.length) {
-                // Small pause between chunks for natural breathing
-                setTimeout(() => {
-                    if (!isAudioPaused) window.speechSynthesis.speak(webSpeechUtterances[currentUtteranceIndex]);
-                }, 300);
-            } else {
-                isAudioPlaying = false;
-                updatePauseButton(false);
-            }
-        };
-
-        utt.onerror = () => {
-            currentUtteranceIndex++;
-            if (currentUtteranceIndex < webSpeechUtterances.length) {
-                window.speechSynthesis.speak(webSpeechUtterances[currentUtteranceIndex]);
-            } else {
-                isAudioPlaying = false;
-                updatePauseButton(false);
-            }
-        };
-
-        webSpeechUtterances.push(utt);
-    });
-
-    if (webSpeechUtterances.length > 0) {
-        isAudioPlaying = true;
-        isAudioPaused = false;
-        window.speechSynthesis.speak(webSpeechUtterances[0]);
-    }
+    
+    const chunk = ttsTextChunks[currentTtsChunkIndex];
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(chunk)}`;
+    
+    ttsAudioElement.src = url;
+    ttsAudioElement.play()
+        .then(() => {
+            updatePauseButton(false);
+        })
+        .catch(err => {
+            console.error("Error playing TTS chunk:", err);
+            // Skip to next chunk
+            currentTtsChunkIndex++;
+            playNextTtsChunk();
+        });
 }
 
-// ─── Stop / Pause / Resume ───────────────────────────────────────────────────
-window.stopAudio = function () {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
+ttsAudioElement.onended = () => {
+    if (isTtsPlayingState && !isTtsPausedState) {
+        currentTtsChunkIndex++;
+        // Natural pause between sentences
+        setTimeout(() => {
+            if (isTtsPlayingState && !isTtsPausedState) {
+                playNextTtsChunk();
+            }
+        }, 400);
     }
-    webSpeechUtterances = [];
-    currentUtteranceIndex = 0;
-    isAudioPlaying = false;
-    isAudioPaused = false;
+};
+
+window.stopAudio = function () {
+    ttsAudioElement.pause();
+    ttsTextChunks = [];
+    currentTtsChunkIndex = 0;
+    isTtsPlayingState = false;
+    isTtsPausedState = false;
     updatePauseButton(false);
 };
 
 window.pauseAudio = function () {
-    if (isAudioPlaying && !isAudioPaused) {
-        if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
-            window.speechSynthesis.pause();
-        }
-        isAudioPaused = true;
+    if (isTtsPlayingState && !isTtsPausedState) {
+        ttsAudioElement.pause();
+        isTtsPausedState = true;
         updatePauseButton(true);
     }
 };
 
 window.resumeAudio = function () {
-    if (isAudioPaused) {
-        if ('speechSynthesis' in window && window.speechSynthesis.paused) {
-            window.speechSynthesis.resume();
-        }
-        isAudioPaused = false;
-        updatePauseButton(false);
+    if (isTtsPlayingState && isTtsPausedState) {
+        isTtsPausedState = false;
+        ttsAudioElement.play()
+            .then(() => {
+                updatePauseButton(false);
+            })
+            .catch(err => {
+                console.error("Error resuming audio:", err);
+            });
     }
 };
 
 window.togglePauseAudio = function () {
-    if (isAudioPlaying) {
-        if (isAudioPaused) window.resumeAudio();
-        else window.pauseAudio();
+    if (isTtsPlayingState) {
+        if (isTtsPausedState) {
+            window.resumeAudio();
+        } else {
+            window.pauseAudio();
+        }
     }
 };
 
@@ -760,25 +1045,7 @@ function updatePauseButton(isPaused) {
 window.courseAudio = { play: window.playAudio, stop: window.stopAudio, pause: window.pauseAudio, resume: window.resumeAudio, togglePause: window.togglePauseAudio };
 
 window.initAudioEngine = function () {
-    console.log('C1 American Pronunciation Audio Engine Initialized');
-    // Pre-load voices aggressively for mobile Chrome/Safari
-    if ('speechSynthesis' in window) {
-        cachedVoices = window.speechSynthesis.getVoices();
-        if (window.speechSynthesis.onvoiceschanged !== undefined) {
-            window.speechSynthesis.onvoiceschanged = () => {
-                cachedVoices = window.speechSynthesis.getVoices();
-            };
-        }
-        // Retry for Chrome on Windows (voices often empty on first call)
-        if (cachedVoices.length === 0) {
-            let attempts = 0;
-            const retryLoad = setInterval(() => {
-                cachedVoices = window.speechSynthesis.getVoices();
-                attempts++;
-                if (cachedVoices.length > 0 || attempts >= 20) clearInterval(retryLoad);
-            }, 200);
-        }
-    }
+    console.log('C1 Google Neural American English Audio Engine Initialized');
 };
 
 window.sendTaskToTeacher = function(unitId, unitTitle, taskText) {

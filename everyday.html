@@ -264,38 +264,13 @@
 
 <script src="js/data_everyday.js"></script>
 <script>
-/* ── High-Quality American English Audio Engine (Web Speech API) ──────────── */
-/* 100% native — works on ALL devices (mobile, tablet, desktop) */
-/* No network dependency — instant, natural, professional American pronunciation */
-let cachedVoicesEv = [];
-let webSpeechUttsEv = [];
-let currentUttIdxEv = 0;
-let isPlayingEv = false;
-let isPausedEv = false;
+/* ── High-Quality American English Audio Engine (Google Neural TTS) ──────────── */
+let ttsAudioEv = new Audio();
+let ttsChunksEv = [];
+let currentTtsIdxEv = 0;
+let isTtsPlayingEv = false;
 
-function getBestUSVoiceEv() {
-    if (cachedVoicesEv.length === 0 && 'speechSynthesis' in window) cachedVoicesEv = window.speechSynthesis.getVoices();
-    const voices = cachedVoicesEv;
-    if (voices.length === 0) return null;
-
-    const usVoices = voices.filter(v => v.lang === 'en-US' || v.lang.startsWith('en-US'));
-    const pool = usVoices.length > 0 ? usVoices : voices.filter(v => v.lang.startsWith('en'));
-
-    const priority = [
-        'Google US English', 'Google US', 'Google',
-        'Microsoft Aria', 'Microsoft Jenny', 'Microsoft Ana', 'Microsoft Zira', 'Microsoft',
-        'Aria', 'Jenny', 'Zira', 'Monica',
-        'Enhanced', 'Premium', 'Natural',
-        'Samantha', 'Karen', 'Victoria', 'David', 'Alex'
-    ];
-    for (const kw of priority) {
-        const match = pool.find(v => v.name.includes(kw));
-        if (match) return match;
-    }
-    return pool[0] || null;
-}
-
-function splitTextEv(text, maxLen) {
+function splitTextEv(text, maxLen = 180) {
     const chunks = [];
     let rem = text;
     while (rem.length > 0) {
@@ -309,84 +284,271 @@ function splitTextEv(text, maxLen) {
         chunks.push(rem.substring(0, idx + 1).trim());
         rem = rem.substring(idx + 1).trim();
     }
-    return chunks;
+    return chunks.filter(c => c.length > 0);
 }
 
-// IMPORTANT: speak() is called SYNCHRONOUSLY inside onclick handlers
-// so mobile browsers (iOS Safari, Android Chrome) never block the audio.
 window.speak = function(text) {
     window.stopAudio();
-    if (!text || !('speechSynthesis' in window)) return;
+    if (!text) return;
 
-    const cleaned = text.replace(/<[^>]+>/g, ' ').replace(/[\/\(\)\[\]]/g, ' ').replace(/&amp;/g, 'and').replace(/&quot;/g, '').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+    const cleaned = text
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/[\/\(\)\[\]]/g, ' ')
+        .replace(/&amp;/g, 'and')
+        .replace(/&quot;/g, '')
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
 
-    window.speechSynthesis.cancel();
-    const chunks = splitTextEv(cleaned, 180);
-    webSpeechUttsEv = [];
-    currentUttIdxEv = 0;
+    ttsChunksEv = splitTextEv(cleaned, 180);
+    currentTtsIdxEv = 0;
+    isTtsPlayingEv = true;
 
-    chunks.forEach(chunk => {
-        const trimmed = chunk.trim();
-        if (trimmed.length === 0) return;
+    if (ttsChunksEv.length > 0) {
+        playNextTtsChunkEv();
+    }
+};
 
-        const utt = new SpeechSynthesisUtterance(trimmed);
-        utt.lang = 'en-US';
-        utt.rate = 0.95;
-        utt.pitch = 1.0;
-        utt.volume = 1.0;
-
-        const voice = getBestUSVoiceEv();
-        if (voice) utt.voice = voice;
-
-        utt.onend = () => {
-            currentUttIdxEv++;
-            if (currentUttIdxEv < webSpeechUttsEv.length) {
-                setTimeout(() => {
-                    if (!isPausedEv) window.speechSynthesis.speak(webSpeechUttsEv[currentUttIdxEv]);
-                }, 300);
-            } else {
-                isPlayingEv = false;
-            }
-        };
-
-        utt.onerror = () => {
-            currentUttIdxEv++;
-            if (currentUttIdxEv < webSpeechUttsEv.length) {
-                window.speechSynthesis.speak(webSpeechUttsEv[currentUttIdxEv]);
-            } else {
-                isPlayingEv = false;
-            }
-        };
-
-        webSpeechUttsEv.push(utt);
+function playNextTtsChunkEv() {
+    if (currentTtsIdxEv >= ttsChunksEv.length) {
+        isTtsPlayingEv = false;
+        return;
+    }
+    const chunk = ttsChunksEv[currentTtsIdxEv];
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(chunk)}`;
+    
+    ttsAudioEv.src = url;
+    ttsAudioEv.play().catch(err => {
+        console.error("Audio playback error:", err);
+        currentTtsIdxEv++;
+        playNextTtsChunkEv();
     });
+}
 
-    if (webSpeechUttsEv.length > 0) {
-        isPlayingEv = true;
-        isPausedEv = false;
-        window.speechSynthesis.speak(webSpeechUttsEv[0]);
+ttsAudioEv.onended = () => {
+    if (isTtsPlayingEv) {
+        currentTtsIdxEv++;
+        setTimeout(() => {
+            if (isTtsPlayingEv) {
+                playNextTtsChunkEv();
+            }
+        }, 400);
     }
 };
 
 window.stopAudio = function () {
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-    webSpeechUttsEv = [];
-    currentUttIdxEv = 0;
-    isPlayingEv = false;
-    isPausedEv = false;
+    ttsAudioEv.pause();
+    ttsChunksEv = [];
+    currentTtsIdxEv = 0;
+    isTtsPlayingEv = false;
 };
 
-// Pre-load voices on page load
-if ('speechSynthesis' in window) {
-    cachedVoicesEv = window.speechSynthesis.getVoices();
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = () => { cachedVoicesEv = window.speechSynthesis.getVoices(); };
+/* ── Student Profile Management ────────────────────────────────────────────── */
+function getActiveStudent() {
+    return localStorage.getItem('c1_active_student') || 'Default Student';
+}
+
+function getStudentsList() {
+    let list = localStorage.getItem('c1_students');
+    if (!list) {
+        list = ['Default Student'];
+        localStorage.setItem('c1_students', JSON.stringify(list));
+        localStorage.setItem('c1_active_student', 'Default Student');
     }
-    if (cachedVoicesEv.length === 0) {
-        let att = 0;
-        const r = setInterval(() => { cachedVoicesEv = window.speechSynthesis.getVoices(); att++; if (cachedVoicesEv.length > 0 || att >= 20) clearInterval(r); }, 200);
+    try {
+        return JSON.parse(list);
+    } catch(e) {
+        return ['Default Student'];
     }
 }
+
+function getScopedKey(key) {
+    const student = getActiveStudent();
+    return `${student}_${key}`;
+}
+
+function injectStudentSelectorEv() {
+    const container = document.querySelector('.hd-inner');
+    if (!container) return;
+    
+    let existing = document.getElementById('student-selector-container-ev');
+    if (existing) existing.remove();
+    
+    const div = document.createElement('div');
+    div.id = 'student-selector-container-ev';
+    div.style.cssText = 'display: flex; align-items: center; gap: 8px; font-family: var(--font-head); margin-right: 15px;';
+    
+    const activeStudent = getActiveStudent();
+    const list = getStudentsList();
+    
+    let optionsHtml = '';
+    list.forEach(student => {
+        const selected = student === activeStudent ? 'selected' : '';
+        optionsHtml += `<option value="${student}" ${selected}>${student}</option>`;
+    });
+    
+    div.innerHTML = `
+        <span style="font-size: 0.85rem; color: #a5b4fc; font-weight: 600;">Student:</span>
+        <select id="student-select" onchange="switchStudentEv(this.value)" style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(129,140,248,0.4); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; outline: none; cursor: pointer; color-scheme: dark;">
+            ${optionsHtml}
+        </select>
+        <button onclick="openStudentModalEv()" style="background: rgba(129,140,248,0.2); border: 1px solid rgba(129,140,248,0.4); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;" title="Manage Students">
+            ⚙️
+        </button>
+    `;
+    
+    const backBtn = container.querySelector('.back-btn');
+    if (backBtn) {
+        container.insertBefore(div, backBtn);
+    } else {
+        container.appendChild(div);
+    }
+}
+
+window.switchStudentEv = function(name) {
+    localStorage.setItem('c1_active_student', name);
+    injectStudentSelectorEv();
+    if (typeof render === 'function') {
+        render();
+    }
+    window.dispatchEvent(new Event('storage'));
+};
+
+window.openStudentModalEv = function() {
+    let modal = document.getElementById('student-modal-ev');
+    if (modal) modal.remove();
+    
+    modal = document.createElement('div');
+    modal.id = 'student-modal-ev';
+    modal.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px);
+        display: flex; align-items: center; justify-content: center; z-index: 10000;
+    `;
+    
+    const activeStudent = getActiveStudent();
+    const list = getStudentsList();
+    
+    let listHtml = '';
+    list.forEach(student => {
+        const deleteButton = list.length > 1 
+            ? `<button onclick="deleteStudentEv('${student.replace(/'/g, "\\'")}')" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s;">Delete ❌</button>`
+            : '';
+        const isActiveLabel = student === activeStudent ? '<span style="color: #2dd4bf; font-weight: bold; font-size: 0.8rem;">(Active)</span>' : '';
+        listHtml += `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; margin-bottom: 8px;">
+                <span style="color: #fff; font-size: 0.95rem;">${student} ${isActiveLabel}</span>
+                ${deleteButton}
+            </div>
+        `;
+    });
+    
+    modal.innerHTML = `
+        <div style="background: #1e293b; border: 1px solid rgba(129, 140, 248, 0.3); border-radius: 16px; padding: 30px; width: 90%; max-width: 450px; box-shadow: 0 15px 50px rgba(0,0,0,0.5); font-family: var(--font-body); color: #f1f5f9;">
+            <h3 style="margin-top: 0; margin-bottom: 20px; font-family: var(--font-head); color: #fff; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span>👥 Manage Students</span>
+                <span style="cursor: pointer; font-size: 1.2rem; opacity: 0.7;" onclick="closeStudentModalEv()">✕</span>
+            </h3>
+            
+            <div style="max-height: 200px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px;">
+                ${listHtml}
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px; margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.85rem; color: #a5b4fc; margin-bottom: 6px; font-weight: 600;">Add New Student Profile:</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="new-student-name-ev" placeholder="Enter name..." style="flex: 1; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(129, 140, 248, 0.4); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; outline: none;">
+                    <button onclick="addNewStudentEv()" style="background: linear-gradient(135deg, #818cf8, #6366f1); border: none; color: #fff; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;">Add</button>
+                </div>
+            </div>
+            
+            <div style="text-align: right;">
+                <button onclick="closeStudentModalEv()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;">Close</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    setTimeout(() => {
+        const input = document.getElementById('new-student-name-ev');
+        if (input) input.focus();
+    }, 50);
+};
+
+window.closeStudentModalEv = function() {
+    const modal = document.getElementById('student-modal-ev');
+    if (modal) modal.remove();
+};
+
+window.addNewStudentEv = function() {
+    const input = document.getElementById('new-student-name-ev');
+    if (!input) return;
+    const name = input.value.trim();
+    if (!name) {
+        alert("Please enter a valid student name.");
+        return;
+    }
+    
+    const list = getStudentsList();
+    if (list.includes(name)) {
+        alert("A student with this name already exists.");
+        return;
+    }
+    
+    list.push(name);
+    localStorage.setItem('c1_students', JSON.stringify(list));
+    localStorage.setItem('c1_active_student', name);
+    
+    closeStudentModalEv();
+    switchStudentEv(name);
+};
+
+window.deleteStudentEv = function(name) {
+    const list = getStudentsList();
+    if (list.length <= 1) {
+        alert("Cannot delete the last student profile.");
+        return;
+    }
+    
+    if (!confirm(`Are you sure you want to delete profile "${name}"? All progress for this student will be lost.`)) {
+        return;
+    }
+    
+    const index = list.indexOf(name);
+    if (index > -1) {
+        list.splice(index, 1);
+    }
+    localStorage.setItem('c1_students', JSON.stringify(list));
+    
+    const keysToRemove = [];
+    const prefix = `${name}_`;
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith(prefix)) {
+            keysToRemove.push(key);
+        }
+    }
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+    
+    const activeStudent = getActiveStudent();
+    if (activeStudent === name) {
+        localStorage.setItem('c1_active_student', list[0]);
+    }
+    
+    openStudentModalEv();
+    switchStudentEv(getActiveStudent());
+};
+
+window.addEventListener('storage', (e) => {
+    if (e.key === 'c1_active_student' || e.key === 'c1_students') {
+        injectStudentSelectorEv();
+        if (typeof render === 'function') {
+            render();
+        }
+    }
+});
 
 /* ── Protection ───────────────────────────────────────────────────── */
 const overlay = document.getElementById('prot-overlay');
@@ -411,6 +573,54 @@ window.checkOpt = function(btn, correct){
     const opts = btn.parentElement.querySelectorAll('.opt-btn');
     opts.forEach(b=>{ b.classList.remove('correct','wrong'); b.disabled=true; });
     btn.classList.add(correct ? 'correct' : 'wrong');
+};
+
+/* ── Section Completion Bar ──────────────────────────────────── */
+function compBarEv(lessonId, sec) {
+    const key = 'c1ev_sec_l' + lessonId + '_' + sec;
+    const scopedKey = getScopedKey(key);
+    const saved = localStorage.getItem(scopedKey) || '';
+    const checked = saved ? 'checked' : '';
+    return `
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+        margin-top:18px;padding:9px 14px;background:rgba(129,140,248,0.08);
+        border:1px solid rgba(129,140,248,0.25);border-radius:8px;">
+        <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:0.88rem;color:#a5b4fc;font-weight:600;">
+            <input type="checkbox" onchange="saveSecCompletionEv('${key}',this.checked,'secdate_${key}')"
+                ${checked} style="width:16px;height:16px;accent-color:#6366f1;cursor:pointer;">
+            ✅ Done
+        </label>
+        <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:0.8rem;color:#a5b4fc;">Fecha:</span>
+            <input type="date" id="secdate_${key}" value="${saved}"
+                onchange="saveSecDateEv('${key}',this.value)"
+                style="background:rgba(0,0,0,0.25);border:1px solid rgba(129,140,248,0.35);
+                color:#fff;padding:3px 7px;border-radius:4px;font-size:0.82rem;
+                outline:none;color-scheme:dark;">
+        </div>
+    </div>`;
+}
+
+window.saveSecCompletionEv = function(key, isChecked, dateInputId) {
+    const dateInput = document.getElementById(dateInputId);
+    const scopedKey = getScopedKey(key);
+    if (isChecked) {
+        const today = new Date().toISOString().substr(0,10);
+        if (dateInput) dateInput.value = today;
+        localStorage.setItem(scopedKey, today);
+    } else {
+        if (dateInput) dateInput.value = '';
+        localStorage.removeItem(scopedKey);
+    }
+};
+
+window.saveSecDateEv = function(key, dateStr) {
+    const scopedKey = getScopedKey(key);
+    if (dateStr) {
+        localStorage.setItem(scopedKey, dateStr);
+    } else {
+        localStorage.removeItem(scopedKey);
+    }
 };
 
 /* ── Render ───────────────────────────────────────────────────────── */
@@ -448,7 +658,7 @@ function render(){
 
             <!-- 1. SOCIAL SITUATIONS VOCAB -->
             <div class="sec">
-                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">🗣️ Social Situations Vocabulary</span>
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">A1. Social Situations Vocabulary</span>
                 <h3>Key Words for Social Interactions</h3>
                 <p style="font-size:0.9rem;color:var(--muted);margin-bottom:16px;">🔊 Click the speaker to hear each word pronounced in American English.</p>
                 <div class="vocab-grid">
@@ -462,11 +672,12 @@ function render(){
                         <span class="v-ex">"${v.example}"</span>
                     </div>`).join('')}
                 </div>
+                ${compBarEv(lesson.id, 'vocabulary')}
             </div>
 
             <!-- 2. TRENDING SOCIAL NEWS -->
             <div class="sec">
-                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">📰 Trending Social News</span>
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">B1. Trending Social News</span>
                 <h3>Modern Lifestyle &amp; Trend in Focus</h3>
                 <div class="ca-card">
                     <div class="ca-headline-bar">
@@ -490,11 +701,12 @@ function render(){
                         </div>`).join('')}
                     </div>
                 </div>
+                ${compBarEv(lesson.id, 'news')}
             </div>
 
             <!-- 3. IDIOMS -->
             <div class="sec">
-                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">💬 Everyday Colloquial Idioms</span>
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">C1. Everyday Colloquial Idioms</span>
                 <h3>Natural Expressions Used in Real Conversations</h3>
                 <div class="idioms-grid">
                     ${lesson.idioms.map(id=>`
@@ -507,11 +719,12 @@ function render(){
                         <span class="idiom-ex">✏️ ${id.example}</span>
                     </div>`).join('')}
                 </div>
+                ${compBarEv(lesson.id, 'idioms')}
             </div>
 
             <!-- 4. LISTENING -->
             <div class="sec">
-                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">🎧 Listening</span>
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">D1. Listening</span>
                 <h3>${lesson.listening.title}</h3>
                 <div class="player-bar">
                     <button class="play-btn" style="width:44px;height:44px;font-size:1.1rem;background:${lesson.color};" onclick="speak('${lesson.listening.transcript.replace(/'/g,"\\'")}')">▶</button>
@@ -530,11 +743,12 @@ function render(){
                         </div>
                     </div>`).join('')}
                 </div>
+                ${compBarEv(lesson.id, 'listening')}
             </div>
 
             <!-- 5. FILL BLANKS -->
             <div class="sec">
-                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">✏️ Practice</span>
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">E1. Practice</span>
                 <h3>Fill in the Blank — Vocabulary &amp; Idioms in Context</h3>
                 ${lesson.fillBlanks.map((fb,fi)=>`
                 <div class="blank-item">
@@ -544,11 +758,12 @@ function render(){
                         <button class="opt-btn" onclick="checkOpt(this,${oi===fb.correct})">${o}</button>`).join('')}
                     </div>
                 </div>`).join('')}
+                ${compBarEv(lesson.id, 'practice')}
             </div>
 
             <!-- 6. DISCUSSION -->
             <div class="sec">
-                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">🎙️ Speaking &amp; Writing</span>
+                <span class="sec-label" style="color:${lesson.color};border-color:${lesson.colorBorder};background:${lesson.colorLight};">F1. Speaking &amp; Writing</span>
                 <h3>Discussion Task</h3>
                 <div class="discussion-box" style="border-left-color:${lesson.color} !important; display: flex; flex-direction: column; gap: 15px;">
                     <p class="discussion-prompt" style="color:${lesson.color}; margin-bottom: 0;">🗣️ ${lesson.discussion.prompt}</p>
@@ -561,6 +776,7 @@ function render(){
                         Send task to teacher
                     </button>
                 </div>
+                ${compBarEv(lesson.id, 'discussion')}
             </div>
 
         </div>`;
@@ -588,7 +804,10 @@ function sendDiscussionToTeacher(lessonId, theme, promptText) {
     window.open(whatsappUrl, '_blank');
 }
 
-document.addEventListener('DOMContentLoaded', render);
+document.addEventListener('DOMContentLoaded', () => {
+    injectStudentSelectorEv();
+    render();
+});
 </script>
 </body>
 </html>
