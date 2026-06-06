@@ -489,16 +489,7 @@ function renderCurriculum() {
                 </div>
             </summary>
             <div class="unit-body">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:20px; background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.3); padding:12px 15px; border-radius:8px;">
-                    <label style="font-size:0.95rem; cursor:pointer; display:flex; align-items:center; gap:8px; color:#a5b4fc; font-weight:600;">
-                        <input type="checkbox" id="chk_u${unit.id}" onchange="toggleUnitCompletion(${unit.id}, this.checked)" ${(function(){ var sd = localStorage.getItem(getScopedKey('c1_completed_u' + unit.id)); return sd ? 'checked' : ''; })()} style="width:18px;height:18px;accent-color:#6366f1;"> 
-                        <span>✅ Completed in Class</span>
-                    </label>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="font-size:0.85rem; color:#a5b4fc;">Date:</span>
-                        <input type="date" id="date_u${unit.id}" onchange="saveUnitDate(${unit.id}, this.value)" value="${localStorage.getItem(getScopedKey('c1_completed_u' + unit.id)) || ''}" style="background:rgba(0,0,0,0.3); border:1px solid rgba(99,102,241,0.4); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.85rem; outline:none; color-scheme:dark;">
-                    </div>
-                </div>
+                ${unitCompBar(unit.id)}
                 <div class="unit-illustration">
                     ${getUnitIllustration(unit.id)}
                 </div>
@@ -833,75 +824,58 @@ window.checkCollocation = function (btn, selected, correct) {
     }
 };
 
-// ─── Section Completion Bar ───────────────────────────────────────────────────
-function compBar(unitId, sec) {
-    const key = 'c1_sec_u' + unitId + '_' + sec;
-    const scopedKey = getScopedKey(key);
-    const saved = localStorage.getItem(scopedKey) || '';
-    const checked = saved ? 'checked' : '';
-    return `
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
-        margin-top:18px;padding:9px 14px;background:rgba(99,102,241,0.08);
-        border:1px solid rgba(99,102,241,0.25);border-radius:8px;">
-        <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:0.88rem;color:#a5b4fc;font-weight:600;">
-            <input type="checkbox" onchange="saveSecCompletion('${key}',this.checked,'secdate_${key}')"
-                ${checked} style="width:16px;height:16px;accent-color:#6366f1;cursor:pointer;">
-            ✅ Done
-        </label>
-        <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-size:0.8rem;color:#a5b4fc;">Fecha:</span>
-            <input type="date" id="secdate_${key}" value="${saved}"
-                onchange="saveSecDate('${key}',this.value)"
+// ─── Section Completion Bar (2 student slots per task) ────────────────────────
+function compSlots(keyBase) {
+    let rows = '';
+    for (let s = 1; s <= 2; s++) {
+        const nk = keyBase + '_s' + s + '_name';
+        const dk = keyBase + '_s' + s + '_date';
+        const savedName = localStorage.getItem(getScopedKey(nk)) || '';
+        const savedDate = localStorage.getItem(getScopedKey(dk)) || '';
+        rows += `
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:0.82rem;color:#a5b4fc;min-width:90px;font-weight:600;">👤 Student ${s}:</span>
+            <input type="text" value="${savedName}" placeholder="Name..."
+                onchange="saveCompField('${nk}',this.value)"
+                style="background:rgba(0,0,0,0.25);border:1px solid rgba(99,102,241,0.35);
+                color:#fff;padding:4px 8px;border-radius:4px;font-size:0.82rem;
+                outline:none;width:140px;font-family:var(--font-body);">
+            <span style="font-size:0.8rem;color:#a5b4fc;">📅</span>
+            <input type="date" value="${savedDate}"
+                onchange="saveCompField('${dk}',this.value)"
                 style="background:rgba(0,0,0,0.25);border:1px solid rgba(99,102,241,0.35);
                 color:#fff;padding:3px 7px;border-radius:4px;font-size:0.82rem;
                 outline:none;color-scheme:dark;">
-        </div>
+        </div>`;
+    }
+    return rows;
+}
+
+function compBar(unitId, sec) {
+    const key = 'c1_sec_u' + unitId + '_' + sec;
+    return `
+    <div style="margin-top:18px;padding:12px 14px;background:rgba(99,102,241,0.08);
+        border:1px solid rgba(99,102,241,0.25);border-radius:8px;display:flex;flex-direction:column;gap:8px;">
+        <span style="font-size:0.85rem;color:#a5b4fc;font-weight:700;">✅ Completion Tracking</span>
+        ${compSlots(key)}
     </div>`;
 }
 
-window.saveSecCompletion = function(key, isChecked, dateInputId) {
-    const dateInput = document.getElementById(dateInputId);
+function unitCompBar(unitId) {
+    const key = 'c1_unit_' + unitId;
+    return `
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;padding:12px 15px;
+        background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:8px;">
+        <span style="font-size:0.95rem;color:#a5b4fc;font-weight:700;">✅ Completed in Class</span>
+        ${compSlots(key)}
+    </div>`;
+}
+
+window.saveCompField = function(key, value) {
     const scopedKey = getScopedKey(key);
-    if (isChecked) {
-        const today = new Date().toISOString().substr(0,10);
-        if (dateInput) dateInput.value = today;
-        localStorage.setItem(scopedKey, today);
+    if (value) {
+        localStorage.setItem(scopedKey, value);
     } else {
-        if (dateInput) dateInput.value = '';
-        localStorage.removeItem(scopedKey);
-    }
-};
-
-window.saveSecDate = function(key, dateStr) {
-    const scopedKey = getScopedKey(key);
-    if (dateStr) {
-        localStorage.setItem(scopedKey, dateStr);
-    } else {
-        localStorage.removeItem(scopedKey);
-    }
-};
-
-window.toggleUnitCompletion = function(unitId, isChecked) {
-    const dateInput = document.getElementById('date_u' + unitId);
-    const scopedKey = getScopedKey('c1_completed_u' + unitId);
-    if (isChecked) {
-        const today = new Date().toISOString().substr(0, 10);
-        dateInput.value = today;
-        localStorage.setItem(scopedKey, today);
-    } else {
-        dateInput.value = '';
-        localStorage.removeItem(scopedKey);
-    }
-};
-
-window.saveUnitDate = function(unitId, dateStr) {
-    const chk = document.getElementById('chk_u' + unitId);
-    const scopedKey = getScopedKey('c1_completed_u' + unitId);
-    if (dateStr) {
-        chk.checked = true;
-        localStorage.setItem(scopedKey, dateStr);
-    } else {
-        chk.checked = false;
         localStorage.removeItem(scopedKey);
     }
 };

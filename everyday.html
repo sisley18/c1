@@ -575,49 +575,47 @@ window.checkOpt = function(btn, correct){
     btn.classList.add(correct ? 'correct' : 'wrong');
 };
 
-/* ── Section Completion Bar ──────────────────────────────────── */
-function compBarEv(lessonId, sec) {
-    const key = 'c1ev_sec_l' + lessonId + '_' + sec;
-    const scopedKey = getScopedKey(key);
-    const saved = localStorage.getItem(scopedKey) || '';
-    const checked = saved ? 'checked' : '';
-    return `
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
-        margin-top:18px;padding:9px 14px;background:rgba(129,140,248,0.08);
-        border:1px solid rgba(129,140,248,0.25);border-radius:8px;">
-        <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:0.88rem;color:#a5b4fc;font-weight:600;">
-            <input type="checkbox" onchange="saveSecCompletionEv('${key}',this.checked,'secdate_${key}')"
-                ${checked} style="width:16px;height:16px;accent-color:#6366f1;cursor:pointer;">
-            ✅ Done
-        </label>
-        <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-size:0.8rem;color:#a5b4fc;">Fecha:</span>
-            <input type="date" id="secdate_${key}" value="${saved}"
-                onchange="saveSecDateEv('${key}',this.value)"
+/* ── Section Completion Bar (2 student slots per task) ────────── */
+function compSlotsEv(keyBase) {
+    let rows = '';
+    for (let s = 1; s <= 2; s++) {
+        const nk = keyBase + '_s' + s + '_name';
+        const dk = keyBase + '_s' + s + '_date';
+        const savedName = localStorage.getItem(getScopedKey(nk)) || '';
+        const savedDate = localStorage.getItem(getScopedKey(dk)) || '';
+        rows += `
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:0.82rem;color:#a5b4fc;min-width:90px;font-weight:600;">👤 Student ${s}:</span>
+            <input type="text" value="${savedName}" placeholder="Name..."
+                onchange="saveCompFieldEv('${nk}',this.value)"
+                style="background:rgba(0,0,0,0.25);border:1px solid rgba(129,140,248,0.35);
+                color:#fff;padding:4px 8px;border-radius:4px;font-size:0.82rem;
+                outline:none;width:140px;font-family:var(--font-body);">
+            <span style="font-size:0.8rem;color:#a5b4fc;">📅</span>
+            <input type="date" value="${savedDate}"
+                onchange="saveCompFieldEv('${dk}',this.value)"
                 style="background:rgba(0,0,0,0.25);border:1px solid rgba(129,140,248,0.35);
                 color:#fff;padding:3px 7px;border-radius:4px;font-size:0.82rem;
                 outline:none;color-scheme:dark;">
-        </div>
+        </div>`;
+    }
+    return rows;
+}
+
+function compBarEv(lessonId, sec) {
+    const key = 'c1ev_sec_l' + lessonId + '_' + sec;
+    return `
+    <div style="margin-top:18px;padding:12px 14px;background:rgba(129,140,248,0.08);
+        border:1px solid rgba(129,140,248,0.25);border-radius:8px;display:flex;flex-direction:column;gap:8px;">
+        <span style="font-size:0.85rem;color:#a5b4fc;font-weight:700;">✅ Completion Tracking</span>
+        ${compSlotsEv(key)}
     </div>`;
 }
 
-window.saveSecCompletionEv = function(key, isChecked, dateInputId) {
-    const dateInput = document.getElementById(dateInputId);
+window.saveCompFieldEv = function(key, value) {
     const scopedKey = getScopedKey(key);
-    if (isChecked) {
-        const today = new Date().toISOString().substr(0,10);
-        if (dateInput) dateInput.value = today;
-        localStorage.setItem(scopedKey, today);
-    } else {
-        if (dateInput) dateInput.value = '';
-        localStorage.removeItem(scopedKey);
-    }
-};
-
-window.saveSecDateEv = function(key, dateStr) {
-    const scopedKey = getScopedKey(key);
-    if (dateStr) {
-        localStorage.setItem(scopedKey, dateStr);
+    if (value) {
+        localStorage.setItem(scopedKey, value);
     } else {
         localStorage.removeItem(scopedKey);
     }
