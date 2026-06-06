@@ -204,6 +204,9 @@ function speakPhrase(text) {
 
     const cleaned = text
         .replace(/<[^>]+>/g, ' ')
+        .replace(/\([^)]*\)/g, '')
+        .replace(/\[[^\]]*\]/g, '')
+        .replace(/_+/g, ', ')
         .replace(/[\/\(\)\[\]]/g, ' ')
         .replace(/&amp;/g, 'and')
         .replace(/&quot;/g, '')
