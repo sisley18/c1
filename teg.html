@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEG: Tests, Exercises &amp; Games | All CEFR Levels</title>
+    <meta name="description" content="Master English grammar, vocabulary, collocations, and idioms with interactive, graded practice from A1 to C2.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/teg.css">
+</head>
+<body>
+
+    <header>
+        <div class="container" style="max-width: 1200px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo">Advanced<span>English</span> C1</div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <a href="index.html" class="btn" style="padding: 8px 20px; font-size: 0.9rem; border-radius: 30px;">← Back to Course</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" style="max-width: 1200px; margin-top: 100px;">
+        <!-- Student Slot Bar -->
+        <div class="student-bar">
+            <div>
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin-bottom: 5px;">Active Student Profile:</h3>
+                <div class="student-slots">
+                    <button id="student1-btn" class="student-slot active" onclick="switchStudent('student1')">Student 1</button>
+                    <button id="student2-btn" class="student-slot" onclick="switchStudent('student2')">Student 2</button>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <label style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 600;">Edit Profile Name:</label>
+                <input type="text" id="student-name-input" class="student-name-input" placeholder="Change name..." onchange="renameStudent(this.value)">
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; margin-bottom: 10px;">TEG: Tests, Exercises &amp; Games</h1>
+            <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-size: 1.1rem;">
+                Select a level and practice through 6 different types of interactive challenges. 
+                Earn bronze, silver, or gold badges as you progress!
+            </p>
+        </div>
+
+        <!-- Level selector ladder -->
+        <div class="level-ladder">
+            <div class="level-card a1 active" id="level-card-a1" onclick="setLevel('A1')">
+                <span class="level-badge">🥉 A1</span>
+                <div style="font-weight: 700;">Beginner</div>
+                <div class="level-info">Elementary grammar</div>
+                <div class="level-progress-mini"><div class="level-progress-bar-mini" id="level-progress-a1"></div></div>
+            </div>
+            <div class="level-card a2" id="level-card-a2" onclick="setLevel('A2')">
+                <span class="level-badge">🥈 A2</span>
+                <div style="font-weight: 700;">Elementary</div>
+                <div class="level-info">Everyday topics</div>
+                <div class="level-progress-mini"><div class="level-progress-bar-mini" id="level-progress-a2"></div></div>
+            </div>
+            <div class="level-card b1" id="level-card-b1" onclick="setLevel('B1')">
+                <span class="level-badge">🥇 B1</span>
+                <div style="font-weight: 700;">Intermediate</div>
+                <div class="level-info">Opinions &amp; tenses</div>
+                <div class="level-progress-mini"><div class="level-progress-bar-mini" id="level-progress-b1"></div></div>
+            </div>
+            <div class="level-card b2" id="level-card-b2" onclick="setLevel('B2')">
+                <span class="level-badge">🥇 B2</span>
+                <div style="font-weight: 700;">Upper-Int</div>
+                <div class="level-info">Abstract &amp; conditionals</div>
+                <div class="level-progress-mini"><div class="level-progress-bar-mini" id="level-progress-b2"></div></div>
+            </div>
+            <div class="level-card c1" id="level-card-c1" onclick="setLevel('C1')">
+                <span class="level-badge">🥇 C1</span>
+                <div style="font-weight: 700;">Advanced</div>
+                <div class="level-info">Nuance &amp; academic</div>
+                <div class="level-progress-mini"><div class="level-progress-bar-mini" id="level-progress-c1"></div></div>
+            </div>
+            <div class="level-card c2" id="level-card-c2" onclick="setLevel('C2')">
+                <span class="level-badge">🏆 C2</span>
+                <div style="font-weight: 700;">Mastery</div>
+                <div class="level-info">Near-native precision</div>
+                <div class="level-progress-mini"><div class="level-progress-bar-mini" id="level-progress-c2"></div></div>
+            </div>
+        </div>
+
+        <!-- Earned badges display block -->
+        <div id="badge-display-container"></div>
+
+        <!-- Exercise Category Tabs -->
+        <div class="tabs-container">
+            <button class="tab-btn active" id="tab-btn-word_formation" onclick="setTab('word_formation')">📝 Word Formation</button>
+            <button class="tab-btn" id="tab-btn-open_cloze" onclick="setTab('open_cloze')">🔑 Open Cloze</button>
+            <button class="tab-btn" id="tab-btn-sentence_transformation" onclick="setTab('sentence_transformation')">🔄 Transformations</button>
+            <button class="tab-btn" id="tab-btn-error_correction" onclick="setTab('error_correction')">🔍 Error Correction</button>
+            <button class="tab-btn" id="tab-btn-vocab_matching" onclick="setTab('vocab_matching')">🧩 Matching Game</button>
+            <button class="tab-btn" id="tab-btn-idiom_challenge" onclick="setTab('idiom_challenge')">💡 Collocations</button>
+        </div>
+
+        <!-- Main Display Card -->
+        <div class="display-card">
+            <div class="display-card-header">
+                <div>
+                    <h2 class="exercise-title" id="exercise-title">Word Formation</h2>
+                    <p class="exercise-description" id="exercise-description">Change the word in brackets to complete the sentence.</p>
+                </div>
+                <!-- Timer widget -->
+                <div class="timer-widget" id="timer-widget" style="display: none;">
+                    <span>⏱️</span>
+                    <span id="timer-val">03:00</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Question Items -->
+            <div id="exercise-container"></div>
+
+            <!-- Control Row -->
+            <div class="control-row">
+                <div class="control-group">
+                    <button class="btn" style="background: var(--gradient-teal); border-color: transparent;" onclick="checkAll()">Check Answers ✅</button>
+                    <button class="btn" onclick="resetLevel()">Reset Section 🔄</button>
+                </div>
+                <div class="control-group">
+                    <button class="btn" id="timer-btn" onclick="toggleTimer()">⏱️ Enable Timer</button>
+                    <button class="btn" onclick="shuffleCurrent()">🔀 Shuffle Items</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div class="results-modal" id="results-modal">
+        <div class="results-content">
+            <h2 style="font-family: var(--font-heading); margin-bottom: 20px;" id="modal-badge-title">Bronze Badge! 🥉</h2>
+            <div class="score-circle">
+                <div style="display:flex; flex-direction:column; align-items:center;">
+                    <span id="modal-score-text" style="font-size: 2.2rem; font-weight: 800;">8 / 10</span>
+                    <span id="modal-percent-text" style="font-size: 1rem; color: var(--text-secondary); font-weight: 400; margin-top: 5px;">80%</span>
+                </div>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;" id="modal-badge-desc">Excellent work! You've passed this section.</p>
+            <button class="btn" onclick="closeModal()" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.05);">Continue Practice</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 C1 Advanced English Course. Created by Cecilia Chiappero.</p>
+        </div>
+    </footer>
+
+    <!-- Load Data Files -->
+    <script src="js/data_teg_a1a2.js"></script>
+    <script src="js/data_teg_b1b2.js"></script>
+    <script src="js/data_teg_c1c2.js"></script>
+    <!-- Load Logic -->
+    <script src="js/teg.js"></script>
+</body>
+</html>
