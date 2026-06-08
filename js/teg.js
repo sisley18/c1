@@ -231,13 +231,8 @@ function playNextTtsChunk() {
     }
     const chunk = ttsChunks[currentTtsIdx];
     
-    // Slow speed parameter for A1/A2
-    let speedParam = '';
-    if (['A1', 'A2'].includes(currentLevel)) {
-        speedParam = '&ttsspeed=0.24';
-    }
-    
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(chunk)}${speedParam}`;
+    // Use Youdao TTS API (type=2 is American English) to bypass Google TTS blocking
+    const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(chunk)}&type=2`;
     
     ttsAudio.src = url;
     ttsAudio.play().catch(err => {
