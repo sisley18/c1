@@ -956,7 +956,7 @@ function playNextTtsChunk() {
     }
     
     const chunk = ttsTextChunks[currentTtsChunkIndex];
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=${encodeURIComponent(chunk)}`;
+    const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(chunk)}&type=2`;
     
     ttsAudioElement.src = url;
     ttsAudioElement.play()
