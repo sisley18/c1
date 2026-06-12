@@ -1,28 +1,73 @@
 :root {
-    /* Premium Dark Theme (C1 Advanced) */
-    --bg-primary: #0f172a; /* Deep navy slate */
-    --bg-secondary: #1e293b; /* Elevated card surface */
-    --bg-tertiary: #334155; /* Nested elements */
-    --text-primary: #f1f5f9; /* Crisp light text */
-    --text-secondary: #94a3b8; /* Muted slate text */
+    /* ═══ 🌺 Tropical Vibrant Theme — C1 Advanced ═══ */
 
-    /* Accent Colors */
-    --accent-gold: #2dd4bf; /* Vibrant Teal */
-    --accent-gold-dim: rgba(45, 212, 191, 0.1);
-    --accent-electric: #818cf8; /* Soft Indigo */
-    --accent-dark: rgba(255, 255, 255, 0.05); /* Subtle glass layer */
+    /* Backgrounds */
+    --bg-primary: #fffaf8;            /* Warm creamy peach */
+    --bg-secondary: rgba(255, 255, 255, 0.82);
+    --bg-tertiary: #fef0ec;           /* Soft coral tint */
+    --bg-hero: linear-gradient(135deg, #fce4ec 0%, #e0f7fa 35%, #fff3e0 70%, #f3e5f5 100%);
 
-    --gradient-teal: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
-    --gradient-accent: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    /* Text */
+    --text-primary: #1b1025;          /* Deep plum — max legibility */
+    --text-secondary: #4a3f5c;        /* Warm purple-gray */
+    --text-muted: #8b7fa3;            /* Lavender-gray */
 
+    /* Accent Palette — Tropical Vibrant */
+    --accent-teal: #00bfa5;           /* Vivid turquoise */
+    --accent-teal-light: #1de9b6;     /* Bright mint */
+    --accent-teal-bg: rgba(0, 191, 165, 0.08);
+
+    --accent-indigo: #e91e63;         /* Hot pink / Fucsia */
+    --accent-indigo-light: #f48fb1;   /* Soft pink */
+    --accent-indigo-bg: rgba(233, 30, 99, 0.06);
+
+    --accent-amber: #ff6d00;          /* Vibrant coral-orange */
+    --accent-amber-light: #ff9e40;    /* Warm tangerine */
+    --accent-amber-bg: rgba(255, 109, 0, 0.08);
+
+    --accent-rose: #d500f9;           /* Electric purple */
+    --accent-rose-bg: rgba(213, 0, 249, 0.06);
+
+    /* Legacy aliases */
+    --accent-gold: #00bfa5;
+    --accent-gold-dim: rgba(0, 191, 165, 0.08);
+    --accent-electric: #e91e63;
+    --accent-dark: rgba(0, 0, 0, 0.03);
+
+    /* Gradients — vibrant tropical */
+    --gradient-teal: linear-gradient(135deg, #1de9b6 0%, #00bfa5 100%);
+    --gradient-accent: linear-gradient(135deg, #f48fb1 0%, #e91e63 100%);
+    --gradient-warm: linear-gradient(135deg, #ff9e40 0%, #ff6d00 100%);
+    --gradient-hero: linear-gradient(135deg, #fce4ec 0%, #e0f7fa 40%, #fff3e0 70%, #f3e5f5 100%);
+    --gradient-card: linear-gradient(160deg, rgba(255,255,255,0.94) 0%, rgba(255,248,245,0.78) 100%);
+
+    /* Typography */
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-heading: 'Outfit', sans-serif;
 
+    /* Spacing */
+    --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 24px;
     --spacing-lg: 48px;
+    --spacing-xl: 72px;
 
-    --border-radius: 16px;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --shadow-glow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    /* Surfaces */
+    --border-radius: 18px;
+    --border-radius-sm: 10px;
+    --border-radius-pill: 50px;
+    --border-color: rgba(233, 30, 99, 0.08);
+    --border-color-strong: rgba(233, 30, 99, 0.15);
+
+    /* Shadows — tropical glow */
+    --shadow-sm: 0 2px 8px rgba(233, 30, 99, 0.06);
+    --shadow-md: 0 8px 30px rgba(233, 30, 99, 0.10);
+    --shadow-lg: 0 16px 50px rgba(233, 30, 99, 0.14);
+    --shadow-glow: 0 10px 40px rgba(0, 191, 165, 0.12);
+    --shadow-glow-indigo: 0 10px 40px rgba(233, 30, 99, 0.12);
+
+    /* Glass */
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-blur: blur(18px);
 }

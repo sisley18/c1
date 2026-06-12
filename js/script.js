@@ -61,11 +61,11 @@ function injectStudentSelector() {
     });
     
     container.innerHTML = `
-        <span style="font-size: 0.85rem; color: #a5b4fc; font-weight: 600;">Student:</span>
-        <select id="student-select" onchange="switchStudent(this.value)" style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(99, 102, 241, 0.4); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; outline: none; cursor: pointer; color-scheme: dark;">
+        <span style="font-size: 0.85rem; color: var(--accent-indigo); font-weight: 600;">Student:</span>
+        <select id="student-select" onchange="switchStudent(this.value)" style="background: rgba(255,255,255,0.8); border: 1.5px solid rgba(90,63,214,0.25); color: var(--text-primary); padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; outline: none; cursor: pointer;">
             ${optionsHtml}
         </select>
-        <button onclick="openStudentModal()" style="background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;" title="Manage Students">
+        <button onclick="openStudentModal()" style="background: rgba(90,63,214,0.08); border: 1.5px solid rgba(90,63,214,0.25); color: var(--accent-indigo); padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;" title="Manage Students">
             ⚙️
         </button>
     `;
@@ -95,7 +95,7 @@ window.openStudentModal = function() {
     modal.id = 'student-modal';
     modal.style.cssText = `
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px);
+        background: rgba(250, 249, 247, 0.85); backdrop-filter: blur(12px);
         display: flex; align-items: center; justify-content: center; z-index: 10000;
     `;
     
@@ -105,38 +105,38 @@ window.openStudentModal = function() {
     let listHtml = '';
     list.forEach(student => {
         const deleteButton = list.length > 1 
-            ? `<button onclick="deleteStudent('${student.replace(/'/g, "\\'")}')" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s;">Delete ❌</button>`
+            ? `<button onclick="deleteStudent('${student.replace(/'/g, "\\'")}')" style="background: rgba(225,29,72,0.06); border: 1px solid rgba(225,29,72,0.2); color: #e11d48; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s;">Delete ❌</button>`
             : '';
-        const isActiveLabel = student === activeStudent ? '<span style="color: #2dd4bf; font-weight: bold; font-size: 0.8rem;">(Active)</span>' : '';
+        const isActiveLabel = student === activeStudent ? '<span style="color: #0d9488; font-weight: bold; font-size: 0.8rem;">(Active)</span>' : '';
         listHtml += `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; margin-bottom: 8px;">
-                <span style="color: #fff; font-size: 0.95rem;">${student} ${isActiveLabel}</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); border-radius: 6px; margin-bottom: 8px;">
+                <span style="color: var(--text-primary); font-size: 0.95rem;">${student} ${isActiveLabel}</span>
                 ${deleteButton}
             </div>
         `;
     });
     
     modal.innerHTML = `
-        <div style="background: #1e293b; border: 1px solid rgba(129, 140, 248, 0.3); border-radius: 16px; padding: 30px; width: 90%; max-width: 450px; box-shadow: 0 15px 50px rgba(0,0,0,0.5); font-family: var(--font-body); color: #f1f5f9;">
-            <h3 style="margin-top: 0; margin-bottom: 20px; font-family: var(--font-heading); color: #fff; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="background: #fff; border: 1.5px solid rgba(90,63,214,0.15); border-radius: 18px; padding: 30px; width: 90%; max-width: 450px; box-shadow: 0 16px 50px rgba(0,0,0,0.1); font-family: var(--font-body); color: var(--text-primary);">
+            <h3 style="margin-top: 0; margin-bottom: 20px; font-family: var(--font-heading); color: var(--text-primary); border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                 <span>👥 Manage Students</span>
-                <span style="cursor: pointer; font-size: 1.2rem; opacity: 0.7;" onclick="closeStudentModal()">✕</span>
+                <span style="cursor: pointer; font-size: 1.2rem; opacity: 0.5;" onclick="closeStudentModal()">✕</span>
             </h3>
             
             <div style="max-height: 200px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px;">
                 ${listHtml}
             </div>
             
-            <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px; margin-bottom: 20px;">
-                <label style="display: block; font-size: 0.85rem; color: #a5b4fc; margin-bottom: 6px; font-weight: 600;">Add New Student Profile:</label>
+            <div style="border-top: 1px solid rgba(0,0,0,0.06); padding-top: 15px; margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.85rem; color: var(--accent-indigo); margin-bottom: 6px; font-weight: 600;">Add New Student Profile:</label>
                 <div style="display: flex; gap: 8px;">
-                    <input type="text" id="new-student-name" placeholder="Enter name..." style="flex: 1; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(99, 102, 241, 0.4); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; outline: none;">
+                    <input type="text" id="new-student-name" placeholder="Enter name..." style="flex: 1; background: rgba(0,0,0,0.02); border: 1.5px solid rgba(90,63,214,0.2); color: var(--text-primary); padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; outline: none;">
                     <button onclick="addNewStudent()" style="background: var(--gradient-accent); border: none; color: #fff; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;">Add</button>
                 </div>
             </div>
             
             <div style="text-align: right;">
-                <button onclick="closeStudentModal()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;">Close</button>
+                <button onclick="closeStudentModal()" style="background: rgba(0,0,0,0.03); border: 1.5px solid rgba(0,0,0,0.1); color: var(--text-primary); padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;">Close</button>
             </div>
         </div>
     `;
@@ -230,7 +230,21 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCurriculum();
     setupNavigation();
     setupProtection();
+    setupHeaderScroll();
 });
+
+// ─── Header Scroll Shadow ────────────────────────────────────────────────────
+function setupHeaderScroll() {
+    const header = document.getElementById('main-header');
+    if (!header) return;
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    }, { passive: true });
+}
 
 // Content Protection
 function setupProtection() {
@@ -493,11 +507,11 @@ function renderCurriculum() {
                 <div class="unit-illustration">
                     ${getUnitIllustration(unit.id)}
                 </div>
-                <p style="opacity: 0.7; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 15px;">Topic: ${unit.topic}</p>
+                <p style="opacity: 0.7; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">Topic: ${unit.topic}</p>
                 
                 <!-- 1. Vocabulary -->
                 <div class="section-block">
-                    <span class="section-label" style="background: rgba(255,255,255,0.1); color: #fff;">A1. Vocabulary</span>
+                    <span class="section-label" style="background: var(--gradient-teal); color: #fff;">A1. Vocabulary</span>
                     <h3>Key Terms</h3>
                     <p style="margin-bottom: 15px; opacity: 0.7;">🔊 Click the speaker to hear each word pronounced:</p>
                     <div class="vocab-grid">
@@ -507,7 +521,7 @@ function renderCurriculum() {
                                     <button class="play-btn" style="width: 32px; height: 32px; font-size: 0.9rem; flex-shrink: 0;" onclick="playAudio('${v.word}')">🔊</button>
                                     <strong style="font-size: 1.1rem;">${v.word}</strong>
                                 </div>
-                                ${v.ipa ? `<p style="font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', monospace; color: #5eead4; font-size: 0.95rem; margin-bottom: 8px;">/${v.ipa}/</p>` : ''}
+                                ${v.ipa ? `<p style="font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', monospace; color: var(--accent-teal); font-size: 0.95rem; margin-bottom: 8px;">/${v.ipa}/</p>` : ''}
                                 <p style="opacity: 0.8;">${v.def}</p>
                             </div>
                         `).join('') : ''}
@@ -523,8 +537,8 @@ function renderCurriculum() {
                         <button class="play-btn" onclick="playTrack('${unit.listening.transcript.replace(/'/g, "\\'")}')">▶</button>
                         <span style="font-size: 0.9rem; opacity: 0.8;">Audio Track</span>
                     </div>
-                    <button class="btn" style="border: 1px solid rgba(255,255,255,0.2); font-size: 0.8rem; padding: 5px 15px;" onclick="toggleTranscript(this)">Show Transcript</button>
-                    <div class="transcript-box" style="display:none; margin-top:10px; padding:15px; background:rgba(0,0,0,0.2); border-radius:8px;">
+                    <button class="btn" style="font-size: 0.8rem; padding: 5px 15px;" onclick="toggleTranscript(this)">Show Transcript</button>
+                    <div class="transcript-box" style="display:none; margin-top:10px;">
                         ${unit.listening.transcript}
                     </div>
                     ${renderQuiz(unit.listening.questions)}
@@ -546,15 +560,15 @@ function renderCurriculum() {
                     <h3>${unit.grammar.title}</h3>
                     <div class="grammar-box">
                         <p style="margin-bottom:10px;">${unit.grammar.explanation}</p>
-                        <p style="font-family:monospace; color:#5eead4;">Ex: ${unit.grammar.example}</p>
+                        <p style="font-family:monospace; color: var(--accent-teal); font-weight: 500;">Ex: ${unit.grammar.example}</p>
                     </div>
                     <div style="margin-top:20px;">
                         ${unit.grammar.quizzes ? unit.grammar.quizzes.map((q, idx) => `
-                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);">
+                            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color);">
                                 <p style="font-weight:600; margin-bottom:10px; color: var(--text-primary);">${idx + 1}. ${q.question}</p>
                                 <div class="options-grid" style="justify-content: flex-start;">
                                     ${q.options.map((opt, i) => `
-                                        <button class="btn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:var(--text-primary);" 
+                                        <button class="btn" style="background:rgba(255,255,255,0.6); border:1.5px solid var(--border-color); color:var(--text-primary);" 
                                         onclick="checkAnswer(this, ${i === q.correct})">${opt}</button>
                                     `).join('')}
                                 </div>
@@ -567,7 +581,7 @@ function renderCurriculum() {
                 <!-- 5. Verb Patterns -->
                 ${unit.verb_patterns ? `
                 <div class="section-block">
-                    <span class="section-label" style="background: var(--accent-gold); color: #0f172a;">E1. Verb Patterns</span>
+                    <span class="section-label" style="background: var(--gradient-warm); color: #fff;">E1. Verb Patterns</span>
                     <h3>Verbs + Gerund / Infinitive</h3>
                     
                     <div class="theory-box">
@@ -593,11 +607,11 @@ function renderCurriculum() {
                     <p style="margin-bottom: 15px; color: var(--text-secondary); opacity: 0.9;">Complete the sentences with the correct verb form:</p>
                     <div style="margin-top:20px;">
                         ${unit.verb_patterns.exercises.map((q, idx) => `
-                            <div style="margin-bottom: 15px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;">
+                            <div style="margin-bottom: 15px; padding: 15px; background: rgba(255,255,255,0.5); border: 1.5px solid var(--border-color); border-radius: 10px;">
                                 <p style="font-weight:600; margin-bottom:10px; color: var(--text-primary);">${idx + 1}. ${q.sentence}</p>
                                 <div class="options-grid" style="justify-content: flex-start;">
                                     ${q.options.map((opt, i) => `
-                                        <button class="btn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:var(--text-primary);" 
+                                        <button class="btn" style="background:rgba(255,255,255,0.6); border:1.5px solid var(--border-color); color:var(--text-primary);" 
                                         onclick="checkAnswer(this, ${i === q.correct})">${opt}</button>
                                     `).join('')}
                                 </div>
@@ -638,7 +652,7 @@ function renderCurriculum() {
                     
                     <p style="margin-bottom: 15px; color: var(--text-secondary); opacity: 0.9;">🔊 Click the speaker to hear the sentence with proper stress:</p>
                     ${unit.pronunciation && unit.pronunciation.sentence_stress ? unit.pronunciation.sentence_stress.map((item, idx) => `
-                        <div style="margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;">
+                        <div style="margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.5); border: 1.5px solid var(--border-color); border-radius: 10px;">
                             <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
                                 <button class="play-btn" style="width: 40px; height: 40px; font-size: 1rem;" onclick="playAudio('${item.sentence.replace(/'/g, "\\'")}')" >🔊</button>
                                 <p style="font-size: 1.2rem; font-style: italic; margin: 0; color: var(--text-primary);">"${item.sentence}"</p>
@@ -663,7 +677,7 @@ function renderCurriculum() {
                                 ${(() => {
                 const opts = [col.pair[1], ...col.distractors].sort(() => Math.random() - 0.5);
                 return opts.map(opt => `
-                                        <button class="btn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:var(--text-primary);" 
+                                        <button class="btn" style="background:rgba(255,255,255,0.6); border:1.5px solid var(--border-color); color:var(--text-primary);" 
                                         onclick="checkCollocation(this, '${opt}', '${col.pair[1]}')">${opt}</button>
                                     `).join('');
             })()}
@@ -676,19 +690,19 @@ function renderCurriculum() {
  
                 <!-- 7. Writing -->
                 <div class="section-block">
-                    <span class="section-label" style="background: #ec4899; color: #ffffff;">H1. Writing Task</span>
-                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+                    <span class="section-label" style="background: linear-gradient(135deg, #f472b6, #db2777); color: #fff;">H1. Writing Task</span>
+                    <div style="background: rgba(255,255,255,0.5); padding: 20px; border-radius: 14px; border: 1.5px solid var(--border-color);">
                         <p style="font-style: italic; margin-bottom: 15px; color: var(--text-secondary);">Target: 250 words</p>
                         <h4 style="margin-bottom: 10px; color: var(--text-primary);">${unit.writing || 'Write about the topic.'}</h4>
-                        <textarea style="width: 100%; height: 150px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit;" placeholder="Type your essay here..."></textarea>
+                        <textarea style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 1.5px solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit;" placeholder="Type your essay here..."></textarea>
                     </div>
                     ${compBar(unit.id, 'writing')}
                 </div>
 
                 <!-- 8. Speaking -->
                 <div class="section-block">
-                    <span class="section-label" style="background: #f59e0b; color: #ffffff;">I1. Speaking</span>
-                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.08);">
+                    <span class="section-label" style="background: var(--gradient-warm); color: #fff;">I1. Speaking</span>
+                    <div style="background: rgba(255,255,255,0.5); padding: 20px; border-radius: 14px; display: flex; align-items: center; gap: 20px; border: 1.5px solid var(--border-color);">
                         <span style="font-size: 2rem;">🎙️</span>
                         <div>
                             <h4 style="margin: 0 0 5px 0; color: var(--text-primary);">Discussion Prompt</h4>
@@ -708,7 +722,7 @@ function renderCurriculum() {
                     <p style="margin-bottom: 15px; color: var(--text-secondary); font-weight: 600; font-size: 0.95rem;">🔊 Click the speaker to hear key functional phrases pronounced:</p>
                     <div class="vocab-grid">
                         ${unit.functionalLanguage.phrases ? unit.functionalLanguage.phrases.map(p => `
-                            <div class="vocab-card" style="border-left-color: var(--accent-electric); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-left-width: 4px;">
+                            <div class="vocab-card" style="border-left-color: var(--accent-indigo); background: rgba(255,255,255,0.6); border: 1.5px solid var(--border-color); border-left: 4px solid var(--accent-indigo);">
                                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
                                     <button class="play-btn" style="width: 32px; height: 32px; font-size: 0.9rem; flex-shrink: 0;" onclick="playAudio('${p.phrase.replace(/'/g, "\\'")}')">🔊</button>
                                     <strong style="color: var(--accent-electric); font-size: 1.1rem;">"${p.phrase}"</strong>
@@ -720,9 +734,9 @@ function renderCurriculum() {
                     </div>
 
                     <h4 style="margin: 30px 0 15px; color: var(--accent-electric);">🗣️ Real-World Application Task</h4>
-                    <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.15); display: flex; flex-direction: column; gap: 15px;">
+                    <div style="background: rgba(255,255,255,0.45); padding: 25px; border-radius: 14px; border: 1.5px dashed rgba(90,63,214,0.2); display: flex; flex-direction: column; gap: 15px;">
                         <p style="font-size: 1.05rem; margin-bottom: 5px; line-height: 1.6; color: var(--text-primary);">${unit.functionalLanguage.task}</p>
-                        <textarea id="task-textarea-${unit.id}" style="width: 100%; height: 120px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit; font-size: 0.95rem;" placeholder="Write your notes, dialogue, or practice sentences here..."></textarea>
+                        <textarea id="task-textarea-${unit.id}" style="width: 100%; height: 120px; background: rgba(255,255,255,0.7); border: 1.5px solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: 8px; font-family: inherit; font-size: 0.95rem;" placeholder="Write your notes, dialogue, or practice sentences here..."></textarea>
                         <button onclick="sendTaskToTeacher(${unit.id}, '${unit.title.replace(/'/g, "\\'")}', '${unit.functionalLanguage.task.replace(/'/g, "\\'").replace(/\n/g, " ")}')" style="align-self: flex-start; background: #25d366; color: #ffffff; border: none; padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);" onmouseover="this.style.background='#20ba5a'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='#25d366'; this.style.transform='translateY(0)';" >
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.436 0 9.86-4.42 9.864-9.852.002-2.63-1.023-5.101-2.887-6.963C16.378 1.936 13.912.912 11.3.912c-5.448 0-9.873 4.417-9.877 9.851-.001 1.765.464 3.486 1.347 5.013l-.995 3.637 3.737-.981zm12.355-6.853c-.302-.15-1.786-.881-2.046-.977-.26-.096-.45-.144-.64.144-.19.288-.737.977-.902 1.168-.166.19-.332.215-.634.065-1.229-.614-2.03-1.077-2.83-2.457-.215-.369.215-.343.615-1.144.1-.19.05-.356-.025-.506-.075-.15-.64-1.54-.877-2.109-.23-.553-.464-.477-.64-.486-.166-.008-.356-.01-.546-.01-.19 0-.5.07-.76.356-.26.288-1.002.977-1.002 2.385s1.025 2.766 1.168 2.957c.143.19 2.017 3.08 4.886 4.318.684.295 1.218.47 1.635.6.688.219 1.314.188 1.81.114.553-.083 1.78-.728 2.03-1.432.25-.704.25-1.309.175-1.432-.075-.124-.275-.2-.577-.35z"/></svg>
                             Send task to teacher
@@ -741,9 +755,9 @@ function renderCurriculum() {
                     <div style="display: grid; gap: 15px;">
                         ${unit.videos.map(video => `
                             <a href="${video.url}" target="_blank" rel="noopener noreferrer" 
-                               style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 12px; text-decoration: none; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease;"
-                               onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.borderColor='var(--accent-electric)';"
-                               onmouseout="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.08)';">
+                               style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.55); padding: 15px 20px; border-radius: 14px; text-decoration: none; color: var(--text-primary); border: 1.5px solid var(--border-color); transition: all 0.3s ease;"
+                               onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.borderColor='var(--accent-indigo)'; this.style.boxShadow='0 4px 16px rgba(90,63,214,0.08)';"
+                               onmouseout="this.style.background='rgba(255,255,255,0.55)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none';">
                                 <span style="font-size: 2rem;">▶️</span>
                                 <div>
                                     <h4 style="margin: 0 0 5px 0; color: var(--accent-electric);">${video.title}</h4>
@@ -758,13 +772,13 @@ function renderCurriculum() {
 
                 ${unit.id % 2 === 0 ? `
                 <!-- Exam Link for Even Units -->
-                <div class="section-block" style="border-top: 2px solid var(--accent-electric); margin-top: 40px; padding-top: 30px; text-align: center;">
-                    <span class="section-label" style="background: var(--accent-electric); color: #ffffff;">📝 Progress Exam</span>
+                <div class="section-block" style="border-top: 2px solid var(--accent-indigo); margin-top: 40px; padding-top: 30px; text-align: center;">
+                    <span class="section-label" style="background: var(--gradient-accent); color: #fff;">📝 Progress Exam</span>
                     <h3 style="color: var(--text-primary); margin: 15px 0 10px;">You've completed Units ${unit.id - 1} &amp; ${unit.id}!</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 20px;">Test your knowledge with the Progress Exam covering both units — listening, writing &amp; grammar.</p>
-                    <a href="exam${unit.id / 2}.html" style="display: inline-block; background: var(--accent-electric); border: 2px solid var(--accent-electric); color: #ffffff; padding: 14px 35px; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s ease;"
-                        onmouseover="this.style.background='transparent'; this.style.color='var(--accent-electric)'; this.style.transform='translateY(-2px)'"
-                        onmouseout="this.style.background='var(--accent-electric)'; this.style.color='#fff'; this.style.transform=''">
+                    <a href="exam${unit.id / 2}.html" style="display: inline-block; background: var(--accent-indigo); border: 2px solid var(--accent-indigo); color: #ffffff; padding: 14px 35px; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s ease;"
+                        onmouseover="this.style.background='transparent'; this.style.color='var(--accent-indigo)'; this.style.transform='translateY(-2px)'"
+                        onmouseout="this.style.background='var(--accent-indigo)'; this.style.color='#fff'; this.style.transform=''">
                         📝 Take Exam ${unit.id / 2} →
                     </a>
                 </div>
@@ -784,7 +798,7 @@ function renderQuiz(questions) {
                     <p style="margin-bottom: 8px; font-weight: 500;">Q: ${q.q}</p>
                     <div class="options-grid" style="justify-content: flex-start;">
                         ${q.options.map((opt, oIdx) => `
-                            <button class="btn" style="padding: 5px 15px; font-size: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);" 
+                            <button class="btn" style="padding: 5px 15px; font-size: 0.8rem; background: rgba(255,255,255,0.6); border: 1.5px solid var(--border-color);" 
                             onclick="checkAnswer(this, ${oIdx === q.correct})">${opt}</button>
                         `).join('')}
                     </div>
@@ -803,11 +817,11 @@ window.toggleTranscript = function (btn) {
 };
 window.checkAnswer = function (btn, isCorrect) {
     const container = btn.parentElement;
-    Array.from(container.children).forEach(b => { b.style.background = 'rgba(255,255,255,0.05)'; b.style.borderColor = 'rgba(255,255,255,0.15)'; b.style.color = 'var(--text-primary)'; });
+    Array.from(container.children).forEach(b => { b.style.background = 'rgba(255,255,255,0.6)'; b.style.borderColor = 'var(--border-color)'; b.style.color = 'var(--text-primary)'; });
     if (isCorrect) { 
-        btn.style.background = 'rgba(16,185,129,0.25)'; btn.style.borderColor = '#10b981'; btn.style.color = '#6ee7b7'; 
+        btn.style.background = 'rgba(16,185,129,0.15)'; btn.style.borderColor = '#10b981'; btn.style.color = '#047857'; 
     } else { 
-        btn.style.background = 'rgba(239,68,68,0.25)'; btn.style.borderColor = '#ef4444'; btn.style.color = '#fca5a5';
+        btn.style.background = 'rgba(239,68,68,0.1)'; btn.style.borderColor = '#ef4444'; btn.style.color = '#dc2626';
     }
 };
 window.checkCollocation = function (btn, selected, correct) {
@@ -815,12 +829,12 @@ window.checkCollocation = function (btn, selected, correct) {
     const blank = parent.querySelector('.blank');
     const buttons = parent.querySelectorAll('button');
     if (selected === correct) {
-        blank.textContent = correct; blank.style.color = '#10b981'; blank.style.borderBottom = 'none';
+        blank.textContent = correct; blank.style.color = '#047857'; blank.style.borderBottom = 'none';
         btn.style.background = '#10b981'; btn.style.color = '#ffffff';
         buttons.forEach(b => b.disabled = true);
     } else {
-        btn.style.background = 'rgba(239,68,68,0.3)'; btn.style.color = '#fca5a5';
-        setTimeout(() => { btn.style.background = 'rgba(255,255,255,0.05)'; btn.style.color = 'var(--text-primary)'; }, 500);
+        btn.style.background = 'rgba(239,68,68,0.1)'; btn.style.color = '#dc2626';
+        setTimeout(() => { btn.style.background = 'rgba(255,255,255,0.6)'; btn.style.color = 'var(--text-primary)'; }, 500);
     }
 };
 
@@ -834,18 +848,18 @@ function compSlots(keyBase) {
         const savedDate = localStorage.getItem(getScopedKey(dk)) || '';
         rows += `
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span style="font-size:0.82rem;color:#a5b4fc;min-width:90px;font-weight:600;">👤 Student ${s}:</span>
+            <span style="font-size:0.82rem;color:var(--accent-indigo);min-width:90px;font-weight:600;">👤 Student ${s}:</span>
             <input type="text" value="${savedName}" placeholder="Name..."
                 onchange="saveCompField('${nk}',this.value)"
-                style="background:rgba(0,0,0,0.25);border:1px solid rgba(99,102,241,0.35);
-                color:#fff;padding:4px 8px;border-radius:4px;font-size:0.82rem;
+                style="background:rgba(255,255,255,0.7);border:1.5px solid rgba(90,63,214,0.2);
+                color:var(--text-primary);padding:4px 8px;border-radius:4px;font-size:0.82rem;
                 outline:none;width:140px;font-family:var(--font-body);">
-            <span style="font-size:0.8rem;color:#a5b4fc;">📅</span>
+            <span style="font-size:0.8rem;color:var(--accent-indigo);">📅</span>
             <input type="date" value="${savedDate}"
                 onchange="saveCompField('${dk}',this.value)"
-                style="background:rgba(0,0,0,0.25);border:1px solid rgba(99,102,241,0.35);
-                color:#fff;padding:3px 7px;border-radius:4px;font-size:0.82rem;
-                outline:none;color-scheme:dark;">
+                style="background:rgba(255,255,255,0.7);border:1.5px solid rgba(90,63,214,0.2);
+                color:var(--text-primary);padding:3px 7px;border-radius:4px;font-size:0.82rem;
+                outline:none;">
         </div>`;
     }
     return rows;
@@ -854,9 +868,9 @@ function compSlots(keyBase) {
 function compBar(unitId, sec) {
     const key = 'c1_sec_u' + unitId + '_' + sec;
     return `
-    <div style="margin-top:18px;padding:12px 14px;background:rgba(99,102,241,0.08);
-        border:1px solid rgba(99,102,241,0.25);border-radius:8px;display:flex;flex-direction:column;gap:8px;">
-        <span style="font-size:0.85rem;color:#a5b4fc;font-weight:700;">✅ Completion Tracking</span>
+    <div style="margin-top:18px;padding:12px 14px;background:rgba(90,63,214,0.04);
+        border:1.5px solid rgba(90,63,214,0.12);border-radius:10px;display:flex;flex-direction:column;gap:8px;">
+        <span style="font-size:0.85rem;color:var(--accent-indigo);font-weight:700;">✅ Completion Tracking</span>
         ${compSlots(key)}
     </div>`;
 }
@@ -865,8 +879,8 @@ function unitCompBar(unitId) {
     const key = 'c1_unit_' + unitId;
     return `
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;padding:12px 15px;
-        background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:8px;">
-        <span style="font-size:0.95rem;color:#a5b4fc;font-weight:700;">✅ Completed in Class</span>
+        background:rgba(90,63,214,0.04);border:1.5px solid rgba(90,63,214,0.12);border-radius:10px;">
+        <span style="font-size:0.95rem;color:var(--accent-indigo);font-weight:700;">✅ Completed in Class</span>
         ${compSlots(key)}
     </div>`;
 }
