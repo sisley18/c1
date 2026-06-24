@@ -963,6 +963,8 @@ if (window.speechSynthesis) {
 
 function _cleanText(text) {
     return text
+        .replace(/—/g, ' - ') // Replace em-dash with hyphen
+        .replace(/–/g, ' - ') // Replace en-dash with hyphen
         .replace(/<[^>]+>/g, ' ')
         .replace(/[\/\(\)\[\]]/g, ' ')
         .replace(/&amp;/g, 'and')
@@ -972,6 +974,7 @@ function _cleanText(text) {
         .replace(/\s+/g, ' ')
         .trim();
 }
+
 
 window.playAudio = function (text) {
     window.stopAudio();
