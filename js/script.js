@@ -926,19 +926,20 @@ function _findBestUSVoice() {
     if (!window.speechSynthesis) return null;
     const voices = window.speechSynthesis.getVoices();
     if (!voices || voices.length === 0) return null;
-    // Filter strictly en-US voices
+    // Accept any en-US variant (en-US, en_US, en-us, etc.)
     const usVoices = voices.filter(v => {
         const lang = (v.lang || '').toLowerCase().replace('_', '-');
-        return lang === 'en-us';
+        return lang.startsWith('en-us') || lang === 'en-us';
     });
-    if (usVoices.length === 0) return null;
     // Prefer natural/neural/Google/Microsoft voices
     const preferred = ['google us', 'natural', 'neural', 'samantha', 'david', 'zira', 'aria', 'jenny', 'guy'];
+    const pool = usVoices.length > 0 ? usVoices : voices.filter(v => (v.lang || '').toLowerCase().startsWith('en'));
+    if (pool.length === 0) return null;
     for (const kw of preferred) {
-        const found = usVoices.find(v => v.name.toLowerCase().includes(kw));
+        const found = pool.find(v => v.name.toLowerCase().includes(kw));
         if (found) return found;
     }
-    return usVoices[0];
+    return pool[0];
 }
 
 function _getUSVoice() {
@@ -1034,13 +1035,14 @@ function _playNextGoogleChunk() {
         return;
     }
     const chunk = ttsTextChunks[currentTtsChunkIndex];
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en-US&q=${encodeURIComponent(chunk)}`;
+    // YouDao TTS — reliable, no CORS block (same as teg.js)
+    const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(chunk)}&type=2`;
 
     ttsAudioElement.src = url;
     ttsAudioElement.play()
         .then(() => { updatePauseButton(false); })
         .catch(err => {
-            console.error('Google TTS chunk error:', err);
+            console.error('TTS chunk error:', err);
             currentTtsChunkIndex++;
             _playNextGoogleChunk();
         });
