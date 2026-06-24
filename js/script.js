@@ -894,41 +894,72 @@ window.saveCompField = function(key, value) {
     }
 };
 
-// ─── Google Neural TTS Audio Engine ──────────────────────────────────────────
-// Natural, high-quality, professional American English TTS
+// ─── Hybrid American English Audio Engine ─────────────────────────────────────
+// Optimized: SpeechSynthesis (en-US) primary → Google Translate TTS fallback
+// Works on any device (phone, tablet, computer) regardless of locale settings
 let ttsAudioElement = new Audio();
 let ttsTextChunks = [];
 let currentTtsChunkIndex = 0;
 let isTtsPlayingState = false;
 let isTtsPausedState = false;
+let _usVoiceCache = null;
+let _voicesLoaded = false;
 
-function splitTextForGoogleTTS(text, maxLen = 180) {
+function splitTextForTTS(text, maxLen = 180) {
     const chunks = [];
     let rem = text;
     while (rem.length > 0) {
-        if (rem.length <= maxLen) {
-            chunks.push(rem);
-            break;
-        }
+        if (rem.length <= maxLen) { chunks.push(rem); break; }
         let idx = rem.lastIndexOf('. ', maxLen);
         if (idx === -1) idx = rem.lastIndexOf('? ', maxLen);
         if (idx === -1) idx = rem.lastIndexOf('! ', maxLen);
         if (idx === -1) idx = rem.lastIndexOf(', ', maxLen);
         if (idx === -1) idx = rem.lastIndexOf(' ', maxLen);
         if (idx === -1) idx = maxLen;
-        
         chunks.push(rem.substring(0, idx + 1).trim());
         rem = rem.substring(idx + 1).trim();
     }
     return chunks.filter(c => c.length > 0);
 }
 
-window.playAudio = function (text) {
-    window.stopAudio();
-    if (!text) return;
+function _findBestUSVoice() {
+    if (!window.speechSynthesis) return null;
+    const voices = window.speechSynthesis.getVoices();
+    if (!voices || voices.length === 0) return null;
+    // Filter strictly en-US voices
+    const usVoices = voices.filter(v => {
+        const lang = (v.lang || '').toLowerCase().replace('_', '-');
+        return lang === 'en-us';
+    });
+    if (usVoices.length === 0) return null;
+    // Prefer natural/neural/Google/Microsoft voices
+    const preferred = ['google us', 'natural', 'neural', 'samantha', 'david', 'zira', 'aria', 'jenny', 'guy'];
+    for (const kw of preferred) {
+        const found = usVoices.find(v => v.name.toLowerCase().includes(kw));
+        if (found) return found;
+    }
+    return usVoices[0];
+}
 
-    // Clean up text
-    const cleanedText = text
+function _getUSVoice() {
+    if (_usVoiceCache) return _usVoiceCache;
+    _usVoiceCache = _findBestUSVoice();
+    return _usVoiceCache;
+}
+
+// Pre-load voices
+if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+        _usVoiceCache = null;
+        _voicesLoaded = true;
+        _getUSVoice();
+        console.log('Voices loaded. Best US voice:', _usVoiceCache ? _usVoiceCache.name : 'none found');
+    };
+}
+
+function _cleanText(text) {
+    return text
         .replace(/<[^>]+>/g, ' ')
         .replace(/[\/\(\)\[\]]/g, ' ')
         .replace(/&amp;/g, 'and')
@@ -937,54 +968,99 @@ window.playAudio = function (text) {
         .replace(/&nbsp;/g, ' ')
         .replace(/\s+/g, ' ')
         .trim();
+}
 
-    ttsTextChunks = splitTextForGoogleTTS(cleanedText, 180);
-    currentTtsChunkIndex = 0;
-    isTtsPlayingState = true;
-    isTtsPausedState = false;
-    
-    if (ttsTextChunks.length > 0) {
-        playNextTtsChunk();
+window.playAudio = function (text) {
+    window.stopAudio();
+    if (!text) return;
+    const cleaned = _cleanText(text);
+    if (!cleaned) return;
+
+    // Try SpeechSynthesis first (best quality, works offline)
+    const voice = _getUSVoice();
+    if (window.speechSynthesis && voice) {
+        _playWithSpeechSynthesis(cleaned, voice);
+    } else {
+        // Fallback to Google Translate TTS
+        _playWithGoogleTTS(cleaned);
     }
 };
 
-function playNextTtsChunk() {
+function _playWithSpeechSynthesis(text, voice) {
+    try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.voice = voice;
+        utterance.lang = 'en-US';
+        utterance.rate = 0.95;  // Slightly slow for clarity
+        utterance.pitch = 1.0;
+
+        utterance.onstart = () => {
+            isTtsPlayingState = true;
+            isTtsPausedState = false;
+            updatePauseButton(false);
+        };
+        utterance.onend = () => {
+            isTtsPlayingState = false;
+            updatePauseButton(false);
+        };
+        utterance.onerror = (e) => {
+            console.warn('SpeechSynthesis error, falling back to Google TTS:', e.error);
+            _playWithGoogleTTS(text);
+        };
+
+        isTtsPlayingState = true;
+        window.speechSynthesis.speak(utterance);
+    } catch (e) {
+        console.warn('SpeechSynthesis exception, falling back:', e);
+        _playWithGoogleTTS(text);
+    }
+}
+
+function _playWithGoogleTTS(text) {
+    ttsTextChunks = splitTextForTTS(text, 180);
+    currentTtsChunkIndex = 0;
+    isTtsPlayingState = true;
+    isTtsPausedState = false;
+    if (ttsTextChunks.length > 0) {
+        _playNextGoogleChunk();
+    }
+}
+
+function _playNextGoogleChunk() {
     if (currentTtsChunkIndex >= ttsTextChunks.length) {
         isTtsPlayingState = false;
         updatePauseButton(false);
         return;
     }
-    
     const chunk = ttsTextChunks[currentTtsChunkIndex];
-    const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(chunk)}&type=2`;
-    
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en-US&q=${encodeURIComponent(chunk)}`;
+
     ttsAudioElement.src = url;
     ttsAudioElement.play()
-        .then(() => {
-            updatePauseButton(false);
-        })
+        .then(() => { updatePauseButton(false); })
         .catch(err => {
-            console.error("Error playing TTS chunk:", err);
-            // Skip to next chunk
+            console.error('Google TTS chunk error:', err);
             currentTtsChunkIndex++;
-            playNextTtsChunk();
+            _playNextGoogleChunk();
         });
 }
 
 ttsAudioElement.onended = () => {
     if (isTtsPlayingState && !isTtsPausedState) {
         currentTtsChunkIndex++;
-        // Natural pause between sentences
         setTimeout(() => {
             if (isTtsPlayingState && !isTtsPausedState) {
-                playNextTtsChunk();
+                _playNextGoogleChunk();
             }
         }, 400);
     }
 };
 
 window.stopAudio = function () {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
     ttsAudioElement.pause();
+    ttsAudioElement.removeAttribute('src');
     ttsTextChunks = [];
     currentTtsChunkIndex = 0;
     isTtsPlayingState = false;
@@ -994,7 +1070,11 @@ window.stopAudio = function () {
 
 window.pauseAudio = function () {
     if (isTtsPlayingState && !isTtsPausedState) {
-        ttsAudioElement.pause();
+        if (window.speechSynthesis && window.speechSynthesis.speaking) {
+            window.speechSynthesis.pause();
+        } else {
+            ttsAudioElement.pause();
+        }
         isTtsPausedState = true;
         updatePauseButton(true);
     }
@@ -1003,23 +1083,20 @@ window.pauseAudio = function () {
 window.resumeAudio = function () {
     if (isTtsPlayingState && isTtsPausedState) {
         isTtsPausedState = false;
-        ttsAudioElement.play()
-            .then(() => {
-                updatePauseButton(false);
-            })
-            .catch(err => {
-                console.error("Error resuming audio:", err);
-            });
+        if (window.speechSynthesis && window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+            updatePauseButton(false);
+        } else {
+            ttsAudioElement.play()
+                .then(() => { updatePauseButton(false); })
+                .catch(err => { console.error('Resume error:', err); });
+        }
     }
 };
 
 window.togglePauseAudio = function () {
     if (isTtsPlayingState) {
-        if (isTtsPausedState) {
-            window.resumeAudio();
-        } else {
-            window.pauseAudio();
-        }
+        isTtsPausedState ? window.resumeAudio() : window.pauseAudio();
     }
 };
 
@@ -1033,7 +1110,11 @@ function updatePauseButton(isPaused) {
 window.courseAudio = { play: window.playAudio, stop: window.stopAudio, pause: window.pauseAudio, resume: window.resumeAudio, togglePause: window.togglePauseAudio };
 
 window.initAudioEngine = function () {
-    console.log('C1 Google Neural American English Audio Engine Initialized');
+    console.log('C1 Hybrid American English Audio Engine Initialized');
+    // Force voice loading
+    if (window.speechSynthesis) {
+        window.speechSynthesis.getVoices();
+    }
 };
 
 window.sendTaskToTeacher = function(unitId, unitTitle, taskText) {
