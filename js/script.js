@@ -231,6 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
     setupProtection();
     setupHeaderScroll();
+    registerClassAttendance();
+    injectAttendancePanel();
 });
 
 // ─── Header Scroll Shadow ────────────────────────────────────────────────────
@@ -1136,5 +1138,111 @@ window.sendTaskToTeacher = function(unitId, unitTitle, taskText) {
                      
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(baseText)}`;
     window.open(whatsappUrl, '_blank');
+};
+
+// ─── Class Attendance Registry ────────────────────────────────────────────────
+// Records: student name + date/time each time the app is opened (once per day).
+// Stored per-student in localStorage.
+
+function getAttendanceKey() {
+    return getScopedKey('c1_attendance');
+}
+
+function loadAttendanceLog() {
+    try {
+        const raw = localStorage.getItem(getAttendanceKey());
+        return raw ? JSON.parse(raw) : [];
+    } catch(e) {
+        return [];
+    }
+}
+
+function saveAttendanceLog(log) {
+    localStorage.setItem(getAttendanceKey(), JSON.stringify(log));
+}
+
+function registerClassAttendance() {
+    const student = getActiveStudent();
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const timeStr = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+
+    const log = loadAttendanceLog();
+    const todayISO = now.toISOString().slice(0, 10);
+    const alreadyToday = log.some(entry => entry.date === todayISO);
+
+    if (!alreadyToday) {
+        log.push({ student, date: todayISO, dateLabel: dateStr, time: timeStr });
+        saveAttendanceLog(log);
+    }
+}
+
+function injectAttendancePanel() {
+    const existing = document.getElementById('attendance-panel-wrapper');
+    if (existing) existing.remove();
+
+    const student = getActiveStudent();
+    const log = loadAttendanceLog();
+    const sorted = [...log].reverse();
+    let rowsHtml = '';
+
+    if (sorted.length === 0) {
+        rowsHtml = '<p style="color:var(--text-muted);font-size:0.85rem;margin:0;">No classes registered yet.</p>';
+    } else {
+        sorted.forEach((entry, i) => {
+            const rowBg = i % 2 === 0 ? 'rgba(0,191,165,0.05)' : 'rgba(233,30,99,0.03)';
+            rowsHtml += `
+                <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:9px 14px;border-radius:8px;background:${rowBg};margin-bottom:4px;">
+                    <span style="font-size:1.1rem;">📅</span>
+                    <div>
+                        <div style="font-size:0.85rem;font-weight:600;color:var(--text-primary);text-transform:capitalize;">${entry.dateLabel}</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);">Student: <strong style="color:var(--accent-indigo);">${entry.student}</strong></div>
+                    </div>
+                    <div style="font-size:0.78rem;color:var(--text-muted);text-align:right;font-variant-numeric:tabular-nums;">⏰ ${entry.time}</div>
+                </div>`;
+        });
+    }
+
+    const totalClasses = log.length;
+    const wrapper = document.createElement('div');
+    wrapper.id = 'attendance-panel-wrapper';
+    wrapper.style.cssText = 'max-width:1100px;margin:0 auto 20px;padding:0 20px;';
+
+    wrapper.innerHTML = `
+        <details id="attendance-details" style="background:var(--bg-secondary);border:1.5px solid var(--border-color-strong);border-radius:var(--border-radius);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <summary style="padding:14px 20px;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-size:0.92rem;font-weight:700;color:var(--accent-teal);list-style:none;user-select:none;">
+                <span style="font-size:1.2rem;">📋</span>
+                <span>Class Attendance Register</span>
+                <span style="margin-left:auto;background:linear-gradient(135deg,#1de9b6,#00bfa5);color:#fff;border-radius:50px;padding:2px 11px;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;">${totalClasses} class${totalClasses !== 1 ? 'es' : ''}</span>
+                <span style="font-size:0.85rem;opacity:0.5;margin-left:4px;">▾</span>
+            </summary>
+            <div style="padding:14px 18px 18px;border-top:1px solid var(--border-color);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <span style="font-size:0.78rem;color:var(--text-muted);">Active student: <strong style="color:var(--accent-indigo);">${student}</strong></span>
+                    <button onclick="clearAttendanceLog()" style="background:rgba(225,29,72,0.06);border:1px solid rgba(225,29,72,0.2);color:#e11d48;padding:4px 12px;border-radius:6px;font-size:0.75rem;cursor:pointer;">🗑 Clear history</button>
+                </div>
+                <div id="attendance-rows">${rowsHtml}</div>
+            </div>
+        </details>
+    `;
+
+    const mainContent = document.getElementById('main-content');
+    if (mainContent && mainContent.parentNode) {
+        mainContent.parentNode.insertBefore(wrapper, mainContent);
+    }
+}
+
+window.clearAttendanceLog = function() {
+    if (!confirm('Clear attendance log for this student? This cannot be undone.')) return;
+    saveAttendanceLog([]);
+    injectAttendancePanel();
+};
+
+// Refresh attendance panel when switching students
+const _origSwitchStudentAtt = window.switchStudent;
+window.switchStudent = function(name) {
+    _origSwitchStudentAtt(name);
+    registerClassAttendance();
+    injectAttendancePanel();
 };
 
