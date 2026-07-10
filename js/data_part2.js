@@ -285,7 +285,8 @@ courseData.units.push(
         videos: [
             { title: "The Psychology of Self-Deception", channel: "TED", duration: "14:33", url: "https://www.youtube.com/watch?v=YCRf5-8FHGE" },
             { title: "How Cognitive Biases Mess Up Your Decisions", channel: "Veritasium", duration: "18:04", url: "https://www.youtube.com/watch?v=vKA4w2O61Xo" },
-            { title: "Thinking, Fast and Slow — Daniel Kahneman", channel: "Talks at Google", duration: "1:02:49", url: "https://www.youtube.com/watch?v=CjVQJdIrDJ0" }
+            { title: "Thinking, Fast and Slow — Daniel Kahneman", channel: "Talks at Google", duration: "1:02:49", url: "https://www.youtube.com/watch?v=CjVQJdIrDJ0" },
+            { title: "10 English Idioms for Being Annoyed & Angry", channel: "English Lessons", duration: "10:15", url: "https://www.youtube.com/watch?v=l4tujYinfoM" }
         ]
     }
 );
