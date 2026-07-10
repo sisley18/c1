@@ -587,13 +587,13 @@ function compSlotsEv(keyBase) {
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
             <span style="font-size:0.82rem;color:#a5b4fc;min-width:90px;font-weight:600;">👤 Student ${s}:</span>
             <input type="text" value="${savedName}" placeholder="Name..."
-                onchange="saveCompFieldEv('${nk}',this.value)"
+                oninput="saveCompFieldEv('${nk}',this.value)"
                 style="background:rgba(0,0,0,0.25);border:1px solid rgba(129,140,248,0.35);
                 color:#fff;padding:4px 8px;border-radius:4px;font-size:0.82rem;
                 outline:none;width:140px;font-family:var(--font-body);">
             <span style="font-size:0.8rem;color:#a5b4fc;">📅</span>
             <input type="date" value="${savedDate}"
-                onchange="saveCompFieldEv('${dk}',this.value)"
+                oninput="saveCompFieldEv('${dk}',this.value)"
                 style="background:rgba(0,0,0,0.25);border:1px solid rgba(129,140,248,0.35);
                 color:#fff;padding:3px 7px;border-radius:4px;font-size:0.82rem;
                 outline:none;color-scheme:dark;">

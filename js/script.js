@@ -852,13 +852,13 @@ function compSlots(keyBase) {
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
             <span style="font-size:0.82rem;color:var(--accent-indigo);min-width:90px;font-weight:600;">👤 Student ${s}:</span>
             <input type="text" value="${savedName}" placeholder="Name..."
-                onchange="saveCompField('${nk}',this.value)"
+                oninput="saveCompField('${nk}',this.value)"
                 style="background:rgba(255,255,255,0.7);border:1.5px solid rgba(90,63,214,0.2);
                 color:var(--text-primary);padding:4px 8px;border-radius:4px;font-size:0.82rem;
                 outline:none;width:140px;font-family:var(--font-body);">
             <span style="font-size:0.8rem;color:var(--accent-indigo);">📅</span>
             <input type="date" value="${savedDate}"
-                onchange="saveCompField('${dk}',this.value)"
+                oninput="saveCompField('${dk}',this.value)"
                 style="background:rgba(255,255,255,0.7);border:1.5px solid rgba(90,63,214,0.2);
                 color:var(--text-primary);padding:3px 7px;border-radius:4px;font-size:0.82rem;
                 outline:none;">
