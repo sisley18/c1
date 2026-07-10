@@ -22,7 +22,7 @@ listening_transcripts = re.findall(r"listening\s*:\s*\{[^}]*transcript\s*:\s*\"(
 
 texts = set(vocab_words + idiom_words + listening_transcripts)
 
-base_url = "https://dict.youdao.com/dictvoice?audio={}&type=2"
+base_url = "https://translate.google.com/translate_tts?ie=UTF-8&tl=en-US&client=tw-ob&q={}"
 failed = []
 for txt in texts:
     if not txt:

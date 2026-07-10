@@ -1027,14 +1027,8 @@ window.playAudio = function (text) {
     const cleaned = _cleanText(text);
     if (!cleaned) return;
 
-    // Try SpeechSynthesis first (best quality, works offline)
-    const voice = _getUSVoice();
-    if (window.speechSynthesis && voice) {
-        _playWithSpeechSynthesis(cleaned, voice);
-    } else {
-        // Fallback to Google Translate TTS
-        _playWithGoogleTTS(cleaned);
-    }
+    // Use Google Translate TTS directly for natural, consistent sound across all devices
+    _playWithGoogleTTS(cleaned);
 };
 
 function _playWithSpeechSynthesis(text, voice) {
@@ -1085,8 +1079,8 @@ function _playNextGoogleChunk() {
         return;
     }
     const chunk = ttsTextChunks[currentTtsChunkIndex];
-    // YouDao TTS — reliable, no CORS block (same as teg.js)
-    const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(chunk)}&type=2`;
+    // Google Translate TTS - high quality neural US English voice
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en-US&client=tw-ob&q=${encodeURIComponent(chunk)}`;
 
     ttsAudioElement.src = url;
     ttsAudioElement.play()
@@ -1101,11 +1095,9 @@ function _playNextGoogleChunk() {
 ttsAudioElement.onended = () => {
     if (isTtsPlayingState && !isTtsPausedState) {
         currentTtsChunkIndex++;
-        setTimeout(() => {
-            if (isTtsPlayingState && !isTtsPausedState) {
-                _playNextGoogleChunk();
-            }
-        }, 400);
+        if (isTtsPlayingState && !isTtsPausedState) {
+            _playNextGoogleChunk();
+        }
     }
 };
 
