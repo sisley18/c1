@@ -734,6 +734,51 @@ function renderCurriculum() {
                             </div>
                         `).join('') : ''}
                     </div>
+                    
+                    ${unit.functionalLanguage.listening ? `
+                    <div style="margin-top: 30px; background: rgba(255,255,255,0.45); padding: 25px; border-radius: 14px; border: 1.5px solid var(--border-color);">
+                        <h4 style="color: var(--accent-indigo); margin-top: 0;">🎧 Listening: ${unit.functionalLanguage.listening.title}</h4>
+                        <div style="display:flex; align-items:center; gap:14px; margin: 15px 0;">
+                            <button class="play-btn" style="width:44px; height:44px; font-size:1.2rem; flex-shrink:0;" onclick="playAudio('${unit.functionalLanguage.listening.transcript.replace(/'/g, "\\'")}')">▶</button>
+                            <span style="font-size:0.9rem; color:var(--text-secondary);">Audio Track — American English Dialogue</span>
+                        </div>
+                        <button class="btn" style="margin-bottom: 15px; background:rgba(255,255,255,0.6); border:1.5px solid var(--border-color);" onclick="toggleTranscript(this)">Show Transcript</button>
+                        <div class="transcript-box" style="display: none; margin-bottom: 20px; font-style: italic; color: var(--text-primary);">
+                            ${unit.functionalLanguage.listening.transcript}
+                        </div>
+                        <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">Comprehension Questions:</p>
+                        ${renderQuiz(unit.functionalLanguage.listening.questions)}
+                        ${compBar(unit.id, 'func_listening')}
+                    </div>
+                    ` : ''}
+
+                    ${unit.functionalLanguage.fillBlanks ? `
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: var(--accent-electric); margin-bottom: 15px;">✏️ Fill in the Blanks</h4>
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            ${unit.functionalLanguage.fillBlanks.map((fb, idx) => `
+                            <div style="background: rgba(255,255,255,0.45); border: 1.5px solid var(--border-color); padding: 15px; border-radius: 10px;">
+                                <p style="font-weight: 600; margin-bottom: 10px; color: var(--text-primary);">${idx + 1}. ${fb.sentence}</p>
+                                <div class="options-grid" style="justify-content: flex-start;">
+                                    ${fb.options.map((opt, i) => `
+                                        <button class="btn" style="background:rgba(255,255,255,0.6); border:1.5px solid var(--border-color); color:var(--text-primary);" 
+                                        onclick="checkAnswer(this, ${i === fb.correct})">${opt}</button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            `).join('')}
+                        </div>
+                        ${compBar(unit.id, 'func_fillblanks')}
+                    </div>
+                    ` : ''}
+
+                    ${unit.functionalLanguage.multipleChoice ? `
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: var(--accent-teal); margin-bottom: 15px;">🤔 Multiple Choice</h4>
+                        ${renderQuiz(unit.functionalLanguage.multipleChoice)}
+                        ${compBar(unit.id, 'func_multiplechoice')}
+                    </div>
+                    ` : ''}
 
                     <h4 style="margin: 30px 0 15px; color: var(--accent-electric);">🗣️ Real-World Application Task</h4>
                     <div style="background: rgba(255,255,255,0.45); padding: 25px; border-radius: 14px; border: 1.5px dashed rgba(90,63,214,0.2); display: flex; flex-direction: column; gap: 15px;">

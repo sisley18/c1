@@ -260,6 +260,26 @@ courseData.units.push(
                 { phrase: "To get the runaround", def: "to be given evasive, confusing, or delayed answers when dealing with a customer support service", example: "I called the airline three times to get a refund but kept getting the runaround." },
                 { phrase: "To be at your wits' end", def: "to be completely overwhelmed, stressed, and exhausted by a difficult problem that you cannot solve", example: "I've tried fixing my internet connection all afternoon and I'm honestly at my wits' end." }
             ],
+            listening: {
+                title: "What Makes People Angry?",
+                transcript: "I've been dealing with my internet provider all morning and I'm honestly at my wits' end. I called them three times and just kept getting the runaround. Every single representative told me something different! Plus, they raised my bill again. It's a complete rip-off. To top it all off, the hold music was driving me up the wall. I just can't deal with this level of incompetence today.",
+                questions: [
+                    { q: "Why is the speaker at their wits' end?", options: ["They lost their internet router.", "They have been dealing with their internet provider all morning.", "They are moving to a new house."], correct: 1 },
+                    { q: "What does the speaker mean by 'getting the runaround'?", options: ["Being transferred to helpful agents.", "Being asked to run outside.", "Being given confusing or evasive answers."], correct: 2 },
+                    { q: "Why does the speaker think the service is a 'rip-off'?", options: ["Because they tore the bill.", "Because the bill was raised again.", "Because the internet is too fast."], correct: 1 }
+                ]
+            },
+            fillBlanks: [
+                { sentence: "I've been trying to fix this code for 5 hours and I'm at my _____.", options: ["wits' end", "runaround", "rip-off"], correct: 0 },
+                { sentence: "I paid £50 for this tiny sandwich, what a _____!", options: ["drive up the wall", "rip-off", "runaround"], correct: 1 },
+                { sentence: "They keep transferring my call to different departments; I'm getting the _____.", options: ["rip-off", "runaround", "wits' end"], correct: 1 },
+                { sentence: "His constant tapping on the desk is driving me _____.", options: ["up the wall", "runaround", "rip-off"], correct: 0 }
+            ],
+            multipleChoice: [
+                { q: "If someone is 'driving you up the wall', they are:", options: ["Helping you paint.", "Making you extremely irritated.", "Teaching you how to drive."], correct: 1 },
+                { q: "When you 'get the runaround', you:", options: ["Exercise at the track.", "Receive direct, helpful answers.", "Are given evasive and delayed answers."], correct: 2 },
+                { q: "Being at your 'wits' end' means:", options: ["You are very intelligent.", "You are overwhelmed and cannot solve a problem.", "You have reached the end of a book."], correct: 1 }
+            ],
             task: "You spent your whole morning dealing with a bank whose website keeps crashing. Write a frustrated venting text message to your friend (3 sentences) using at least two of the phrases above."
         },
         videos: [
