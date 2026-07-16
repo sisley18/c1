@@ -4,29 +4,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progress Test — Units 1–4 | Advanced English C1</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Progress Exam 4 — Units 1–4 | Advanced English C1</title>
     <style>
+        :root {
+            --bg-primary: #faf9f7;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e1b18;
+            --text-secondary: #4a4a4a;
+            --text-muted: #737373;
+            --accent-teal: #0d9488;
+            --accent-indigo: #4f46e5;
+            --accent-electric: #2563eb;
+            --accent-gold: #d97706;
+            --accent-purple: #9333ea;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-color-strong: rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 6px 20px rgba(90, 63, 214, 0.15);
+            --gradient-accent: linear-gradient(135deg, #4f46e5, #0d9488);
+            --gradient-teal: linear-gradient(135deg, #0f766e, #14b8a6);
+            --font-heading: 'Outfit', -apple-system, system-ui, sans-serif;
+            --font-body: 'Inter', -apple-system, system-ui, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #main-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        #main-header .container {
+            padding: 15px 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-indigo);
+        }
+
         .exam-banner {
-            background: linear-gradient(135deg, rgba(0, 191, 165, .12), rgba(233, 30, 99, .08), rgba(255, 109, 0, .08));
-            border: 2px solid rgba(0, 191, 165, .35);
-            border-radius: 18px;
+            background: var(--bg-secondary);
+            border-top: 4px solid var(--accent-indigo);
+            border-radius: 12px;
             padding: 2.5rem;
-            margin: 100px 0 2rem;
-            text-align: center
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
         }
 
         .exam-banner h1 {
+            margin: 0 0 10px 0;
             font-family: var(--font-heading);
+            color: var(--accent-indigo);
             font-size: 2.2rem;
-            color: var(--text-primary);
-            margin-bottom: .5rem
         }
 
         .exam-banner p {
             color: var(--text-secondary);
-            font-size: 1.1rem
+            margin: 0 0 20px 0;
+            font-size: 1.05rem;
         }
 
         .exam-meta {
@@ -34,287 +101,232 @@
             justify-content: center;
             gap: 1.5rem;
             flex-wrap: wrap;
-            margin-top: 1rem
         }
 
         .exam-meta span {
-            background: rgba(0, 191, 165, .1);
-            border: 1px solid rgba(0, 191, 165, .35);
-            padding: .4rem 1.2rem;
-            border-radius: 20px;
-            font-size: .85rem;
-            color: var(--text-primary);
-            font-weight: 500
+            background: rgba(90, 63, 214, 0.06);
+            color: var(--accent-indigo);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
         }
 
         .exam-section {
             background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 18px;
+            border-radius: 16px;
             padding: 2rem;
+            box-shadow: var(--shadow-sm);
             margin-bottom: 2rem;
-            box-shadow: var(--shadow-sm)
+            border: 1px solid var(--border-color);
         }
 
         .sec-label {
             display: inline-block;
-            padding: .4rem 1.2rem;
-            border-radius: 20px;
-            font-size: .8rem;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 6px;
             font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1.2rem;
-            color: #fff
+            margin-bottom: 1.5rem;
         }
 
         .sec-teal {
-            background: rgba(0, 191, 165, .85);
-            border: 1px solid #00bfa5
+            background: var(--gradient-teal);
         }
 
         .sec-pink {
-            background: rgba(233, 30, 99, .75);
-            border: 1px solid #e91e63
+            background: linear-gradient(135deg, #e91e63, #ff4081);
         }
 
-        .sec-orange {
-            background: rgba(255, 109, 0, .8);
-            border: 1px solid #ff6d00
+        .reading-box {
+            background: rgba(13, 148, 136, 0.04);
+            border-left: 4px solid var(--accent-teal);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-primary);
         }
 
         .ebox {
-            background: rgba(0, 191, 165, .04);
-            border-left: 4px solid #00bfa5;
-            border-radius: 10px;
-            padding: 1.2rem;
-            margin: 1.2rem 0
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .ebox p.qtext {
+        .ebox:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .qtext {
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: .8rem
+            margin: 0 0 1rem 0;
+            font-size: 1.05rem;
+        }
+
+        .opts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .opts label {
             display: flex;
             align-items: center;
-            gap: .7rem;
-            padding: .5rem .8rem;
+            background: rgba(0, 0, 0, 0.02);
+            padding: 10px 15px;
             border-radius: 8px;
+            border: 1px solid var(--border-color);
             cursor: pointer;
-            color: var(--text-secondary);
-            transition: background .2s;
-            margin: .25rem 0
+            transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
         .opts label:hover {
-            background: rgba(0, 191, 165, .1)
+            background: rgba(0, 0, 0, 0.04);
+            border-color: var(--border-color-strong);
         }
 
-        .opts input {
-            accent-color: #00bfa5
-        }
-
-        .transcript {
-            background: rgba(255, 109, 0, .05);
-            border-left: 4px solid #ff6d00;
-            padding: 1.5rem;
-            border-radius: 10px;
-            line-height: 1.9;
-            color: var(--text-secondary);
-            margin: 1rem 0
-        }
-
-        .tbtn {
-            background: rgba(0, 191, 165, .12);
-            border: 2px solid #00bfa5;
-            color: var(--text-primary);
-            padding: .6rem 1.4rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            transition: background .2s
-        }
-
-        .tbtn:hover {
-            background: rgba(0, 191, 165, .25)
+        .opts input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: var(--accent-teal);
         }
 
         textarea {
             width: 100%;
-            min-height: 100px;
-            background: rgba(0, 191, 165, .03);
+            min-height: 120px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.8);
             border: 2px solid var(--border-color-strong);
             color: var(--text-primary);
             padding: 1rem;
             border-radius: 10px;
             font-family: inherit;
-            font-size: .95rem;
-            resize: vertical
+            font-size: 0.95rem;
+            resize: vertical;
         }
 
         textarea:focus {
             outline: none;
-            border-color: #00bfa5
-        }
-
-        textarea::placeholder {
-            color: var(--text-muted)
+            border-color: #e91e63;
         }
 
         .wc {
-            font-size: .8rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-align: right;
-            margin-top: .3rem
-        }
-
-        .hint {
-            font-size: .85rem;
-            color: #e91e63;
-            margin: .4rem 0;
-            font-style: italic
+            margin-top: 0.3rem;
         }
 
         .check-btn {
             background: var(--gradient-teal);
             border: none;
             color: #fff;
-            padding: .9rem 2.2rem;
+            padding: 0.9rem 2.2rem;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 700;
             font-size: 1rem;
             margin-top: 1.5rem;
             display: block;
-            transition: transform .2s;
-            box-shadow: var(--shadow-glow)
+            transition: transform 0.2s;
+            box-shadow: var(--shadow-glow);
         }
 
         .check-btn:hover {
-            transform: translateY(-2px)
+            transform: translateY(-2px);
         }
 
         .score-reveal {
-            background: linear-gradient(135deg, rgba(0, 191, 165, .12), rgba(29, 233, 182, .08));
-            border: 2px solid #00bfa5;
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.12), rgba(20, 184, 166, 0.08));
+            border: 2px solid var(--accent-teal);
             border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
             margin-top: 1rem;
-            display: none
+            display: none;
         }
 
         .score-num {
             font-size: 3rem;
             font-weight: 800;
-            color: #e91e63;
-            font-family: var(--font-heading)
+            color: var(--accent-teal);
+            font-family: var(--font-heading);
         }
 
         .ms-box {
-            background: rgba(233, 30, 99, .04);
-            border: 2px solid rgba(233, 30, 99, .2);
+            background: rgba(233, 30, 99, 0.04);
+            border: 2px solid rgba(233, 30, 99, 0.2);
             border-radius: 18px;
             padding: 2rem;
-            margin-top: 2rem
+            margin-top: 2rem;
         }
 
         .ms-box h3 {
             color: #e91e63;
             margin-bottom: 1.5rem;
             font-size: 1.4rem;
-            font-family: var(--font-heading)
+            font-family: var(--font-heading);
         }
 
         .ak {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-            gap: .5rem;
-            margin: 1rem 0
+            gap: 0.5rem;
+            margin: 1rem 0;
         }
 
         .ai {
-            background: rgba(0, 191, 165, .06);
-            border: 1px solid rgba(0, 191, 165, .2);
-            padding: .6rem 1rem;
+            background: rgba(13, 148, 136, 0.06);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            padding: 0.6rem 1rem;
             border-radius: 8px;
-            font-size: .9rem;
-            color: var(--text-secondary)
+            font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
         .ai strong {
-            color: #e91e63
-        }
-
-        .gbounds table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: .8rem
-        }
-
-        .gbounds th {
-            background: rgba(0, 191, 165, .2);
-            color: var(--text-primary);
-            padding: .7rem 1rem;
-            text-align: left;
-            font-size: .9rem
-        }
-
-        .gbounds td {
-            padding: .6rem 1rem;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: .9rem
+            color: var(--accent-teal);
         }
 
         .ms-toggle {
-            background: rgba(233, 30, 99, .08);
+            background: rgba(233, 30, 99, 0.08);
             border: 2px solid #e91e63;
             color: #e91e63;
-            padding: .8rem 2rem;
+            padding: 0.8rem 2rem;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 700;
             margin: 2rem auto;
             display: block;
-            transition: background .2s
+            transition: background 0.2s;
         }
 
         .ms-toggle:hover {
-            background: rgba(233, 30, 99, .15)
+            background: rgba(233, 30, 99, 0.15);
         }
 
         .hidden {
-            display: none
+            display: none;
         }
 
         .mark-hint {
             color: var(--text-muted);
-            font-size: .85rem;
-            margin-bottom: 1rem
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
         }
 
-        .final-badge {
-            background: linear-gradient(135deg, rgba(0, 191, 165, .12), rgba(233, 30, 99, .08));
-            border: 2px solid #00bfa5;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+        footer {
             text-align: center;
-            color: #e91e63;
-            font-weight: 700;
-            font-size: 1.1rem;
-            font-family: var(--font-heading)
-        }
-
-        @media(max-width:600px) {
-            .exam-meta {
-                gap: .8rem
-            }
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -324,178 +336,112 @@
         <div class="container">
             <nav>
                 <div class="logo">Advanced<span>English</span> C1</div>
-                <a href="index.html" style="color:var(--text-muted);font-size:.9rem;">← Back to Course</a>
+                <a href="index.html" style="color:var(--text-muted);font-size:0.9rem;text-decoration:none;">&larr; Back to Course</a>
             </nav>
         </div>
     </header>
 
     <div class="container">
-        <div class="final-badge">📋 Cumulative Progress Test — Covering all key C1 concepts from Units 1–4</div>
-
         <div class="exam-banner">
             <h1>📝 Progress Test — Units 1–4</h1>
-            <p>Rhetoric &amp; Persuasion · Bioethics &amp; Society · Geopolitics &amp; Diplomacy · Cognitive Science</p>
+            <p>Reading Comprehension &amp; Critical Thinking</p>
             <div class="exam-meta">
-                <span>⏱ 75 minutes</span>
+                <span>⏱ 60 minutes</span>
                 <span>📊 50 marks</span>
                 <span>🎯 Pass: 30/50</span>
-                <span>📚 Units 1–4</span>
             </div>
         </div>
 
-        <!-- SECTION A: LISTENING -->
+        <!-- SECTION A: READING COMPREHENSION -->
         <div class="exam-section">
-            <span class="sec-label sec-teal">🎧 Section A — Listening Comprehension — 20 marks</span>
-            <p class="mark-hint">Read the transcript, then answer. Each correct answer = 2 marks.</p>
-            <div style="display:flex; gap:12px; align-items:center; margin-bottom:1rem; flex-wrap:wrap;">
-                <button id="listen-btn" onclick="listenTranscript()" style="background:var(--gradient-teal); border:none; color:#fff; padding:.6rem 1.4rem; border-radius:8px; cursor:pointer; font-weight:700; font-size:0.95rem; display:flex; align-items:center; gap:8px; box-shadow: var(--shadow-glow);">
-                    &#x1F50A; Listen
-                </button>
-                <button onclick="stopListen()" style="background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; padding:.6rem 1.2rem; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.9rem;">
-                    &#x23F9;&#xFE0F; Stop
-                </button>
-                <button class="tbtn" onclick="document.getElementById('tr').classList.toggle('hidden')" style="margin-bottom:0;">&#x1F4C4; Show / Hide Transcript</button>
-            </div>
-            <div id="tr" class="transcript hidden">
-                <strong>Transcript: "Persuasion, Ethics, and the Human Mind — A Cross-Disciplinary Perspective"</strong><br><br>
-                Welcome to Thinking Forward, the podcast that brings together ideas from across the academic spectrum. Today we have Dr. Helena Marsh, a professor of applied philosophy and cognitive science at the University of Edinburgh, here to discuss the intersection of rhetoric, bioethics, international affairs, and human cognition.<br><br>
-                Dr. Marsh, let's start with rhetoric. How relevant is it in the twenty-first century?<br><br>
-                Enormously relevant. Aristotle identified three modes of persuasion — ethos, pathos, and logos — over two thousand years ago, and they remain the foundation of every persuasive communication today. What has changed is the medium. In the digital age, algorithms create filter bubbles that reinforce existing beliefs rather than challenging them, and the rise of deepfakes has blurred the line between authentic and manufactured discourse. The result is what many scholars call a crisis of rhetoric.<br><br>
-                That connects to bioethics too, doesn't it?<br><br>
-                Absolutely. Take CRISPR gene-editing technology. It has the potential to eradicate hereditary diseases like sickle cell anaemia, but it also opens the door to designer babies — where parents select traits like intelligence or physical appearance. Critics warn this could create a new form of inequality based on genetic privilege. The ethical questions around germline editing — modifications passed down to future generations — demand the kind of rigorous argumentation that rhetoric teaches us.<br><br>
-                And how does geopolitics fit into this picture?<br><br>
-                Well, the world has shifted from a unipolar order after the Soviet Union collapsed in nineteen ninety-one to a complex multipolar system. China, India, and Brazil have emerged as major powers. Joseph Nye's concept of soft power — influencing others through culture and values rather than military force — has become central to diplomacy. South Korea's Korean Wave is a perfect example: K-pop and dramas have generated billions in revenue and enormous diplomatic goodwill.<br><br>
-                Finally, what role does cognitive science play in all of this?<br><br>
-                A crucial one. Daniel Kahneman and Amos Tversky showed that humans are far less rational than we assumed. Cognitive biases like confirmation bias — seeking information that supports what we already believe — and the anchoring effect — being swayed by the first information we receive — distort our judgment in politics, medicine, and everyday decisions. Metacognition, the ability to think about our own thinking, is the antidote. Research shows that students who practise metacognitive strategies consistently outperform those who don't. The prefrontal cortex is the brain region most closely linked to these reflective processes.
+            <span class="sec-label sec-teal">📖 Section A — Reading Comprehension — 30 marks</span>
+            <p class="mark-hint">Read the text and answer the multiple-choice questions. Each correct answer = 6 marks.</p>
+            
+            <div class="reading-box">
+                <strong>"The Intersection of Influence: Rhetoric, Bioethics, and Geopolitics"</strong><br><br>
+                In the 21st century, the intersection of rhetoric, bioethics, soft power, and cognitive biases shapes public discourse in unprecedented ways. When nations debate the ethical implications of CRISPR and designer babies, they do not merely exchange scientific facts. Instead, they deploy complex rhetorical strategies—appealing to ethos, pathos, and logos—to sway international opinion. <br><br>
+                This persuasion is a crucial element of a country’s soft power, as projecting moral leadership and technological responsibility can attract allies more effectively than military might. However, public understanding of these debates is often distorted by cognitive biases. The confirmation bias, for instance, leads individuals to seek out information that aligns with their pre-existing beliefs, creating filter bubbles. Meanwhile, the anchoring effect ensures that the first dramatic headline about genetic engineering anchors all subsequent understanding, making it difficult for nuanced ethical frameworks to gain traction.<br><br>
+                Consequently, navigating the multipolar geopolitical landscape requires not just diplomatic skill, but a profound awareness of human psychology and the mechanics of persuasion. To evaluate global events accurately, citizens must apply metacognition and critically assess both the arguments presented to them and their own cognitive vulnerabilities.
             </div>
 
             <div class="ebox">
-                <p class="qtext">1. How many modes of persuasion did Aristotle identify?</p>
+                <p class="qtext">1. What is the primary role of rhetoric in the debate on bioethics, according to the text?</p>
                 <div class="opts">
-                    <label><input type="radio" name="q1" value="a"> A. Two</label>
-                    <label><input type="radio" name="q1" value="b"> B. Four</label>
-                    <label><input type="radio" name="q1" value="c"> C. Three</label>
+                    <label><input type="radio" name="q1" value="a"> A) To explain the scientific mechanics of CRISPR.</label>
+                    <label><input type="radio" name="q1" value="b"> B) To sway international opinion through persuasion.</label>
+                    <label><input type="radio" name="q1" value="c"> C) To enforce military dominance over other nations.</label>
                 </div>
             </div>
 
             <div class="ebox">
-                <p class="qtext">2. What do algorithms create that reinforces existing beliefs?</p>
+                <p class="qtext">2. How does projecting moral leadership relate to a nation's soft power?</p>
                 <div class="opts">
-                    <label><input type="radio" name="q2" value="a"> A. Filter bubbles</label>
-                    <label><input type="radio" name="q2" value="b"> B. Social networks</label>
-                    <label><input type="radio" name="q2" value="c"> C. News channels</label>
+                    <label><input type="radio" name="q2" value="a"> A) It attracts allies more effectively than military force.</label>
+                    <label><input type="radio" name="q2" value="b"> B) It creates unipolar hegemony.</label>
+                    <label><input type="radio" name="q2" value="c"> C) It isolates a nation from the global community.</label>
                 </div>
             </div>
 
             <div class="ebox">
-                <p class="qtext">3. What technology could potentially eradicate hereditary diseases?</p>
+                <p class="qtext">3. According to the text, what effect does confirmation bias have on public understanding?</p>
                 <div class="opts">
-                    <label><input type="radio" name="q3" value="a"> A. Stem cell therapy</label>
-                    <label><input type="radio" name="q3" value="b"> B. CRISPR gene-editing</label>
-                    <label><input type="radio" name="q3" value="c"> C. Cloning</label>
+                    <label><input type="radio" name="q3" value="a"> A) It leads people to critically evaluate all available evidence.</label>
+                    <label><input type="radio" name="q3" value="b"> B) It makes people rely heavily on the first headline they read.</label>
+                    <label><input type="radio" name="q3" value="c"> C) It causes individuals to only seek information aligning with their existing beliefs.</label>
                 </div>
             </div>
 
             <div class="ebox">
-                <p class="qtext">4. What new form of inequality could designer babies create?</p>
+                <p class="qtext">4. The text suggests that navigating modern geopolitics requires:</p>
                 <div class="opts">
-                    <label><input type="radio" name="q4" value="a"> A. Economic inequality</label>
-                    <label><input type="radio" name="q4" value="b"> B. Inequality based on genetic privilege</label>
-                    <label><input type="radio" name="q4" value="c"> C. Educational inequality</label>
+                    <label><input type="radio" name="q4" value="a"> A) Advanced technological capabilities like gene editing.</label>
+                    <label><input type="radio" name="q4" value="b"> B) Awareness of human psychology and the mechanics of persuasion.</label>
+                    <label><input type="radio" name="q4" value="c"> C) Disregarding the role of soft power in diplomacy.</label>
                 </div>
             </div>
 
             <div class="ebox">
-                <p class="qtext">5. When did the Soviet Union collapse, according to the transcript?</p>
+                <p class="qtext">5. Which cognitive bias is associated with relying too heavily on the initial piece of information encountered?</p>
                 <div class="opts">
-                    <label><input type="radio" name="q5" value="a"> A. Nineteen eighty-nine</label>
-                    <label><input type="radio" name="q5" value="b"> B. Nineteen ninety-one</label>
-                    <label><input type="radio" name="q5" value="c"> C. Two thousand and one</label>
+                    <label><input type="radio" name="q5" value="a"> A) Confirmation bias</label>
+                    <label><input type="radio" name="q5" value="b"> B) Availability heuristic</label>
+                    <label><input type="radio" name="q5" value="c"> C) Anchoring effect</label>
                 </div>
             </div>
 
-            <div class="ebox">
-                <p class="qtext">6. Who introduced the concept of soft power?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q6" value="a"> A. Noam Chomsky</label>
-                    <label><input type="radio" name="q6" value="b"> B. Henry Kissinger</label>
-                    <label><input type="radio" name="q6" value="c"> C. Joseph Nye</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">7. What is given as an example of soft power success?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q7" value="a"> A. American military bases abroad</label>
-                    <label><input type="radio" name="q7" value="b"> B. South Korea's Korean Wave (K-pop and dramas)</label>
-                    <label><input type="radio" name="q7" value="c"> C. The European Union's trade agreements</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">8. Who pioneered the study of cognitive biases?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q8" value="a"> A. Sigmund Freud and Carl Jung</label>
-                    <label><input type="radio" name="q8" value="b"> B. Daniel Kahneman and Amos Tversky</label>
-                    <label><input type="radio" name="q8" value="c"> C. Ivan Pavlov and B.F. Skinner</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">9. What is confirmation bias?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q9" value="a"> A. Overestimating easily recalled events</label>
-                    <label><input type="radio" name="q9" value="b"> B. Being influenced by the first information received</label>
-                    <label><input type="radio" name="q9" value="c"> C. Seeking information that supports existing beliefs</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">10. Which brain region is linked to metacognitive processes?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q10" value="a"> A. The amygdala</label>
-                    <label><input type="radio" name="q10" value="b"> B. The hippocampus</label>
-                    <label><input type="radio" name="q10" value="c"> C. The prefrontal cortex</label>
-                </div>
-            </div>
-
-            <button class="check-btn" onclick="checkL()">✅ Check Listening Score</button>
-            <div id="lscore" class="score-reveal">
+            <button class="check-btn" onclick="checkR()">✅ Check Reading Score</button>
+            <div id="rscore" class="score-reveal">
                 <div style="color:var(--text-secondary)">Your Score:</div>
-                <div class="score-num" id="lnum">—</div>
-                <div style="color:var(--text-muted)">out of 20</div>
+                <div class="score-num" id="rnum">—</div>
+                <div style="color:var(--text-muted)">out of 30</div>
             </div>
         </div>
 
         <!-- SECTION B: OPEN-ENDED -->
         <div class="exam-section">
-            <span class="sec-label sec-pink">✍️ Section B — Open-Ended Questions — 20 marks</span>
-            <p class="mark-hint">Write 4–6 sentences per answer. Use vocabulary from Units 1–4.</p>
+            <span class="sec-label sec-pink">✍️ Section B — Reading Comprehension (Open-Ended) — 20 marks</span>
+            <p class="mark-hint">Based on the text and your knowledge of Units 1–4, answer the following questions. Write 3–5 sentences per answer. Each question is worth 5 marks.</p>
 
             <div style="margin:1.5rem 0">
-                <p style="color:var(--text-primary);font-weight:600;margin-bottom:.5rem">1. How can the principles of rhetoric (ethos, pathos, logos) be used to evaluate the persuasiveness of political speeches or advertising campaigns? Give specific examples. <span style="color:#e91e63">(5 marks)</span></p>
-                <p class="hint">💡 Use: ethos / pathos / logos / filter bubble / echo chamber / media literacy / persuasion / rhetoric</p>
+                <p style="color:var(--text-primary);font-weight:600;margin-bottom:0.5rem">1. Based on the text, how do cognitive biases complicate the public's understanding of complex issues like bioethics?</p>
                 <textarea id="b1" placeholder="Write your answer here..." oninput="wc('b1','w1')"></textarea>
                 <div class="wc" id="w1">Words: 0</div>
             </div>
 
             <div style="margin:1.5rem 0">
-                <p style="color:var(--text-primary);font-weight:600;margin-bottom:.5rem">2. Should genetic enhancement technologies be available only for therapeutic purposes or should they also be permitted for human enhancement? Discuss both sides using ethical frameworks. <span style="color:#e91e63">(5 marks)</span></p>
-                <p class="hint">💡 Use: bioethics / germline editing / designer babies / utilitarian / deontological / genetic privilege / regulatory framework</p>
+                <p style="color:var(--text-primary);font-weight:600;margin-bottom:0.5rem">2. In your own words, explain the relationship between a nation's soft power and its use of rhetorical strategies.</p>
                 <textarea id="b2" placeholder="Write your answer here..." oninput="wc('b2','w2')"></textarea>
                 <div class="wc" id="w2">Words: 0</div>
             </div>
 
             <div style="margin:1.5rem 0">
-                <p style="color:var(--text-primary);font-weight:600;margin-bottom:.5rem">3. How has the shift from a unipolar to a multipolar world affected international diplomacy? Discuss the role of soft power in this new order. <span style="color:#e91e63">(5 marks)</span></p>
-                <p class="hint">💡 Use: multipolar / unipolar / soft power / hegemony / multilateral cooperation / cultural diplomacy / sharp power</p>
+                <p style="color:var(--text-primary);font-weight:600;margin-bottom:0.5rem">3. Do you agree that soft power is more effective than military might in today's multipolar world? Justify your opinion.</p>
                 <textarea id="b3" placeholder="Write your answer here..." oninput="wc('b3','w3')"></textarea>
                 <div class="wc" id="w3">Words: 0</div>
             </div>
 
             <div style="margin:1.5rem 0">
-                <p style="color:var(--text-primary);font-weight:600;margin-bottom:.5rem">4. Choose two cognitive biases and explain how they can distort decision-making in professional contexts (e.g., medicine, law, business). What strategies can mitigate their impact? <span style="color:#e91e63">(5 marks)</span></p>
-                <p class="hint">💡 Use: cognitive bias / confirmation bias / anchoring effect / availability heuristic / metacognition / heuristic / empirical evidence</p>
+                <p style="color:var(--text-primary);font-weight:600;margin-bottom:0.5rem">4. Why is it important for citizens to recognize cognitive biases (like the anchoring effect) when consuming news about scientific advancements?</p>
                 <textarea id="b4" placeholder="Write your answer here..." oninput="wc('b4','w4')"></textarea>
                 <div class="wc" id="w4">Words: 0</div>
             </div>
@@ -506,239 +452,55 @@
             </button>
         </div>
 
-        <!-- SECTION C: GRAMMAR & VOCABULARY -->
-        <div class="exam-section">
-            <span class="sec-label sec-orange">📝 Section C — Grammar &amp; Vocabulary — 10 marks</span>
-            <p class="mark-hint">Choose the best option. Each answer = 1 mark.</p>
-
-            <div class="ebox">
-                <p class="qtext">1. If she _____ rhetoric at university, she would be a more persuasive speaker now.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g1" value="a"> A. studied</label>
-                    <label><input type="radio" name="g1" value="b"> B. had studied</label>
-                    <label><input type="radio" name="g1" value="c"> C. has studied</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">2. Never before _____ technology advanced at such a pace as it has with CRISPR.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g2" value="a"> A. has</label>
-                    <label><input type="radio" name="g2" value="b"> B. did</label>
-                    <label><input type="radio" name="g2" value="c"> C. was</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">3. It was the collapse of the Soviet Union _____ ushered in the unipolar moment.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g3" value="a"> A. what</label>
-                    <label><input type="radio" name="g3" value="b"> B. that</label>
-                    <label><input type="radio" name="g3" value="c"> C. which</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">4. She said she _____ leave the conference early due to an emergency.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g4" value="a"> A. must</label>
-                    <label><input type="radio" name="g4" value="b"> B. had to</label>
-                    <label><input type="radio" name="g4" value="c"> C. should</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">5. The concept of _____ power refers to influencing others through culture and values rather than coercion.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g5" value="a"> A. hard</label>
-                    <label><input type="radio" name="g5" value="b"> B. soft</label>
-                    <label><input type="radio" name="g5" value="c"> C. sharp</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">6. _____ bias leads people to overestimate the probability of events that are easily recalled.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g6" value="a"> A. Confirmation</label>
-                    <label><input type="radio" name="g6" value="b"> B. Availability</label>
-                    <label><input type="radio" name="g6" value="c"> C. Anchoring</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">7. The bioethicist advocated _____ stricter guidelines for germline editing.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g7" value="a"> A. to implement</label>
-                    <label><input type="radio" name="g7" value="b"> B. implementing</label>
-                    <label><input type="radio" name="g7" value="c"> C. implement</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">8. The technique of concession and _____ signals intellectual honesty in argumentation.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g8" value="a"> A. debate</label>
-                    <label><input type="radio" name="g8" value="b"> B. rebuttal</label>
-                    <label><input type="radio" name="g8" value="c"> C. denial</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">9. Not only _____ the theory controversial, but it also lacked empirical evidence.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g9" value="a"> A. is</label>
-                    <label><input type="radio" name="g9" value="b"> B. was</label>
-                    <label><input type="radio" name="g9" value="c"> C. were</label>
-                </div>
-            </div>
-
-            <div class="ebox">
-                <p class="qtext">10. _____ — the process of thinking about one's own thinking — is a powerful predictor of academic success.</p>
-                <div class="opts">
-                    <label><input type="radio" name="g10" value="a"> A. Heuristics</label>
-                    <label><input type="radio" name="g10" value="b"> B. Metacognition</label>
-                    <label><input type="radio" name="g10" value="c"> C. Rationality</label>
-                </div>
-            </div>
-
-            <button class="check-btn" onclick="checkG()">✅ Check Grammar Score</button>
-            <div id="gscore" class="score-reveal">
-                <div style="color:var(--text-secondary)">Your Score:</div>
-                <div class="score-num" id="gnum">—</div>
-                <div style="color:var(--text-muted)">out of 10</div>
-            </div>
-        </div>
-
         <!-- MARKING SCHEME -->
         <button class="ms-toggle" onclick="document.getElementById('ms').classList.toggle('hidden')">🔑 Show / Hide Marking Scheme — Teacher Use Only</button>
         <div id="ms" class="ms-box hidden">
             <h3>🔑 Marking Scheme — Progress Test (Units 1–4)</h3>
 
-            <h4 style="color:#00bfa5;margin:1.5rem 0 .8rem">Section A Answers (2 marks each)</h4>
+            <h4 style="color:#00bfa5;margin:1.5rem 0 0.8rem">Section A Answers (6 marks each)</h4>
             <div class="ak">
-                <div class="ai">Q1 → <strong>C</strong> (three)</div>
-                <div class="ai">Q2 → <strong>A</strong> (filter bubbles)</div>
-                <div class="ai">Q3 → <strong>B</strong> (CRISPR)</div>
-                <div class="ai">Q4 → <strong>B</strong> (genetic privilege)</div>
-                <div class="ai">Q5 → <strong>B</strong> (1991)</div>
-                <div class="ai">Q6 → <strong>C</strong> (Joseph Nye)</div>
-                <div class="ai">Q7 → <strong>B</strong> (Korean Wave)</div>
-                <div class="ai">Q8 → <strong>B</strong> (Kahneman & Tversky)</div>
-                <div class="ai">Q9 → <strong>C</strong> (seeking supporting info)</div>
-                <div class="ai">Q10 → <strong>C</strong> (prefrontal cortex)</div>
+                <div class="ai">Q1 &rarr; <strong>B</strong> (sway international opinion)</div>
+                <div class="ai">Q2 &rarr; <strong>A</strong> (attracts allies)</div>
+                <div class="ai">Q3 &rarr; <strong>C</strong> (seek information aligning with beliefs)</div>
+                <div class="ai">Q4 &rarr; <strong>B</strong> (human psychology)</div>
+                <div class="ai">Q5 &rarr; <strong>C</strong> (Anchoring effect)</div>
             </div>
 
-            <h4 style="color:#00bfa5;margin:1.5rem 0 .8rem">Section B Criteria (5 marks each)</h4>
-            <div class="gbounds">
-                <table>
-                    <tr>
-                        <th>Marks</th>
-                        <th>Criteria</th>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Excellent: 5+ sentences, 4+ C1 vocab items naturally used, well-developed argument, minimal errors</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Good: clear ideas, 4+ sentences, 3 vocabulary items used correctly</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Satisfactory: adequate ideas, some vocabulary, noticeable errors</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Basic: limited ideas, few vocabulary items</td>
-                    </tr>
-                    <tr>
-                        <td>0–1</td>
-                        <td>Not attempted or off topic</td>
-                    </tr>
-                </table>
+            <h4 style="color:#00bfa5;margin:1.5rem 0 0.8rem">Section B Criteria (5 marks each)</h4>
+            <div style="background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 8px;">
+                <p><strong>5 marks (Excellent):</strong> Full comprehension of the text, well-structured response (3-5 sentences), clear application of concepts, accurate grammar.</p>
+                <p><strong>3-4 marks (Good):</strong> Understands the concepts but explanation lacks depth or has minor grammatical errors.</p>
+                <p><strong>1-2 marks (Basic):</strong> Vague answers, mostly copying from the text without explanation.</p>
             </div>
-            <p style="color:var(--text-muted);margin-top:.8rem;font-size:.9rem"><strong style="color:#e91e63">Key vocab:</strong> ethos, pathos, logos, filter bubble, rhetoric, media literacy, bioethics, germline editing, designer babies, utilitarian, deontological, genetic privilege, regulatory framework, multipolar, unipolar, soft power, hegemony, multilateral cooperation, cultural diplomacy, cognitive bias, confirmation bias, anchoring effect, metacognition, heuristic, empirical evidence</p>
-
-            <h4 style="color:#00bfa5;margin:1.5rem 0 .8rem">Section C Answers (1 mark each)</h4>
-            <div class="ak">
-                <div class="ai">G1 → <strong>B</strong> (had studied — mixed conditional)</div>
-                <div class="ai">G2 → <strong>A</strong> (has — inversion)</div>
-                <div class="ai">G3 → <strong>B</strong> (that — cleft sentence)</div>
-                <div class="ai">G4 → <strong>B</strong> (had to — reported speech)</div>
-                <div class="ai">G5 → <strong>B</strong> (soft — collocation)</div>
-                <div class="ai">G6 → <strong>B</strong> (Availability — vocabulary)</div>
-                <div class="ai">G7 → <strong>B</strong> (implementing — verb pattern)</div>
-                <div class="ai">G8 → <strong>B</strong> (rebuttal — vocabulary)</div>
-                <div class="ai">G9 → <strong>B</strong> (was — inversion)</div>
-                <div class="ai">G10 → <strong>B</strong> (Metacognition — vocabulary)</div>
-            </div>
-
-            <h4 style="color:#00bfa5;margin:1.5rem 0 .8rem">Grade Boundaries</h4>
-            <div class="gbounds">
-                <table>
-                    <tr>
-                        <th>Grade</th>
-                        <th>Marks</th>
-                        <th>Descriptor</th>
-                    </tr>
-                    <tr>
-                        <td>⭐⭐⭐ Distinction</td>
-                        <td>45–50</td>
-                        <td>Outstanding C1 performance across Units 1–4</td>
-                    </tr>
-                    <tr>
-                        <td>✅ Merit</td>
-                        <td>38–44</td>
-                        <td>Strong command, minor weaknesses</td>
-                    </tr>
-                    <tr>
-                        <td>👍 Pass</td>
-                        <td>30–37</td>
-                        <td>Adequate C1 competence</td>
-                    </tr>
-                    <tr>
-                        <td>⚠️ Borderline</td>
-                        <td>20–29</td>
-                        <td>Review Units 1–4 before continuing</td>
-                    </tr>
-                    <tr>
-                        <td>❌ Needs Repeat</td>
-                        <td>0–19</td>
-                        <td>Repeat Units 1–4</td>
-                    </tr>
-                </table>
+            
+            <h4 style="color:#00bfa5;margin:1.5rem 0 0.8rem">Grade Boundaries (Out of 50)</h4>
+            <div style="background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 8px;">
+                <p><strong>⭐⭐⭐ Distinction:</strong> 45–50</p>
+                <p><strong>✅ Merit:</strong> 38–44</p>
+                <p><strong>👍 Pass:</strong> 30–37</p>
+                <p><strong>⚠️ Borderline:</strong> 20–29</p>
+                <p><strong>❌ Needs Repeat:</strong> 0–19</p>
             </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <p>© 2025 C1 Advanced English Course. Created by Cecilia Chiappero.</p>
+            <p>&copy; 2025 C1 Advanced English Course. Created by Cecilia Chiappero.</p>
         </div>
     </footer>
 
     <script>
-        const LA = { q1: 'c', q2: 'a', q3: 'b', q4: 'b', q5: 'b', q6: 'c', q7: 'b', q8: 'b', q9: 'c', q10: 'c' };
-        const GA = { g1: 'b', g2: 'a', g3: 'b', g4: 'b', g5: 'b', g6: 'b', g7: 'b', g8: 'b', g9: 'b', g10: 'b' };
+        const RA = { q1: 'b', q2: 'a', q3: 'c', q4: 'b', q5: 'c' };
 
-        function checkL() {
+        function checkR() {
             let s = 0;
-            for (let [q, a] of Object.entries(LA)) {
+            for (let [q, a] of Object.entries(RA)) {
                 const el = document.querySelector(`input[name="${q}"]:checked`);
-                if (el && el.value === a) s += 2;
+                if (el && el.value === a) s += 6;
             }
-            document.getElementById('lnum').textContent = s + '/20';
-            document.getElementById('lscore').style.display = 'block';
-        }
-
-        function checkG() {
-            let s = 0;
-            for (let [q, a] of Object.entries(GA)) {
-                const el = document.querySelector(`input[name="${q}"]:checked`);
-                if (el && el.value === a) s++;
-            }
-            document.getElementById('gnum').textContent = s + '/10';
-            document.getElementById('gscore').style.display = 'block';
+            document.getElementById('rnum').textContent = s + '/30';
+            document.getElementById('rscore').style.display = 'block';
         }
 
         function wc(id, cid) {
@@ -751,80 +513,29 @@
             const b2 = document.getElementById('b2').value.trim();
             const b3 = document.getElementById('b3').value.trim();
             const b4 = document.getElementById('b4').value.trim();
-            if (!b1 && !b2 && !b3 && !b4) { alert('Please write some answers before sending.'); return; }
-            const title = 'Progress Test — Units 1–4 (C1)';
-            const msg = `📝 *${title} — Section B Answers*\n\n*1.* ${b1 || '(No answer)'}\n\n*2.* ${b2 || '(No answer)'}\n\n*3.* ${b3 || '(No answer)'}\n\n*4.* ${b4 || '(No answer)'}`;
-            window.open(`https://wa.me/5493517017850?text=${encodeURIComponent(msg)}`, '_blank');
-        }
 
-        // ── Audio Engine (Web Speech API — American English) ──────────────────
-        const TRANSCRIPT_TEXT = "Welcome to Thinking Forward, the podcast that brings together ideas from across the academic spectrum. Today we have Dr. Helena Marsh, a professor of applied philosophy and cognitive science at the University of Edinburgh, here to discuss the intersection of rhetoric, bioethics, international affairs, and human cognition. Dr. Marsh, let's start with rhetoric. How relevant is it in the twenty-first century? Enormously relevant. Aristotle identified three modes of persuasion — ethos, pathos, and logos — over two thousand years ago, and they remain the foundation of every persuasive communication today. What has changed is the medium. In the digital age, algorithms create filter bubbles that reinforce existing beliefs rather than challenging them, and the rise of deepfakes has blurred the line between authentic and manufactured discourse. The result is what many scholars call a crisis of rhetoric. That connects to bioethics too, doesn't it? Absolutely. Take CRISPR gene-editing technology. It has the potential to eradicate hereditary diseases like sickle cell anaemia, but it also opens the door to designer babies — where parents select traits like intelligence or physical appearance. Critics warn this could create a new form of inequality based on genetic privilege. The ethical questions around germline editing — modifications passed down to future generations — demand the kind of rigorous argumentation that rhetoric teaches us. And how does geopolitics fit into this picture? Well, the world has shifted from a unipolar order after the Soviet Union collapsed in nineteen ninety-one to a complex multipolar system. China, India, and Brazil have emerged as major powers. Joseph Nye's concept of soft power — influencing others through culture and values rather than military force — has become central to diplomacy. South Korea's Korean Wave is a perfect example: K-pop and dramas have generated billions in revenue and enormous diplomatic goodwill. Finally, what role does cognitive science play in all of this? A crucial one. Daniel Kahneman and Amos Tversky showed that humans are far less rational than we assumed. Cognitive biases like confirmation bias — seeking information that supports what we already believe — and the anchoring effect — being swayed by the first information we receive — distort our judgment in politics, medicine, and everyday decisions. Metacognition, the ability to think about our own thinking, is the antidote. Research shows that students who practise metacognitive strategies consistently outperform those who don't. The prefrontal cortex is the brain region most closely linked to these reflective processes.";
-
-        let isListening = false;
-
-        function getBestUSVoice() {
-            const voices = window.speechSynthesis.getVoices();
-            const us = voices.filter(v => v.lang === 'en-US' || v.lang.startsWith('en-US'));
-            if (!us.length) return voices.find(v => v.lang.includes('en')) || null;
-            const priority = ['Google US English', 'Google US', 'Google', 'Microsoft Aria', 'Microsoft Jenny', 'Microsoft', 'Enhanced', 'Premium', 'Natural'];
-            for (const k of priority) { const m = us.find(v => v.name.includes(k)); if (m) return m; }
-            return us[0];
-        }
-
-        function listenTranscript() {
-            stopListen();
-            isListening = true;
-            const btn = document.getElementById('listen-btn');
-            if (btn) btn.innerHTML = '&#x23F8;&#xFE0F; Playing...';
-
-            // Smarter split by sentences for natural pauses
-            const chunks = TRANSCRIPT_TEXT.match(/[^.!?]+[.!?]+/g) || [TRANSCRIPT_TEXT];
-            let i = 0;
-
-            function next() {
-                if (!isListening || i >= chunks.length) {
-                    isListening = false;
-                    if (btn) btn.innerHTML = '&#x1F50A; Listen';
-                    return;
-                }
-
-                const u = new SpeechSynthesisUtterance(chunks[i++].trim());
-                u.lang = 'en-US';
-                u.rate = 0.92;
-                u.pitch = 1.0;
-
-                const v = getBestUSVoice();
-                if (v) u.voice = v;
-
-                u.onend = () => {
-                    // Natural pause between sentences (500ms)
-                    if (isListening) setTimeout(next, 500);
-                };
-
-                u.onerror = () => {
-                    if (isListening) next();
-                };
-
-                window.speechSynthesis.speak(u);
+            if (!b1 || !b2 || !b3 || !b4) {
+                alert('Please answer all 4 questions in Section B before sending.');
+                return;
             }
 
-            if (window.speechSynthesis.getVoices().length === 0) {
-                setTimeout(next, 400);
-            } else {
-                next();
-            }
-        }
+            const text = `*C1 Progress Test (Units 1-4) - Section B Answers*
 
-        function stopListen() {
-            isListening = false;
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-            const btn = document.getElementById('listen-btn');
-            if (btn) btn.innerHTML = '&#x1F50A; Listen';
-        }
+*Q1 (Cognitive Biases):*
+${b1}
 
-        // Load voices early for desktop Chrome
-        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+*Q2 (Soft Power & Rhetoric):*
+${b2}
+
+*Q3 (Effectiveness of Soft Power):*
+${b3}
+
+*Q4 (Scientific News & Biases):*
+${b4}`;
+            
+            const url = 'https://wa.me/?text=' + encodeURIComponent(text);
+            window.open(url, '_blank');
+        }
     </script>
 </body>
-
 </html>
