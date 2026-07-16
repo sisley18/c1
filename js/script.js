@@ -821,6 +821,15 @@ function renderCurriculum() {
                 <!-- Exam Link for Even Units -->
                 <div class="section-block" style="border-top: 2px solid var(--accent-indigo); margin-top: 40px; padding-top: 30px; text-align: center;">
                     <span class="section-label" style="background: var(--gradient-accent); color: #fff;">📝 Progress Exam</span>
+                    ${unit.id === 4 ? `
+                    <h3 style="color: var(--text-primary); margin: 15px 0 10px;">You've completed Units 1 to 4!</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Test your knowledge with the Progress Exam covering all key C1 concepts from Units 1–4.</p>
+                    <a href="exam4.html" style="display: inline-block; background: var(--accent-indigo); border: 2px solid var(--accent-indigo); color: #ffffff; padding: 14px 35px; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s ease;"
+                        onmouseover="this.style.background='transparent'; this.style.color='var(--accent-indigo)'; this.style.transform='translateY(-2px)'"
+                        onmouseout="this.style.background='var(--accent-indigo)'; this.style.color='#fff'; this.style.transform=''">
+                        📝 Take Progress Test (Units 1–4) →
+                    </a>
+                    ` : `
                     <h3 style="color: var(--text-primary); margin: 15px 0 10px;">You've completed Units ${unit.id - 1} &amp; ${unit.id}!</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 20px;">Test your knowledge with the Progress Exam covering both units — listening, writing &amp; grammar.</p>
                     <a href="exam${unit.id / 2}.html" style="display: inline-block; background: var(--accent-indigo); border: 2px solid var(--accent-indigo); color: #ffffff; padding: 14px 35px; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s ease;"
@@ -828,6 +837,7 @@ function renderCurriculum() {
                         onmouseout="this.style.background='var(--accent-indigo)'; this.style.color='#fff'; this.style.transform=''">
                         📝 Take Exam ${unit.id / 2} →
                     </a>
+                    `}
                 </div>
                 ` : ''}
 
