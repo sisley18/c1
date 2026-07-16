@@ -7,28 +7,27 @@
     <title>Progress Exam 4 — Units 1–4 | Advanced English C1</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Premium C1 Exam Styles overrides/additions */
-        body {
-            background-color: var(--bg-primary, #faf9f7);
-            color: var(--text-primary, #1e1b18);
-        }
-
+        /* Premium C1 Exam Styles — using core variables */
+        
         .exam-banner {
-            background: var(--bg-secondary, #ffffff);
-            border-top: 5px solid var(--accent-indigo, #4f46e5);
-            border-radius: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border-top: 5px solid var(--accent-indigo);
+            border-radius: var(--border-radius);
             padding: 3rem 2rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-md);
             margin-top: 100px;
             margin-bottom: 3rem;
             position: relative;
             overflow: hidden;
             transition: transform 0.3s ease;
+            border: 1px solid var(--glass-border);
         }
 
         .exam-banner:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .exam-banner::before {
@@ -38,7 +37,7 @@
             right: -50px;
             width: 150px;
             height: 150px;
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(147, 51, 234, 0.1));
+            background: var(--accent-indigo-bg);
             border-radius: 50%;
             z-index: 0;
         }
@@ -46,7 +45,7 @@
         .exam-banner h1 {
             margin: 0 0 15px 0;
             font-size: 2.8rem;
-            background: linear-gradient(135deg, var(--accent-indigo, #4f46e5), #9333ea);
+            background: var(--gradient-accent);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             position: relative;
@@ -54,7 +53,7 @@
         }
 
         .exam-banner p {
-            color: var(--text-secondary, #4a4a4a);
+            color: var(--text-secondary);
             font-size: 1.2rem;
             margin-bottom: 25px;
             position: relative;
@@ -71,30 +70,30 @@
         }
 
         .exam-meta span {
-            background: rgba(79, 70, 229, 0.08);
-            color: var(--accent-indigo, #4f46e5);
+            background: var(--accent-indigo-bg);
+            color: var(--accent-indigo);
             padding: 8px 20px;
-            border-radius: 50px;
+            border-radius: var(--border-radius-pill);
             font-size: 0.95rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.05);
+            border: 1px solid var(--border-color);
         }
 
         .exam-section {
-            background: var(--bg-secondary, #ffffff);
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+            box-shadow: var(--shadow-sm);
             margin-bottom: 3rem;
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
             transition: box-shadow 0.3s ease;
         }
         
         .exam-section:hover {
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-md);
         }
 
         .sec-label {
@@ -103,21 +102,21 @@
             gap: 8px;
             color: #fff;
             padding: 8px 20px;
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             font-weight: 800;
             font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-sm);
         }
 
-        .sec-teal { background: linear-gradient(135deg, #0d9488, #14b8a6); }
-        .sec-purple { background: linear-gradient(135deg, #7c3aed, #a855f7); }
-        .sec-pink { background: linear-gradient(135deg, #e11d48, #f43f5e); }
+        .sec-teal { background: var(--gradient-teal); }
+        .sec-purple { background: var(--gradient-accent); }
+        .sec-pink { background: var(--gradient-warm); }
 
         .mark-hint {
-            color: var(--text-muted, #737373);
+            color: var(--text-muted);
             font-size: 0.95rem;
             font-weight: 500;
             margin-top: -15px;
@@ -126,10 +125,10 @@
         }
 
         .reading-box {
-            background: rgba(13, 148, 136, 0.03);
-            border-left: 5px solid #0d9488;
+            background: var(--accent-teal-bg);
+            border-left: 5px solid var(--accent-teal);
             padding: 2rem;
-            border-radius: 0 16px 16px 0;
+            border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
             margin-bottom: 2.5rem;
             font-size: 1.05rem;
             line-height: 1.8;
@@ -138,7 +137,7 @@
         }
         
         .reading-box strong {
-            color: #0d9488;
+            color: var(--accent-teal);
             font-size: 1.1rem;
             display: inline-block;
             margin-top: 15px;
@@ -148,17 +147,18 @@
         .ebox {
             margin-bottom: 2rem;
             padding: 1.5rem;
-            border-radius: 16px;
-            background: rgba(0, 0, 0, 0.015);
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border-radius: var(--border-radius);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
             transition: background 0.3s ease;
         }
         
         .ebox:hover {
-            background: rgba(0, 0, 0, 0.03);
+            background: var(--bg-secondary);
         }
 
         .qtext {
+            font-family: var(--font-heading);
             font-weight: 700;
             margin: 0 0 1.2rem 0;
             font-size: 1.1rem;
@@ -174,50 +174,48 @@
         .opts label {
             display: flex;
             align-items: center;
-            background: #ffffff;
+            background: var(--bg-secondary);
             padding: 14px 20px;
-            border-radius: 12px;
-            border: 2px solid rgba(0, 0, 0, 0.05);
+            border-radius: var(--border-radius-sm);
+            border: 1.5px solid var(--border-color);
             cursor: pointer;
             font-size: 1rem;
             font-weight: 500;
             color: var(--text-secondary);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.01);
         }
 
         .opts label:hover {
-            border-color: rgba(79, 70, 229, 0.3);
-            background: rgba(79, 70, 229, 0.02);
+            border-color: var(--accent-indigo);
+            background: var(--accent-indigo-bg);
             transform: translateX(5px);
         }
 
         .opts input[type="radio"] {
             margin-right: 15px;
             transform: scale(1.2);
-            accent-color: var(--accent-indigo, #4f46e5);
+            accent-color: var(--accent-indigo);
         }
 
         textarea {
             width: 100%;
             min-height: 140px;
             box-sizing: border-box;
-            background: #ffffff;
-            border: 2px solid rgba(0, 0, 0, 0.1);
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color-strong);
             color: var(--text-primary);
             padding: 1.2rem;
-            border-radius: 14px;
-            font-family: inherit;
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-body);
             font-size: 1rem;
             resize: vertical;
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
 
         textarea:focus { 
             outline: none; 
-            border-color: #e11d48;
-            box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1);
+            border-color: var(--accent-indigo);
+            box-shadow: 0 0 0 4px var(--accent-indigo-bg);
         }
 
         .wc {
@@ -229,13 +227,14 @@
         }
 
         .check-btn {
-            background: linear-gradient(135deg, #0d9488, #14b8a6);
+            background: var(--gradient-teal);
             border: none;
             color: #fff;
             padding: 1.2rem 2.5rem;
-            border-radius: 14px;
+            border-radius: var(--border-radius-sm);
             cursor: pointer;
             font-weight: 800;
+            font-family: var(--font-heading);
             font-size: 1.1rem;
             margin-top: 2rem;
             display: flex;
@@ -244,42 +243,38 @@
             gap: 10px;
             width: 100%;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 15px rgba(13, 148, 136, 0.2);
+            box-shadow: var(--shadow-glow);
         }
         
         .check-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(13, 148, 136, 0.3);
+            opacity: 0.95;
         }
         
         .check-btn.purple {
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
-            box-shadow: 0 6px 15px rgba(124, 58, 237, 0.2);
+            background: var(--gradient-accent);
+            box-shadow: var(--shadow-glow-indigo);
         }
         
-        .check-btn.purple:hover {
-            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
-        }
-
         .score-reveal {
-            background: #ffffff;
-            border: 3px solid #0d9488;
-            border-radius: 16px;
+            background: var(--bg-primary);
+            border: 3px solid var(--accent-teal);
+            border-radius: var(--border-radius);
             padding: 2rem;
             text-align: center;
             margin-top: 1.5rem;
             display: none;
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 25px rgba(13, 148, 136, 0.15);
+            box-shadow: var(--shadow-glow);
         }
         
         .score-reveal.purple {
-            border-color: #7c3aed;
-            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.15);
+            border-color: var(--accent-indigo);
+            box-shadow: var(--shadow-glow-indigo);
         }
         
         .score-reveal.purple .score-num {
-            color: #7c3aed;
+            color: var(--accent-indigo);
         }
 
         @keyframes popIn {
@@ -288,36 +283,38 @@
         }
 
         .score-num {
+            font-family: var(--font-heading);
             font-size: 4rem;
             font-weight: 900;
-            color: #0d9488;
+            color: var(--accent-teal);
             line-height: 1.2;
             margin: 10px 0;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
         }
 
         .ms-box {
-            background: rgba(244, 63, 94, 0.03);
-            border: 2px dashed rgba(244, 63, 94, 0.3);
-            border-radius: 20px;
+            background: var(--accent-indigo-bg);
+            border: 2px dashed var(--accent-indigo);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
             margin-top: 3rem;
             margin-bottom: 3rem;
         }
 
         .ms-box h3 {
-            color: #e11d48;
+            color: var(--accent-indigo);
             font-size: 1.5rem;
             margin-top: 0;
+            font-family: var(--font-heading);
         }
 
         .ms-toggle {
-            background: rgba(244, 63, 94, 0.1);
-            border: 2px solid #e11d48;
-            color: #e11d48;
+            background: var(--accent-indigo-bg);
+            border: 2px solid var(--accent-indigo);
+            color: var(--accent-indigo);
             padding: 1rem 2.5rem;
-            border-radius: 14px;
+            border-radius: var(--border-radius-sm);
             cursor: pointer;
+            font-family: var(--font-heading);
             font-weight: 800;
             margin: 3rem auto;
             display: block;
@@ -325,7 +322,7 @@
         }
         
         .ms-toggle:hover {
-            background: #e11d48;
+            background: var(--accent-indigo);
             color: white;
         }
 
@@ -339,14 +336,14 @@
             margin: 20px 0;
         }
         .ai {
-            background: white;
+            background: var(--bg-secondary);
             padding: 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border-color);
             font-weight: 500;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            box-shadow: var(--shadow-sm);
         }
-        .ai strong { color: #e11d48; font-size: 1.2rem; }
+        .ai strong { color: var(--accent-indigo); font-size: 1.2rem; }
     </style>
 </head>
 
@@ -355,7 +352,9 @@
         <div class="container">
             <nav>
                 <div class="logo">Advanced<span>English</span> C1</div>
-                <a href="index.html" style="color:var(--text-muted);font-weight:600;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent-indigo)'" onmouseout="this.style.color='var(--text-muted)'">&larr; Back to Course</a>
+                <a href="index.html" class="btn">
+                    &larr; Back to Course
+                </a>
             </nav>
         </div>
     </header>
@@ -374,7 +373,7 @@
 
         <!-- SECTION A -->
         <div class="exam-section">
-            <span class="sec-label sec-teal">📖 Section A — Reading Comprehension — 25 marks</span>
+            <span class="sec-label sec-teal">📖 Section A — Reading</span>
             <span class="mark-hint">Read the excerpts carefully. Select the most accurate interpretation. (5 marks each)</span>
             
             <div class="reading-box">
@@ -446,7 +445,7 @@
 
         <!-- SECTION B -->
         <div class="exam-section">
-            <span class="sec-label sec-purple">🗣️ Section B — Functional Language & Idioms — 10 marks</span>
+            <span class="sec-label sec-purple">🗣️ Section B — Functions</span>
             <span class="mark-hint">Complete each sentence with the correct idiom or functional phrase. (2 marks each)</span>
 
             <div class="ebox">
@@ -504,28 +503,28 @@
 
         <!-- SECTION C -->
         <div class="exam-section">
-            <span class="sec-label sec-pink">✍️ Section C — Open-Ended Questions — 15 marks</span>
+            <span class="sec-label sec-pink">✍️ Section C — Open-Ended</span>
             <span class="mark-hint">Answer the following questions based on the texts. Write 2–4 sentences per answer. (5 marks each)</span>
 
             <div style="margin:2rem 0">
-                <p style="color:var(--text-primary);font-weight:700;font-size:1.1rem;margin-bottom:0.8rem">1. Explain the role of "evidence" in the construction of a compelling argument (Unit 1).</p>
+                <p class="qtext">1. Explain the role of "evidence" in the construction of a compelling argument (Unit 1).</p>
                 <textarea id="c1" placeholder="Type your analytical response here..." oninput="wc('c1','w1')"></textarea>
                 <div class="wc" id="w1">Words: 0</div>
             </div>
 
             <div style="margin:2rem 0">
-                <p style="color:var(--text-primary);font-weight:700;font-size:1.1rem;margin-bottom:0.8rem">2. Describe why the distinction between therapeutic intervention and human enhancement is considered a contentious debate (Unit 2).</p>
+                <p class="qtext">2. Describe why the distinction between therapeutic intervention and human enhancement is considered a contentious debate (Unit 2).</p>
                 <textarea id="c2" placeholder="Type your analytical response here..." oninput="wc('c2','w2')"></textarea>
                 <div class="wc" id="w2">Words: 0</div>
             </div>
 
             <div style="margin:2rem 0">
-                <p style="color:var(--text-primary);font-weight:700;font-size:1.1rem;margin-bottom:0.8rem">3. How does "soft power" differ from "hard power"? Provide an example based on the text (Unit 3).</p>
+                <p class="qtext">3. How does "soft power" differ from "hard power"? Provide an example based on the text (Unit 3).</p>
                 <textarea id="c3" placeholder="Type your analytical response here..." oninput="wc('c3','w3')"></textarea>
                 <div class="wc" id="w3">Words: 0</div>
             </div>
 
-            <button onclick="sendC()" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 1.2rem 2.5rem; margin-top: 2rem; background: linear-gradient(135deg, #25D366, #128C7E); border: none; color: #fff; font-size: 1.1rem; font-weight: 800; border-radius: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 6px 15px rgba(37, 211, 102, 0.2);">
+            <button onclick="sendC()" class="check-btn" style="background: var(--gradient-warm); box-shadow: 0 10px 40px rgba(255, 109, 0, 0.12);">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Send Section C via WhatsApp
             </button>
@@ -536,7 +535,7 @@
         <div id="ms" class="ms-box hidden">
             <h3>🔑 Teacher Marking Scheme</h3>
             
-            <h4 style="color:#e11d48;margin:1.5rem 0 0.8rem">Section A — Reading (5 marks each)</h4>
+            <h4 style="color:var(--accent-indigo);margin:1.5rem 0 0.8rem">Section A — Reading (5 marks each)</h4>
             <div class="ak">
                 <div class="ai">Q1 → <strong>B</strong></div>
                 <div class="ai">Q2 → <strong>B</strong></div>
@@ -545,7 +544,7 @@
                 <div class="ai">Q5 → <strong>C</strong></div>
             </div>
 
-            <h4 style="color:#e11d48;margin:2rem 0 0.8rem">Section B — Functions (2 marks each)</h4>
+            <h4 style="color:var(--accent-indigo);margin:2rem 0 0.8rem">Section B — Functions (2 marks each)</h4>
             <div class="ak">
                 <div class="ai">Q1 → <strong>B</strong></div>
                 <div class="ai">Q2 → <strong>A</strong></div>
@@ -554,7 +553,7 @@
                 <div class="ai">Q5 → <strong>A</strong></div>
             </div>
 
-            <h4 style="color:#e11d48;margin:2rem 0 0.8rem">Section C — Criteria (5 marks each)</h4>
+            <h4 style="color:var(--accent-indigo);margin:2rem 0 0.8rem">Section C — Criteria (5 marks each)</h4>
             <ul style="color:var(--text-secondary);line-height:1.8;">
                 <li><strong>5 marks:</strong> Excellent, well-developed (3-4 sentences), natural advanced vocabulary, minimal errors.</li>
                 <li><strong>4 marks:</strong> Good, clear ideas, adequate explanation, minor errors.</li>
@@ -564,8 +563,8 @@
         </div>
     </div>
 
-    <footer>
-        <div class="container" style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
+    <footer style="text-align: center; padding: 2rem 0; color: var(--text-muted); font-family: var(--font-body);">
+        <div class="container">
             <p>© 2025 C1 Advanced English Course. Created by Cecilia Chiappero.</p>
         </div>
     </footer>
