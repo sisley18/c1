@@ -5,95 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progress Exam 4 — Units 1–4 | Advanced English C1</title>
+    <link rel="icon" type="image/x-icon" href="st_marys.ico">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         :root {
-            --bg-primary: #faf9f7;
-            --bg-secondary: #ffffff;
-            --text-primary: #1e1b18;
-            --text-secondary: #4a4a4a;
-            --text-muted: #737373;
-            --accent-teal: #0d9488;
-            --accent-indigo: #4f46e5;
-            --accent-electric: #2563eb;
-            --accent-gold: #d97706;
-            --accent-purple: #9333ea;
-            --border-color: rgba(0, 0, 0, 0.08);
-            --border-color-strong: rgba(0, 0, 0, 0.15);
-            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.04);
-            --shadow-glow: 0 6px 20px rgba(90, 63, 214, 0.15);
-            --gradient-accent: linear-gradient(135deg, #4f46e5, #0d9488);
-            --gradient-teal: linear-gradient(135deg, #0f766e, #14b8a6);
-            --font-heading: 'Outfit', -apple-system, system-ui, sans-serif;
-            --font-body: 'Inter', -apple-system, system-ui, sans-serif;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        #main-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        #main-header .container {
-            padding: 15px 20px;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: var(--font-heading);
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-        }
-
-        .logo span {
-            color: var(--accent-indigo);
+            --exam1: #6366f1
         }
 
         .exam-banner {
-            background: var(--bg-secondary);
-            border-top: 4px solid var(--accent-indigo);
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, .25), rgba(139, 92, 246, .15));
+            border: 2px solid rgba(99, 102, 241, .5);
+            border-radius: 16px;
             padding: 2.5rem;
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
+            margin: 100px 0 2rem;
+            text-align: center
         }
 
         .exam-banner h1 {
-            margin: 0 0 10px 0;
-            font-family: var(--font-heading);
-            color: var(--accent-indigo);
             font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: .5rem
         }
 
         .exam-banner p {
-            color: var(--text-secondary);
-            margin: 0 0 20px 0;
-            font-size: 1.05rem;
+            color: rgba(255, 255, 255, .8);
+            font-size: 1.1rem
         }
 
         .exam-meta {
@@ -101,440 +37,603 @@
             justify-content: center;
             gap: 1.5rem;
             flex-wrap: wrap;
+            margin-top: 1rem
         }
 
         .exam-meta span {
-            background: rgba(90, 63, 214, 0.06);
-            color: var(--accent-indigo);
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
+            background: rgba(99, 102, 241, .3);
+            border: 1px solid rgba(99, 102, 241, .5);
+            padding: .4rem 1.2rem;
+            border-radius: 20px;
+            font-size: .85rem;
+            color: #fff
         }
 
         .exam-section {
-            background: var(--bg-secondary);
+            background: rgba(0, 0, 0, .2);
+            border: 2px solid rgba(255, 255, 255, .15);
             border-radius: 16px;
             padding: 2rem;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-color);
+            margin-bottom: 2rem
         }
 
         .sec-label {
             display: inline-block;
-            color: #fff;
-            padding: 6px 14px;
-            border-radius: 6px;
+            padding: .4rem 1.2rem;
+            border-radius: 20px;
+            font-size: .8rem;
             font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
             text-transform: uppercase;
-            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+            color: #fff
         }
 
-        .sec-teal {
-            background: var(--gradient-teal);
+        .sec-indigo {
+            background: rgba(99, 102, 241, .5);
+            border: 1px solid #6366f1
         }
 
-        .sec-pink {
-            background: linear-gradient(135deg, #e91e63, #ff4081);
+        .sec-gold {
+            background: rgba(251, 191, 36, .3);
+            border: 1px solid #fbbf24;
+            color: #fbbf24
         }
 
-        .reading-box {
-            background: rgba(13, 148, 136, 0.04);
-            border-left: 4px solid var(--accent-teal);
-            padding: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: var(--text-primary);
+        .sec-purple {
+            background: rgba(139, 92, 246, .4);
+            border: 1px solid #8b5cf6
         }
 
         .ebox {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(0, 0, 0, .25);
+            border-left: 4px solid #6366f1;
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin: 1.2rem 0
         }
 
-        .ebox:last-of-type {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .qtext {
+        .ebox p.qtext {
             font-weight: 600;
-            margin: 0 0 1rem 0;
-            font-size: 1.05rem;
-        }
-
-        .opts {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            color: #fff;
+            margin-bottom: .8rem
         }
 
         .opts label {
             display: flex;
             align-items: center;
-            background: rgba(0, 0, 0, 0.02);
-            padding: 10px 15px;
+            gap: .7rem;
+            padding: .5rem .8rem;
             border-radius: 8px;
-            border: 1px solid var(--border-color);
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, .85);
+            transition: background .2s;
+            margin: .25rem 0
         }
 
         .opts label:hover {
-            background: rgba(0, 0, 0, 0.04);
-            border-color: var(--border-color-strong);
+            background: rgba(99, 102, 241, .2)
         }
 
-        .opts input[type="radio"] {
-            margin-right: 12px;
-            transform: scale(1.2);
-            accent-color: var(--accent-teal);
+        .opts input {
+            accent-color: #6366f1
+        }
+
+        .transcript {
+            background: rgba(0, 0, 0, .3);
+            border-left: 4px solid #fbbf24;
+            padding: 1.5rem;
+            border-radius: 10px;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, .9);
+            margin: 1rem 0
+        }
+
+        .tbtn {
+            background: rgba(99, 102, 241, .35);
+            border: 2px solid #6366f1;
+            color: #fff;
+            padding: .6rem 1.4rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: background .2s
+        }
+
+        .tbtn:hover {
+            background: rgba(99, 102, 241, .6)
         }
 
         textarea {
             width: 100%;
-            min-height: 120px;
-            box-sizing: border-box;
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid var(--border-color-strong);
-            color: var(--text-primary);
+            min-height: 100px;
+            background: rgba(0, 0, 0, .3);
+            border: 2px solid rgba(255, 255, 255, .2);
+            color: #fff;
             padding: 1rem;
             border-radius: 10px;
             font-family: inherit;
-            font-size: 0.95rem;
-            resize: vertical;
+            font-size: .95rem;
+            resize: vertical
         }
 
         textarea:focus {
             outline: none;
-            border-color: #e91e63;
+            border-color: #6366f1
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, .4)
         }
 
         .wc {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .4);
             text-align: right;
-            margin-top: 0.3rem;
+            margin-top: .3rem
+        }
+
+        .hint {
+            font-size: .85rem;
+            color: #fbbf24;
+            margin: .4rem 0;
+            font-style: italic
         }
 
         .check-btn {
-            background: var(--gradient-teal);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border: none;
             color: #fff;
-            padding: 0.9rem 2.2rem;
+            padding: .9rem 2.2rem;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 700;
             font-size: 1rem;
             margin-top: 1.5rem;
             display: block;
-            transition: transform 0.2s;
-            box-shadow: var(--shadow-glow);
+            transition: transform .2s
         }
 
         .check-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-2px)
         }
 
         .score-reveal {
-            background: linear-gradient(135deg, rgba(13, 148, 136, 0.12), rgba(20, 184, 166, 0.08));
-            border: 2px solid var(--accent-teal);
+            background: linear-gradient(135deg, rgba(99, 102, 241, .4), rgba(139, 92, 246, .3));
+            border: 2px solid #6366f1;
             border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
             margin-top: 1rem;
-            display: none;
+            display: none
         }
 
         .score-num {
             font-size: 3rem;
             font-weight: 800;
-            color: var(--accent-teal);
-            font-family: var(--font-heading);
+            color: #fbbf24
         }
 
         .ms-box {
-            background: rgba(233, 30, 99, 0.04);
-            border: 2px solid rgba(233, 30, 99, 0.2);
-            border-radius: 18px;
+            background: rgba(0, 0, 0, .3);
+            border: 2px solid rgba(251, 191, 36, .4);
+            border-radius: 16px;
             padding: 2rem;
-            margin-top: 2rem;
+            margin-top: 2rem
         }
 
         .ms-box h3 {
-            color: #e91e63;
+            color: #fbbf24;
             margin-bottom: 1.5rem;
-            font-size: 1.4rem;
-            font-family: var(--font-heading);
+            font-size: 1.4rem
         }
 
         .ak {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-            gap: 0.5rem;
-            margin: 1rem 0;
+            gap: .5rem;
+            margin: 1rem 0
         }
 
         .ai {
-            background: rgba(13, 148, 136, 0.06);
-            border: 1px solid rgba(13, 148, 136, 0.2);
-            padding: 0.6rem 1rem;
+            background: rgba(0, 0, 0, .25);
+            border: 1px solid rgba(251, 191, 36, .3);
+            padding: .6rem 1rem;
             border-radius: 8px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+            font-size: .9rem;
+            color: rgba(255, 255, 255, .85)
         }
 
         .ai strong {
-            color: var(--accent-teal);
+            color: #fbbf24
+        }
+
+        .gbounds table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: .8rem
+        }
+
+        .gbounds th {
+            background: rgba(99, 102, 241, .4);
+            color: #fff;
+            padding: .7rem 1rem;
+            text-align: left;
+            font-size: .9rem
+        }
+
+        .gbounds td {
+            padding: .6rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            color: rgba(255, 255, 255, .85);
+            font-size: .9rem
         }
 
         .ms-toggle {
-            background: rgba(233, 30, 99, 0.08);
-            border: 2px solid #e91e63;
-            color: #e91e63;
-            padding: 0.8rem 2rem;
+            background: rgba(251, 191, 36, .2);
+            border: 2px solid #fbbf24;
+            color: #fbbf24;
+            padding: .8rem 2rem;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 700;
             margin: 2rem auto;
-            display: block;
-            transition: background 0.2s;
+            display: block
         }
 
         .ms-toggle:hover {
-            background: rgba(233, 30, 99, 0.15);
+            background: rgba(251, 191, 36, .35)
         }
 
         .hidden {
-            display: none;
+            display: none
         }
 
         .mark-hint {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, .6);
+            font-size: .85rem;
+            margin-bottom: 1rem
         }
 
-        footer {
-            text-align: center;
-            padding: 2rem 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        @media(max-width:600px) {
+            .exam-meta {
+                gap: .8rem
+            }
         }
     </style>
 </head>
 
 <body>
-    <header id="main-header">
+    <header>
         <div class="container">
             <nav>
-                <div class="logo">Advanced<span>English</span> C1</div>
-                <a href="index.html" style="color:var(--text-muted);font-size:0.9rem;text-decoration:none;">&larr; Back to Course</a>
+                <div class="logo">English<span>Language</span> Course</div>
+                <a href="index.html" style="color:rgba(255,255,255,.7);font-size:.9rem;">← Back to Course</a>
             </nav>
         </div>
     </header>
 
     <div class="container">
         <div class="exam-banner">
-            <h1>📝 Progress Test — Units 1–4</h1>
-            <p>Reading Comprehension &amp; Critical Thinking</p>
+            <h1>📝 Progress Exam 4</h1>
+            <p>Units 1 to 4 — Reading, Functions &amp; Open-Ended</p>
             <div class="exam-meta">
                 <span>⏱ 60 minutes</span>
-                <span>📊 50 marks</span>
+                <span>📊 Total: 50 marks</span>
                 <span>🎯 Pass: 30/50</span>
+                <span>📚 Units 1 to 4</span>
             </div>
         </div>
 
+        <!-- SECTION A: LISTENING -->
+        
+
         <!-- SECTION A: READING COMPREHENSION -->
         <div class="exam-section">
-            <span class="sec-label sec-teal">📖 Section A — Reading Comprehension — 30 marks</span>
-            <p class="mark-hint">Read the text and answer the multiple-choice questions. Each correct answer = 6 marks.</p>
+            <span class="sec-label sec-indigo">📖 Section A — Reading Comprehension — 25 marks</span>
+            <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem">Read the excerpts from Units 1-4 and answer the questions. Each correct answer = 5 marks.</p>
             
-            <div class="reading-box">
-                <strong>"The Intersection of Influence: Rhetoric, Bioethics, and Geopolitics"</strong><br><br>
-                In the 21st century, the intersection of rhetoric, bioethics, soft power, and cognitive biases shapes public discourse in unprecedented ways. When nations debate the ethical implications of CRISPR and designer babies, they do not merely exchange scientific facts. Instead, they deploy complex rhetorical strategies—appealing to ethos, pathos, and logos—to sway international opinion. <br><br>
-                This persuasion is a crucial element of a country’s soft power, as projecting moral leadership and technological responsibility can attract allies more effectively than military might. However, public understanding of these debates is often distorted by cognitive biases. The confirmation bias, for instance, leads individuals to seek out information that aligns with their pre-existing beliefs, creating filter bubbles. Meanwhile, the anchoring effect ensures that the first dramatic headline about genetic engineering anchors all subsequent understanding, making it difficult for nuanced ethical frameworks to gain traction.<br><br>
-                Consequently, navigating the multipolar geopolitical landscape requires not just diplomatic skill, but a profound awareness of human psychology and the mechanics of persuasion. To evaluate global events accurately, citizens must apply metacognition and critically assess both the arguments presented to them and their own cognitive vulnerabilities.
+            <div class="ebox" style="background: rgba(255,255,255,0.02); padding: 20px; border-left: 4px solid var(--exam1); border-radius: 8px; margin-bottom: 20px; color: var(--text); line-height: 1.8;">
+                <strong>Excerpt 1 (Unit 1: Rhetoric):</strong><br>
+                The construction of a compelling argument is both an art and a science, requiring the orchestration of multiple elements that work in concert to shift an audience's perspective. At its foundation lies the claim—a clear, debatable assertion that stakes out the arguer's position. However, a claim without substantiation is merely an opinion. To elevate assertion into argument, one must marshal evidence: empirical data, expert testimony, case studies, and analogies that lend weight and credibility to the position being advanced.<br><br>
+
+                <strong>Excerpt 2 (Unit 2: Bioethics):</strong><br>
+                The distinction between therapeutic intervention and human enhancement represents one of the most contentious debates in contemporary bioethics. Therapeutic interventions aim to restore normal functioning—treating a disease, repairing an injury, or correcting a genetic defect. Enhancement, by contrast, seeks to augment human capabilities beyond what is considered the species-typical norm.<br><br>
+
+                <strong>Excerpt 3 (Unit 3: Geopolitics):</strong><br>
+                In 1990, the political scientist Joseph Nye introduced the concept of 'soft power'—the ability to influence others through attraction and persuasion rather than coercion or payment. Unlike hard power, which relies on military force and economic sanctions, soft power operates through the appeal of a nation's culture, political values, and foreign policies.<br><br>
+
+                <strong>Excerpt 4 (Unit 4: Cognitive Science):</strong><br>
+                Metacognition—the process of thinking about one's own thinking—represents one of the most sophisticated cognitive abilities that distinguish humans from other species. This capacity encompasses two fundamental components: metacognitive knowledge, which refers to what we know about our own cognitive abilities and limitations, and metacognitive regulation, which involves the active monitoring and control of our cognitive processes.
             </div>
 
-            <div class="ebox">
-                <p class="qtext">1. What is the primary role of rhetoric in the debate on bioethics, according to the text?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q1" value="a"> A) To explain the scientific mechanics of CRISPR.</label>
-                    <label><input type="radio" name="q1" value="b"> B) To sway international opinion through persuasion.</label>
-                    <label><input type="radio" name="q1" value="c"> C) To enforce military dominance over other nations.</label>
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">1. According to Excerpt 1, what is required to elevate a claim into an argument?</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="q1" value="a"> A) Emotional appeals and a high volume.</label>
+                    <label><input type="radio" name="q1" value="b"> B) Evidence such as empirical data and expert testimony.</label>
+                    <label><input type="radio" name="q1" value="c"> C) A clear and debatable assertion alone.</label>
                 </div>
             </div>
 
-            <div class="ebox">
-                <p class="qtext">2. How does projecting moral leadership relate to a nation's soft power?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q2" value="a"> A) It attracts allies more effectively than military force.</label>
-                    <label><input type="radio" name="q2" value="b"> B) It creates unipolar hegemony.</label>
-                    <label><input type="radio" name="q2" value="c"> C) It isolates a nation from the global community.</label>
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">2. According to Excerpt 2, how does enhancement differ from therapeutic intervention?</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="q2" value="a"> A) Enhancement aims to restore normal functioning.</label>
+                    <label><input type="radio" name="q2" value="b"> B) Enhancement seeks to augment human capabilities beyond the species-typical norm.</label>
+                    <label><input type="radio" name="q2" value="c"> C) There is no conceptual distinction between the two.</label>
                 </div>
             </div>
 
-            <div class="ebox">
-                <p class="qtext">3. According to the text, what effect does confirmation bias have on public understanding?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q3" value="a"> A) It leads people to critically evaluate all available evidence.</label>
-                    <label><input type="radio" name="q3" value="b"> B) It makes people rely heavily on the first headline they read.</label>
-                    <label><input type="radio" name="q3" value="c"> C) It causes individuals to only seek information aligning with their existing beliefs.</label>
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">3. Based on Excerpt 3, what does 'soft power' rely on?</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="q3" value="a"> A) The appeal of a nation's culture, political values, and foreign policies.</label>
+                    <label><input type="radio" name="q3" value="b"> B) Military force and economic sanctions.</label>
+                    <label><input type="radio" name="q3" value="c"> C) Coercion and payment.</label>
                 </div>
             </div>
 
-            <div class="ebox">
-                <p class="qtext">4. The text suggests that navigating modern geopolitics requires:</p>
-                <div class="opts">
-                    <label><input type="radio" name="q4" value="a"> A) Advanced technological capabilities like gene editing.</label>
-                    <label><input type="radio" name="q4" value="b"> B) Awareness of human psychology and the mechanics of persuasion.</label>
-                    <label><input type="radio" name="q4" value="c"> C) Disregarding the role of soft power in diplomacy.</label>
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">4. What are the two fundamental components of metacognition mentioned in Excerpt 4?</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="q4" value="a"> A) Problem-solving and self-awareness.</label>
+                    <label><input type="radio" name="q4" value="b"> B) Metacognitive knowledge and metacognitive regulation.</label>
+                    <label><input type="radio" name="q4" value="c"> C) Biological reality and cognitive deficits.</label>
                 </div>
             </div>
 
-            <div class="ebox">
-                <p class="qtext">5. Which cognitive bias is associated with relying too heavily on the initial piece of information encountered?</p>
-                <div class="opts">
-                    <label><input type="radio" name="q5" value="a"> A) Confirmation bias</label>
-                    <label><input type="radio" name="q5" value="b"> B) Availability heuristic</label>
-                    <label><input type="radio" name="q5" value="c"> C) Anchoring effect</label>
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">5. Which of the following statements is true based on the provided texts?</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="q5" value="a"> A) A claim without substantiation is considered a compelling argument.</label>
+                    <label><input type="radio" name="q5" value="b"> B) Soft power influences others through coercion.</label>
+                    <label><input type="radio" name="q5" value="c"> C) Therapeutic interventions aim to treat a disease or repair an injury.</label>
                 </div>
             </div>
 
             <button class="check-btn" onclick="checkR()">✅ Check Reading Score</button>
             <div id="rscore" class="score-reveal">
-                <div style="color:var(--text-secondary)">Your Score:</div>
+                <div style="color:rgba(255,255,255,.8)">Your Score:</div>
                 <div class="score-num" id="rnum">—</div>
-                <div style="color:var(--text-muted)">out of 30</div>
+                <div style="color:rgba(255,255,255,.7)">out of 25</div>
             </div>
         </div>
 
-        <!-- SECTION B: OPEN-ENDED -->
+        <!-- SECTION B: FUNCTIONS AND IDIOMS -->
         <div class="exam-section">
-            <span class="sec-label sec-pink">✍️ Section B — Reading Comprehension (Open-Ended) — 20 marks</span>
-            <p class="mark-hint">Based on the text and your knowledge of Units 1–4, answer the following questions. Write 3–5 sentences per answer. Each question is worth 5 marks.</p>
+            <span class="sec-label sec-purple">🗣️ Section B — Functional Language & Idioms — 10 marks</span>
+            <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem">Complete each sentence with the correct idiom or functional phrase. Each question = 2 marks.</p>
+
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">1. I called the internet provider three times today but I just kept getting _____. They wouldn't give me a straight answer!</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="f1" value="a"> A) a two-faced person</label>
+                    <label><input type="radio" name="f1" value="b"> B) the runaround</label>
+                    <label><input type="radio" name="f1" value="c"> C) up the wall</label>
+                </div>
+            </div>
+
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">2. We had a huge misunderstanding last week, but we finally sat down and _____.</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="f2" value="a"> A) cleared the air</label>
+                    <label><input type="radio" name="f2" value="b"> B) footed the bill</label>
+                    <label><input type="radio" name="f2" value="c"> C) split it down the middle</label>
+                </div>
+            </div>
+
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">3. "Put your wallet away! It's your birthday, so dinner _____ tonight."</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="f3" value="a"> A) goes Dutch</label>
+                    <label><input type="radio" name="f3" value="b"> B) is a rip-off</label>
+                    <label><input type="radio" name="f3" value="c"> C) is on me</label>
+                </div>
+            </div>
+
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">4. I _____ to ask, but could you possibly lend me your laptop for the weekend?</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="f4" value="a"> A) mind</label>
+                    <label><input type="radio" name="f4" value="b"> B) hate</label>
+                    <label><input type="radio" name="f4" value="c"> C) doubt</label>
+                </div>
+            </div>
+
+            <div class="quiz-item" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <p class="quiz-q" style="font-weight: 600; margin-bottom: 15px; color: var(--text);">5. I've been trying to fix this code all day, it's not working, and I am completely at my _____!</p>
+                <div class="opts" style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><input type="radio" name="f5" value="a"> A) wits' end</label>
+                    <label><input type="radio" name="f5" value="b"> B) runaround</label>
+                    <label><input type="radio" name="f5" value="c"> C) two-faced</label>
+                </div>
+            </div>
+
+            <button class="check-btn" onclick="checkF()">✅ Check Functions Score</button>
+            <div id="fscore" class="score-reveal">
+                <div style="color:rgba(255,255,255,.8)">Your Score:</div>
+                <div class="score-num" id="fnum">—</div>
+                <div style="color:rgba(255,255,255,.7)">out of 10</div>
+            </div>
+        </div>
+
+        <!-- SECTION C: OPEN-ENDED -->
+        <div class="exam-section">
+            <span class="sec-label sec-gold">✍️ Section C — Open-Ended Questions — 15 marks</span>
+            <p class="mark-hint">Answer the following questions based on the excerpts. Write 2–4 sentences per answer. Each question is worth 5 marks.</p>
 
             <div style="margin:1.5rem 0">
-                <p style="color:var(--text-primary);font-weight:600;margin-bottom:0.5rem">1. Based on the text, how do cognitive biases complicate the public's understanding of complex issues like bioethics?</p>
+                <p style="color:#fff;font-weight:600;margin-bottom:.5rem">1. Explain the role of "evidence" in the construction of a compelling argument (Unit 1).</p>
                 <textarea id="b1" placeholder="Write your answer here..." oninput="wc('b1','w1')"></textarea>
                 <div class="wc" id="w1">Words: 0</div>
             </div>
 
             <div style="margin:1.5rem 0">
-                <p style="color:var(--text-primary);font-weight:600;margin-bottom:0.5rem">2. In your own words, explain the relationship between a nation's soft power and its use of rhetorical strategies.</p>
+                <p style="color:#fff;font-weight:600;margin-bottom:.5rem">2. Describe why the distinction between therapeutic intervention and human enhancement is considered a contentious debate (Unit 2).</p>
                 <textarea id="b2" placeholder="Write your answer here..." oninput="wc('b2','w2')"></textarea>
                 <div class="wc" id="w2">Words: 0</div>
             </div>
 
             <div style="margin:1.5rem 0">
-                <p style="color:var(--text-primary);font-weight:600;margin-bottom:0.5rem">3. Do you agree that soft power is more effective than military might in today's multipolar world? Justify your opinion.</p>
+                <p style="color:#fff;font-weight:600;margin-bottom:.5rem">3. How does "soft power" differ from "hard power"? Provide an example based on the text (Unit 3).</p>
                 <textarea id="b3" placeholder="Write your answer here..." oninput="wc('b3','w3')"></textarea>
                 <div class="wc" id="w3">Words: 0</div>
             </div>
 
-            <div style="margin:1.5rem 0">
-                <p style="color:var(--text-primary);font-weight:600;margin-bottom:0.5rem">4. Why is it important for citizens to recognize cognitive biases (like the anchoring effect) when consuming news about scientific advancements?</p>
-                <textarea id="b4" placeholder="Write your answer here..." oninput="wc('b4','w4')"></textarea>
-                <div class="wc" id="w4">Words: 0</div>
-            </div>
-
             <button onclick="sendB()" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px 20px; margin-top: 20px; background: linear-gradient(135deg, #25D366, #128C7E); border: none; color: #fff; font-size: 1rem; font-weight: 700; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                Send Section B via WhatsApp
+                Send Section C via WhatsApp
             </button>
         </div>
+
 
         <!-- MARKING SCHEME -->
         <button class="ms-toggle" onclick="document.getElementById('ms').classList.toggle('hidden')">🔑 Show / Hide Marking Scheme — Teacher Use Only</button>
         <div id="ms" class="ms-box hidden">
-            <h3>🔑 Marking Scheme — Progress Test (Units 1–4)</h3>
+            <h3>🔑 Marking Scheme — Progress Exam 4 (Units 1–4)</h3>
 
-            <h4 style="color:#00bfa5;margin:1.5rem 0 0.8rem">Section A Answers (6 marks each)</h4>
+            <h4 style="color:#a78bfa;margin:1.5rem 0 .8rem">Section A — Reading Answers (5 marks each)</h4>
             <div class="ak">
-                <div class="ai">Q1 &rarr; <strong>B</strong> (sway international opinion)</div>
-                <div class="ai">Q2 &rarr; <strong>A</strong> (attracts allies)</div>
-                <div class="ai">Q3 &rarr; <strong>C</strong> (seek information aligning with beliefs)</div>
-                <div class="ai">Q4 &rarr; <strong>B</strong> (human psychology)</div>
-                <div class="ai">Q5 &rarr; <strong>C</strong> (Anchoring effect)</div>
+                <div class="ai">Q1 → <strong>B</strong></div>
+                <div class="ai">Q2 → <strong>B</strong></div>
+                <div class="ai">Q3 → <strong>A</strong></div>
+                <div class="ai">Q4 → <strong>B</strong></div>
+                <div class="ai">Q5 → <strong>C</strong></div>
             </div>
 
-            <h4 style="color:#00bfa5;margin:1.5rem 0 0.8rem">Section B Criteria (5 marks each)</h4>
-            <div style="background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 8px;">
-                <p><strong>5 marks (Excellent):</strong> Full comprehension of the text, well-structured response (3-5 sentences), clear application of concepts, accurate grammar.</p>
-                <p><strong>3-4 marks (Good):</strong> Understands the concepts but explanation lacks depth or has minor grammatical errors.</p>
-                <p><strong>1-2 marks (Basic):</strong> Vague answers, mostly copying from the text without explanation.</p>
+            <h4 style="color:#a78bfa;margin:1.5rem 0 .8rem">Section B — Functions Answers (2 marks each)</h4>
+            <div class="ak">
+                <div class="ai">Q1 → <strong>B</strong></div>
+                <div class="ai">Q2 → <strong>A</strong></div>
+                <div class="ai">Q3 → <strong>C</strong></div>
+                <div class="ai">Q4 → <strong>B</strong></div>
+                <div class="ai">Q5 → <strong>A</strong></div>
             </div>
-            
-            <h4 style="color:#00bfa5;margin:1.5rem 0 0.8rem">Grade Boundaries (Out of 50)</h4>
-            <div style="background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 8px;">
-                <p><strong>⭐⭐⭐ Distinction:</strong> 45–50</p>
-                <p><strong>✅ Merit:</strong> 38–44</p>
-                <p><strong>👍 Pass:</strong> 30–37</p>
-                <p><strong>⚠️ Borderline:</strong> 20–29</p>
-                <p><strong>❌ Needs Repeat:</strong> 0–19</p>
+
+            <h4 style="color:#a78bfa;margin:1.5rem 0 .8rem">Section C — Open Questions Criteria (5 marks each)</h4>
+            <div class="gbounds">
+                <table>
+                    <tr>
+                        <th>Marks</th>
+                        <th>Criteria</th>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Excellent: well-developed, 3-5 sentences, natural use of key vocabulary, minimal errors</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Good: clear ideas, adequate explanation, minor errors</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Satisfactory: adequate, some vocabulary, noticeable errors</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Basic: limited ideas, few vocabulary items</td>
+                    </tr>
+                    <tr>
+                        <td>0–1</td>
+                        <td>Not attempted or off topic</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h4 style="color:#a78bfa;margin:1.5rem 0 .8rem">Grade Boundaries</h4>
+            <div class="gbounds">
+                <table>
+                    <tr>
+                        <th>Grade</th>
+                        <th>Marks</th>
+                        <th>Descriptor</th>
+                    </tr>
+                    <tr>
+                        <td>⭐⭐⭐ Distinction</td>
+                        <td>45–50</td>
+                        <td>Outstanding command of language and topic</td>
+                    </tr>
+                    <tr>
+                        <td>✅ Merit</td>
+                        <td>38–44</td>
+                        <td>Strong performance, minor weaknesses</td>
+                    </tr>
+                    <tr>
+                        <td>👍 Pass</td>
+                        <td>30–37</td>
+                        <td>Adequate for C1 level, some gaps</td>
+                    </tr>
+                    <tr>
+                        <td>⚠️ Borderline</td>
+                        <td>20–29</td>
+                        <td>Review Units 1–4 before continuing</td>
+                    </tr>
+                    <tr>
+                        <td>❌ Needs Repeat</td>
+                        <td>0–19</td>
+                        <td>Repeat Units 1–4</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 C1 Advanced English Course. Created by Cecilia Chiappero.</p>
+            <p>© 2024 Advanced English Course. Created by Cecilia Chiappero.</p>
         </div>
     </footer>
 
     <script>
-        const RA = { q1: 'b', q2: 'a', q3: 'c', q4: 'b', q5: 'c' };
+        const RA = { q1: 'b', q2: 'b', q3: 'a', q4: 'b', q5: 'c' };
+        const FA = { f1: 'b', f2: 'a', f3: 'c', f4: 'b', f5: 'a' };
 
-        function checkR() {
-            let s = 0;
-            for (let [q, a] of Object.entries(RA)) {
-                const el = document.querySelector(`input[name="${q}"]:checked`);
-                if (el && el.value === a) s += 6;
-            }
-            document.getElementById('rnum').textContent = s + '/30';
-            document.getElementById('rscore').style.display = 'block';
+        function checkR() { 
+            let s = 0; 
+            for (let [q, a] of Object.entries(RA)) { 
+                const el = document.querySelector(`input[name="${q}"]:checked`); 
+                if (el && el.value === a) s += 5; 
+            } 
+            document.getElementById('rnum').textContent = s + '/25'; 
+            document.getElementById('rscore').style.display = 'block'; 
         }
 
-        function wc(id, cid) {
-            const t = document.getElementById(id).value.trim();
-            document.getElementById(cid).textContent = 'Words: ' + (t === '' ? 0 : t.split(/\s+/).length);
+        function checkF() { 
+            let s = 0; 
+            for (let [q, a] of Object.entries(FA)) { 
+                const el = document.querySelector(`input[name="${q}"]:checked`); 
+                if (el && el.value === a) s += 2; 
+            } 
+            document.getElementById('fnum').textContent = s + '/10'; 
+            document.getElementById('fscore').style.display = 'block'; 
+        }
+
+        function wc(id, cid) { 
+            const t = document.getElementById(id).value.trim(); 
+            document.getElementById(cid).textContent = 'Words: ' + (t === '' ? 0 : t.split(/\s+/).length); 
         }
 
         function sendB() {
             const b1 = document.getElementById('b1').value.trim();
             const b2 = document.getElementById('b2').value.trim();
             const b3 = document.getElementById('b3').value.trim();
-            const b4 = document.getElementById('b4').value.trim();
-
-            if (!b1 || !b2 || !b3 || !b4) {
-                alert('Please answer all 4 questions in Section B before sending.');
-                return;
-            }
-
-            const text = `*C1 Progress Test (Units 1-4) - Section B Answers*
-
-*Q1 (Cognitive Biases):*
-${b1}
-
-*Q2 (Soft Power & Rhetoric):*
-${b2}
-
-*Q3 (Effectiveness of Soft Power):*
-${b3}
-
-*Q4 (Scientific News & Biases):*
-${b4}`;
             
-            const url = 'https://wa.me/?text=' + encodeURIComponent(text);
-            window.open(url, '_blank');
+            if (!b1 && !b2 && !b3) { 
+                alert('Please write some answers before sending.'); 
+                return; 
+            }
+            
+            const title = document.querySelector('h1').textContent;
+            const msg = `📝 *${title} — Section C Answers*
+
+*1.* ${b1 || '(No answer)'}
+
+*2.* ${b2 || '(No answer)'}
+
+*3.* ${b3 || '(No answer)'}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
 </body>
